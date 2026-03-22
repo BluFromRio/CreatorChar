@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="header-actions">
-        <button class="btn-icon" id="btn-save" title="Save to browser">💾 Save</button>
-        <button class="btn-icon" id="btn-load" title="Load from browser">📂 Load</button>
+        <button class="btn-icon" id="btn-save" title="Save to browser">Save</button>
+        <button class="btn-icon" id="btn-load" title="Load from browser">Load</button>
         <button class="btn-icon btn-danger" id="btn-reset" title="Reset all">↺ Reset</button>
       </div>
     </div>
@@ -217,11 +217,17 @@
         <div id="traits-summary" class="summary-list"></div>
       </div>
 
+      <!-- Stat Totals -->
+      <div class="summary-card">
+        <div class="summary-card-header">Stat Totals</div>
+        <div id="stat-totals" class="stat-totals-grid"></div>
+      </div>
+
       <!-- Export buttons -->
       <div class="export-row">
-        <button class="btn-export" id="btn-copy">📋 Copy</button>
+        <button class="btn-export" id="btn-copy">Copy</button>
         <button class="btn-export" id="btn-export-json">{ } JSON</button>
-        <button class="btn-export" id="btn-export-txt">📄 Text</button>
+        <button class="btn-export" id="btn-export-txt">Text</button>
       </div>
 
       <div id="copy-toast" class="copy-toast">Copied!</div>

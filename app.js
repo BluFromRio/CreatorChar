@@ -94,15 +94,15 @@ const WEIGHT_LABELS = [
 
 // ── CATEGORY DISPLAY CONFIG ─────────────────────────────────
 const CATEGORY_META = {
-  personality: { label: 'Personality',  icon: '♟', order: 1 },
-  education:   { label: 'Education',    icon: '📜', order: 2 },
-  lifestyle:   { label: 'Lifestyle',    icon: '⚔', order: 3 },
-  congenital:  { label: 'Congenital',   icon: '🧬', order: 4 },
-  health:      { label: 'Health',       icon: '🩸', order: 5 },
-  commander:   { label: 'Commander',    icon: '🛡', order: 6 },
-  childhood:   { label: 'Childhood',    icon: '✦', order: 7 },
-  fame:        { label: 'Fame & Vices', icon: '👁', order: 8 },
-  other:       { label: 'Other',        icon: '◆', order: 9 },
+  personality: { label: 'Personality',  order: 1 },
+  education:   { label: 'Education',    order: 2 },
+  lifestyle:   { label: 'Lifestyle',    order: 3 },
+  congenital:  { label: 'Congenital',   order: 4 },
+  health:      { label: 'Health',       order: 5 },
+  commander:   { label: 'Commander',    order: 6 },
+  childhood:   { label: 'Childhood',    order: 7 },
+  fame:        { label: 'Fame & Vices', order: 8 },
+  other:       { label: 'Other',        order: 9 },
 };
 
 // ── STATE ────────────────────────────────────────────────────
@@ -411,7 +411,7 @@ function renderTraitBrowser() {
   const activeCats = catFilter === 'all' ? cats : cats.filter(c => c === catFilter);
 
   for (const cat of activeCats) {
-    const meta = CATEGORY_META[cat] || { label: cat, icon: '◆' };
+    const meta = CATEGORY_META[cat] || { label: cat };
     const allTraitsInCat = traitsByCat[cat] || [];
 
     // Apply filters
@@ -435,7 +435,6 @@ function renderTraitBrowser() {
     const hdr = document.createElement('div');
     hdr.className = 'cat-header' + (collapsed ? ' collapsed' : '');
     hdr.innerHTML = `
-      <span class="cat-icon cat-icon-${cat}">${meta.icon}</span>
       <span class="cat-name">${meta.label}</span>
       <span class="cat-count">${filtered.length}</span>
       <span class="cat-arrow">▼</span>
@@ -664,7 +663,7 @@ function renderSummary() {
     let html = '';
     for (const [cat, traits] of Object.entries(byCat)) {
       const meta = CATEGORY_META[cat] || { label: cat };
-      html += `<div class="summary-cat-header">${meta.icon || '◆'} ${meta.label}</div>`;
+      html += `<div class="summary-cat-header">${meta.label}</div>`;
       for (const t of traits) {
         const cc = costClass(t.cost);
         const dotColor = cc === 'positive' ? 'var(--green-good)' : cc === 'negative' ? 'var(--crimson)' : 'var(--border-mid)';
@@ -680,6 +679,9 @@ function renderSummary() {
 
   // Narrative
   renderNarrative();
+
+  // Stat totals
+  renderStatTotals();
 
   // Warnings
   renderWarnings();
@@ -824,6 +826,90 @@ function renderWarnings() {
   area.innerHTML = warnings.map(w =>
     `<div class="warning-item ${w.type}">${w.msg}</div>`
   ).join('');
+}
+
+// ── STAT CALCULATION ─────────────────────────────────────────
+// Base values — a character starts here before any traits.
+// Edit these in CONFIG or directly here.
+const STAT_BASE = {
+  stewardship: 5,
+  martial:     5,
+  intrigue:    5,
+  diplomacy:   5,
+  learning:    5,
+  prowess:     5,
+};
+
+const STAT_ORDER = ['diplomacy', 'martial', 'stewardship', 'intrigue', 'learning', 'prowess'];
+const STAT_LABELS = {
+  stewardship: 'Stewardship',
+  martial:     'Martial',
+  intrigue:    'Intrigue',
+  diplomacy:   'Diplomacy',
+  learning:    'Learning',
+  prowess:     'Prowess',
+};
+
+function calcStatTotals() {
+  const totals = { ...STAT_BASE };
+  for (const id of state.selectedTraits) {
+    const modifiers = TRAIT_STATS[id];
+    if (!modifiers) continue;
+    for (const [stat, delta] of Object.entries(modifiers)) {
+      if (totals[stat] !== undefined) totals[stat] += delta;
+    }
+  }
+  return totals;
+}
+
+function calcStatDeltas() {
+  // Returns the combined delta from all selected traits (base not included)
+  const deltas = { stewardship: 0, martial: 0, intrigue: 0, diplomacy: 0, learning: 0, prowess: 0 };
+  for (const id of state.selectedTraits) {
+    const modifiers = TRAIT_STATS[id];
+    if (!modifiers) continue;
+    for (const [stat, delta] of Object.entries(modifiers)) {
+      if (deltas[stat] !== undefined) deltas[stat] += delta;
+    }
+  }
+  return deltas;
+}
+
+// ── RENDER: STAT TOTALS ──────────────────────────────────────
+function renderStatTotals() {
+  const el = document.getElementById('stat-totals');
+  if (!el) return;
+
+  const totals = calcStatTotals();
+  const deltas = calcStatDeltas();
+
+  el.innerHTML = '';
+  for (const stat of STAT_ORDER) {
+    const total = totals[stat];
+    const delta = deltas[stat];
+    const base  = STAT_BASE[stat];
+
+    const row = document.createElement('div');
+    row.className = 'stat-row' + (delta !== 0 ? ' modified' : '');
+
+    const nameEl = document.createElement('span');
+    nameEl.className = 'stat-name';
+    nameEl.textContent = STAT_LABELS[stat];
+
+    const valEl = document.createElement('span');
+    valEl.className = 'stat-value'
+      + (total > base ? ' above-base' : total < base ? ' below-base' : '');
+    valEl.textContent = total;
+
+    const deltaEl = document.createElement('span');
+    deltaEl.className = 'stat-delta' + (delta > 0 ? ' pos' : delta < 0 ? ' neg' : '');
+    deltaEl.textContent = delta > 0 ? `+${delta}` : delta < 0 ? `${delta}` : '';
+
+    row.appendChild(nameEl);
+    row.appendChild(valEl);
+    row.appendChild(deltaEl);
+    el.appendChild(row);
+  }
 }
 
 // ── RENDER ALL ────────────────────────────────────────────────
