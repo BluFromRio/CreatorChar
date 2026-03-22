@@ -806,8 +806,8 @@ input[type="color"] {
 /* Stat totals grid */
 .stat-totals-grid {
   display: grid;
-  display: flex; flex-direction: column;
-  gap: 4px 8px;
+  grid-template-columns: 1fr;
+  gap: 6px;
   padding: 0.55rem 0.8rem 0.6rem;
 }
 .stat-row {
