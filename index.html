@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Codex — Book Character Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ═══════════════════ HEADER ═══════════════════ -->
+  <header id="app-header">
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>Character <span class="accent">Codex</span></h1>
+        <p class="header-sub">CK3-Inspired Book Character Builder</p>
+      </div>
+      <div class="point-budget-display">
+        <div class="budget-ring" id="budget-ring">
+          <div class="budget-inner">
+            <span id="points-remaining" class="points-number">400</span>
+            <span class="points-label">pts left</span>
+          </div>
+        </div>
+        <div class="budget-meta">
+          <div class="budget-line"><span id="points-spent">0</span> spent</div>
+          <div class="budget-line budget-total">of <span id="points-total">400</span> total</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="btn-save" title="Save to browser">💾 Save</button>
+        <button class="btn-icon" id="btn-load" title="Load from browser">📂 Load</button>
+        <button class="btn-icon btn-danger" id="btn-reset" title="Reset all">↺ Reset</button>
+      </div>
+    </div>
+    <!-- Progress bar -->
+    <div class="budget-bar-wrap">
+      <div class="budget-bar" id="budget-bar"></div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════ MAIN 3-COLUMN LAYOUT ═══════════════════ -->
+  <main id="main-layout">
+
+    <!-- ══════ LEFT COLUMN: Identity + Appearance ══════ -->
+    <aside id="col-appearance" class="panel">
+      <div class="panel-header">
+        <h2>Identity &amp; Appearance</h2>
+      </div>
+
+      <!-- Identity -->
+      <section class="appearance-section">
+        <h3 class="section-label">Identity</h3>
+
+        <div class="field-group">
+          <label for="char-name">Name</label>
+          <input type="text" id="char-name" placeholder="Character name…" autocomplete="off" />
+        </div>
+        <div class="field-group">
+          <label for="char-nickname">Nickname / Title</label>
+          <input type="text" id="char-nickname" placeholder="The Bold, Lady of Ash…" autocomplete="off" />
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label for="char-age">Age</label>
+            <input type="number" id="char-age" min="1" max="999" placeholder="—" />
+          </div>
+          <div class="field-group">
+            <label for="char-pronouns">Pronouns</label>
+            <select id="char-pronouns">
+              <option value="">—</option>
+              <option>he/him</option>
+              <option>she/her</option>
+              <option>they/them</option>
+              <option>any/all</option>
+              <option value="custom">Custom…</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group" id="pronouns-custom-wrap" style="display:none">
+          <label for="char-pronouns-custom">Custom pronouns</label>
+          <input type="text" id="char-pronouns-custom" placeholder="e.g. xe/xem" />
+        </div>
+      </section>
+
+      <!-- Body -->
+      <section class="appearance-section">
+        <h3 class="section-label">Body</h3>
+
+        <div class="field-group">
+          <label>Height <span class="slider-val" id="height-val">170 cm</span></label>
+          <input type="range" id="char-height" min="130" max="230" value="170" class="slider" />
+          <div class="slider-labels"><span>130 cm</span><span>230 cm</span></div>
+        </div>
+        <div class="field-group">
+          <label>Build / Weight <span class="slider-val" id="weight-val">Medium</span></label>
+          <input type="range" id="char-weight" min="0" max="100" value="50" class="slider" />
+          <div class="slider-labels"><span>Very Lean</span><span>Very Heavy</span></div>
+        </div>
+      </section>
+
+      <!-- Skin Color -->
+      <section class="appearance-section">
+        <h3 class="section-label">Skin Tone</h3>
+        <div class="swatch-grid" id="skin-swatches">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="field-group field-hex">
+          <label for="skin-hex">Custom hex</label>
+          <div class="hex-row">
+            <div class="hex-preview" id="skin-hex-preview"></div>
+            <input type="color" id="skin-hex" value="#c68642" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Eye Color -->
+      <section class="appearance-section">
+        <h3 class="section-label">Eye Color</h3>
+        <div class="swatch-grid" id="eye-swatches">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Hair Color -->
+      <section class="appearance-section">
+        <h3 class="section-label">Hair Color</h3>
+        <div class="swatch-grid" id="hair-color-swatches">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Hair Style -->
+      <section class="appearance-section">
+        <h3 class="section-label">Hair Style</h3>
+        <div class="style-grid" id="hair-style-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+    </aside>
+
+    <!-- ══════ CENTER COLUMN: Trait Browser ══════ -->
+    <section id="col-traits" class="panel">
+      <div class="panel-header trait-header">
+        <h2>Traits</h2>
+        <div class="trait-controls">
+          <input type="text" id="trait-search" placeholder="Search traits…" />
+          <select id="trait-filter-cost">
+            <option value="all">All costs</option>
+            <option value="positive">Positive cost</option>
+            <option value="negative">Negative cost (flaws)</option>
+            <option value="zero">Zero cost</option>
+          </select>
+          <select id="trait-filter-cat">
+            <option value="all">All categories</option>
+          </select>
+          <label class="checkbox-label">
+            <input type="checkbox" id="trait-filter-selected" />
+            Selected only
+          </label>
+        </div>
+      </div>
+
+      <!-- Selected Traits Strip -->
+      <div id="selected-strip">
+        <div class="strip-label">Selected Traits</div>
+        <div id="selected-chips"></div>
+        <div id="strip-empty" class="strip-empty">No traits selected yet</div>
+      </div>
+
+      <!-- Trait Category Sections -->
+      <div id="trait-browser">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ══════ RIGHT COLUMN: Character Summary ══════ -->
+    <aside id="col-summary" class="panel">
+      <div class="panel-header">
+        <h2>Character Sheet</h2>
+      </div>
+
+      <!-- Portrait placeholder -->
+      <div id="char-portrait">
+        <div id="portrait-circle">
+          <div id="portrait-initials">?</div>
+        </div>
+        <div id="portrait-name-display">—</div>
+        <div id="portrait-subtitle-display"></div>
+      </div>
+
+      <!-- Warnings -->
+      <div id="warnings-area" class="warnings-area" style="display:none">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Narrative summary -->
+      <div class="summary-card">
+        <div class="summary-card-header">Narrative</div>
+        <p id="narrative-text" class="narrative-text">Fill out your character to see a summary appear here.</p>
+      </div>
+
+      <!-- Appearance summary -->
+      <div class="summary-card">
+        <div class="summary-card-header">Appearance</div>
+        <div id="appearance-summary" class="summary-list"></div>
+      </div>
+
+      <!-- Traits summary grouped by category -->
+      <div class="summary-card">
+        <div class="summary-card-header">Traits by Category</div>
+        <div id="traits-summary" class="summary-list"></div>
+      </div>
+
+      <!-- Export buttons -->
+      <div class="export-row">
+        <button class="btn-export" id="btn-copy">📋 Copy</button>
+        <button class="btn-export" id="btn-export-json">{ } JSON</button>
+        <button class="btn-export" id="btn-export-txt">📄 Text</button>
+      </div>
+
+      <div id="copy-toast" class="copy-toast">Copied!</div>
+    </aside>
+
+  </main>
+
+</div>
+
+<!-- Data + Logic -->
+<script src="traits.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
