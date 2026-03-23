@@ -795,7 +795,8 @@ const CK3_TRAITS = [
     "genetic": false,
     "physical": false,
     "opposites": [
-      "gluttonous"
+      "gluttonous",
+      "excessive"
     ],
     "compat": {
       "temperate": 15,
@@ -803,6 +804,7 @@ const CK3_TRAITS = [
       "content": 5,
       "chaste": 5,
       "gluttonous": -15,
+      "excessive": -15,
       "drunkard": -5,
       "greedy": -5,
       "lustful": -5,
@@ -1604,6 +1606,392 @@ const CK3_TRAITS = [
       "arbitrary": -5,
       "paranoid": -5,
       "wrathful": -5
+    }
+  },
+  {
+    "id": "selfless",
+    "label": "Selfless",
+    "category": "personality",
+    "cost": 20,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "self_serving"
+    ],
+    "compat": {
+      "selfless": 15,
+      "compassionate": 15,
+      "generous": 15,
+      "humble": 10,
+      "forgiving": 5,
+      "just": 5,
+      "self_serving": -30,
+      "greedy": -15,
+      "callous": -10,
+      "arrogant": -10
+    }
+  },
+  {
+    "id": "self_serving",
+    "label": "Self-serving",
+    "category": "personality",
+    "cost": -10,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "selfless"
+    ],
+    "compat": {
+      "self_serving": 5,
+      "greedy": 15,
+      "ambitious": 10,
+      "arrogant": 10,
+      "deceitful": 5,
+      "selfless": -30,
+      "compassionate": -20,
+      "generous": -20,
+      "just": -10,
+      "humble": -10
+    }
+  },
+  {
+    "id": "excessive",
+    "label": "Excessive",
+    "category": "personality",
+    "cost": -10,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "temperate"
+    ],
+    "compat": {
+      "gluttonous": 10,
+      "drunkard": 10,
+      "lustful": 5,
+      "lifestyle_reveler": 10,
+      "temperate": -30,
+      "chaste": -10,
+      "content": -5,
+      "calm": -5
+    }
+  },
+  {
+    "id": "perceptive",
+    "label": "Perceptive",
+    "category": "personality",
+    "cost": 30,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "oblivious"
+    ],
+    "compat": {
+      "perceptive": 15,
+      "curious": 10,
+      "pensive": 10,
+      "paranoid": 5,
+      "shrewd": 10,
+      "diligent": 5,
+      "oblivious": -30,
+      "trusting": -5
+    }
+  },
+  {
+    "id": "oblivious",
+    "label": "Oblivious",
+    "category": "personality",
+    "cost": -15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "perceptive"
+    ],
+    "compat": {
+      "trusting": 5,
+      "content": 5,
+      "perceptive": -30,
+      "paranoid": -15,
+      "curious": -10
+    }
+  },
+  {
+    "id": "stoic",
+    "label": "Stoic",
+    "category": "personality",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "expressive"
+    ],
+    "compat": {
+      "stoic": 15,
+      "calm": 15,
+      "patient": 10,
+      "cynical": 10,
+      "stubborn": 5,
+      "expressive": -30,
+      "zealous": -5,
+      "gregarious": -10
+    }
+  },
+  {
+    "id": "expressive",
+    "label": "Expressive",
+    "category": "personality",
+    "cost": 15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "stoic"
+    ],
+    "compat": {
+      "expressive": 10,
+      "gregarious": 15,
+      "compassionate": 10,
+      "charming": 10,
+      "stoic": -30,
+      "calm": -10,
+      "stubborn": -5
+    }
+  },
+  {
+    "id": "calculating",
+    "label": "Calculating",
+    "category": "personality",
+    "cost": 30,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "impulsive"
+    ],
+    "compat": {
+      "calculating": 15,
+      "patient": 15,
+      "shrewd": 15,
+      "cynical": 10,
+      "ambitious": 5,
+      "impulsive": -30,
+      "trusting": -10,
+      "honest": -5
+    }
+  },
+  {
+    "id": "impulsive",
+    "label": "Impulsive",
+    "category": "personality",
+    "cost": -5,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "calculating"
+    ],
+    "compat": {
+      "brave": 10,
+      "wrathful": 5,
+      "rowdy": 10,
+      "impatient": 5,
+      "calculating": -30,
+      "patient": -20,
+      "stubborn": -10
+    }
+  },
+  {
+    "id": "worldly",
+    "label": "Worldly",
+    "category": "personality",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "naive"
+    ],
+    "compat": {
+      "worldly": 15,
+      "curious": 15,
+      "gregarious": 10,
+      "cynical": 5,
+      "lifestyle_traveler": 15,
+      "naive": -30,
+      "trusting": -10
+    }
+  },
+  {
+    "id": "naive",
+    "label": "Naive",
+    "category": "personality",
+    "cost": -10,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "worldly"
+    ],
+    "compat": {
+      "trusting": 10,
+      "compassionate": 5,
+      "zealous": 5,
+      "worldly": -30,
+      "cynical": -15,
+      "curious": -5
+    }
+  },
+  {
+    "id": "fateful",
+    "label": "Fateful",
+    "category": "personality",
+    "cost": 15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "defiant"
+    ],
+    "compat": {
+      "fateful": 10,
+      "zealous": 15,
+      "content": 10,
+      "humble": 5,
+      "compassionate": 5,
+      "defiant": -30,
+      "ambitious": -10,
+      "stubborn": -5
+    }
+  },
+  {
+    "id": "defiant",
+    "label": "Defiant",
+    "category": "personality",
+    "cost": 20,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "fateful"
+    ],
+    "compat": {
+      "defiant": 10,
+      "brave": 10,
+      "stubborn": 15,
+      "ambitious": 10,
+      "wrathful": 5,
+      "fateful": -30,
+      "content": -15,
+      "humble": -5
+    }
+  },
+  {
+    "id": "oathbound",
+    "label": "Oathbound",
+    "category": "personality",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "oathbreaking"
+    ],
+    "compat": {
+      "oathbound": 20,
+      "honest": 20,
+      "just": 15,
+      "stubborn": 10,
+      "zealous": 10,
+      "humble": 5,
+      "oathbreaking": -30,
+      "deceitful": -20,
+      "ambitious": -5
+    }
+  },
+  {
+    "id": "oathbreaking",
+    "label": "Oathbreaking",
+    "category": "personality",
+    "cost": -15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "oathbound"
+    ],
+    "compat": {
+      "deceitful": 20,
+      "ambitious": 10,
+      "arrogant": 5,
+      "oathbound": -30,
+      "honest": -20,
+      "just": -20,
+      "zealous": -10
+    }
+  },
+  {
+    "id": "reverent",
+    "label": "Reverent",
+    "category": "personality",
+    "cost": 20,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "rude"
+    ],
+    "compat": {
+      "reverent": 15,
+      "zealous": 15,
+      "humble": 10,
+      "just": 5,
+      "compassionate": 5,
+      "rude": -30,
+      "arrogant": -10,
+      "arbitrary": -5
+    }
+  },
+  {
+    "id": "rude",
+    "label": "Rude",
+    "category": "personality",
+    "cost": -10,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [
+      "reverent"
+    ],
+    "compat": {
+      "honest": 10,
+      "wrathful": 5,
+      "arrogant": 5,
+      "reverent": -30,
+      "gregarious": -15,
+      "compassionate": -10,
+      "humble": -10
     }
   },
   {
@@ -2718,12 +3106,450 @@ const CK3_TRAITS = [
     "physical": false,
     "opposites": [],
     "compat": {}
+  },
+
+  // ── Magic: Gate Traits ────────────────────────────────────
+  {
+    "id": "magic_affinity",
+    "label": "Magic Affinity",
+    "category": "congenital",
+    "cost": 125,
+    "group": null,
+    "level": null,
+    "genetic": true,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "shrewd": 10,
+      "intellect_good_1": 5, "intellect_good_2": 10, "intellect_good_3": 15,
+      "lifestyle_mystic": 15, "witch": 15, "scholar": 10,
+      "talented_mage": 20
+    }
+  },
+  {
+    "id": "talented_mage",
+    "label": "Talented Mage",
+    "category": "fame",
+    "cost": 75,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 20,
+      "shrewd": 10,
+      "perceptive": 5,
+      "scholar": 10,
+      "lifestyle_mystic": 10
+    }
+  },
+
+  // ── Magic Elements: Base ──────────────────────────────────
+  {
+    "id": "elem_earth",
+    "label": "Earth",
+    "category": "magic_elements",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 5,
+      "elem_water": 10, "elem_magma": 10, "elem_nature": 10
+    }
+  },
+  {
+    "id": "elem_fire",
+    "label": "Fire",
+    "category": "magic_elements",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 5,
+      "elem_wind": 10, "elem_magma": 10, "elem_lightning": 10
+    }
+  },
+  {
+    "id": "elem_water",
+    "label": "Water",
+    "category": "magic_elements",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 5,
+      "elem_earth": 10, "elem_wind": 10, "elem_ice": 10, "elem_nature": 10
+    }
+  },
+  {
+    "id": "elem_wind",
+    "label": "Wind",
+    "category": "magic_elements",
+    "cost": 25,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 5,
+      "elem_fire": 10, "elem_water": 10, "elem_ice": 10, "elem_lightning": 10
+    }
+  },
+
+  // ── Magic Elements: Combination ───────────────────────────
+  {
+    "id": "elem_ice",
+    "label": "Ice",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 10,
+      "elem_water": 15, "elem_wind": 15
+    }
+  },
+  {
+    "id": "elem_magma",
+    "label": "Magma",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 10,
+      "elem_fire": 15, "elem_earth": 15
+    }
+  },
+  {
+    "id": "elem_lightning",
+    "label": "Lightning",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 10,
+      "elem_fire": 15, "elem_wind": 15
+    }
+  },
+  {
+    "id": "elem_nature",
+    "label": "Nature Element",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "magic_affinity": 5, "talented_mage": 10,
+      "elem_earth": 15, "elem_water": 15
+    }
+  },
+
+  // ── Magic Elements: Rare ──────────────────────────────────
+  {
+    "id": "elem_light",
+    "label": "Light",
+    "category": "magic_elements",
+    "cost": 100,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": ["elem_dark"],
+    "compat": {
+      "magic_affinity": 10,
+      "reverent": 10, "just": 5, "zealous": 5, "oathbound": 5
+    }
+  },
+  {
+    "id": "elem_dark",
+    "label": "Dark",
+    "category": "magic_elements",
+    "cost": 100,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": ["elem_light"],
+    "compat": {
+      "magic_affinity": 10,
+      "cynical": 5, "sadistic": 5, "witch": 10, "calculating": 5
+    }
   }
 ];
 
 // ============================================================
-// TRAIT_STATS — stat modifiers extracted from 00_traits.txt
-// Keys are trait ids; values are objects of stat deltas.
-// Only traits with non-zero stat effects are included.
+// TRAIT_STATS — stat modifiers for all three stat categories
+// Keys are trait ids. Values are objects of stat deltas covering:
+//   Education:    diplomacy, martial, stewardship, intrigue, learning, prowess
+//   Core Stats:   strength, constitution, intelligence, wisdom, charisma
+//   General Skills: athletics, acrobatics, intimidation, animal_handling, survival,
+//                   arcana, history, investigation, nature, religion,
+//                   insight, medicine, perception, sleight_of_hand, stealth,
+//                   deception, performance, persuasion
+// Only non-zero deltas are listed per trait.
 // ============================================================
-const TRAIT_STATS = {"education_intrigue_1":{"intrigue":2},"education_intrigue_2":{"intrigue":4},"education_intrigue_3":{"intrigue":6},"education_intrigue_4":{"intrigue":8},"education_intrigue_5":{"intrigue":10,"diplomacy":3},"education_diplomacy_1":{"diplomacy":2},"education_diplomacy_2":{"diplomacy":4},"education_diplomacy_3":{"diplomacy":6},"education_diplomacy_4":{"diplomacy":8},"education_diplomacy_5":{"martial":3,"diplomacy":10},"education_stewardship_1":{"stewardship":2},"education_stewardship_2":{"stewardship":4},"education_stewardship_3":{"stewardship":6},"education_stewardship_4":{"stewardship":8},"education_stewardship_5":{"stewardship":10,"learning":3},"education_martial_1":{"martial":2},"education_martial_2":{"martial":4},"education_martial_3":{"martial":6},"education_martial_4":{"martial":8},"education_martial_5":{"stewardship":3,"martial":10},"education_learning_1":{"learning":2},"education_learning_2":{"learning":4},"education_learning_3":{"learning":6},"education_learning_4":{"learning":8},"education_learning_5":{"intrigue":3,"learning":10},"diplomat":{"diplomacy":3},"august":{"martial":1,"diplomacy":2},"lifestyle_reveler":{"intrigue":1},"lifestyle_blademaster":{"prowess":3},"lifestyle_hunter":{"prowess":1},"strategist":{"martial":3,"diplomacy":1},"overseer":{"stewardship":2,"martial":2},"gallant":{"martial":2,"prowess":4},"architect":{"stewardship":2},"administrator":{"stewardship":3,"diplomacy":1},"avaricious":{"stewardship":2},"schemer":{"intrigue":5},"seducer":{"intrigue":3},"torturer":{"prowess":4},"scholar":{"learning":3},"theologian":{"learning":3},"lifestyle_mystic":{"learning":1},"lifestyle_physician":{"learning":1},"lifestyle_herbalist":{"intrigue":2,"learning":2},"lifestyle_gardener":{"stewardship":2},"lustful":{"intrigue":2},"chaste":{"learning":2},"gluttonous":{"stewardship":-2},"temperate":{"stewardship":2},"greedy":{"diplomacy":-2},"generous":{"diplomacy":3},"lazy":{"stewardship":-1,"martial":-1,"intrigue":-1,"diplomacy":-1,"learning":-1},"diligent":{"stewardship":3,"diplomacy":2,"learning":3},"wrathful":{"martial":3,"intrigue":-1,"diplomacy":-1},"calm":{"intrigue":1,"diplomacy":1},"patient":{"learning":2},"impatient":{"learning":-2},"deceitful":{"intrigue":4,"diplomacy":-2},"honest":{"intrigue":-4,"diplomacy":2},"craven":{"martial":-2,"intrigue":2,"prowess":-3},"brave":{"martial":2,"prowess":3},"shy":{"diplomacy":-2,"learning":1},"gregarious":{"diplomacy":2},"ambitious":{"stewardship":1,"martial":1,"intrigue":1,"diplomacy":1,"learning":1,"prowess":1},"content":{"intrigue":-1,"learning":2},"arbitrary":{"stewardship":-2,"intrigue":3,"learning":-1},"just":{"stewardship":2,"intrigue":-3,"learning":1},"cynical":{"intrigue":2,"learning":2},"zealous":{"martial":2},"paranoid":{"intrigue":3,"diplomacy":-1},"trusting":{"intrigue":-2,"diplomacy":2},"compassionate":{"intrigue":-2,"diplomacy":2},"callous":{"intrigue":2,"diplomacy":-2},"sadistic":{"intrigue":2,"prowess":4},"stubborn":{"stewardship":3},"fickle":{"stewardship":-2,"intrigue":1,"diplomacy":2},"eccentric":{"diplomacy":-2,"learning":2},"vengeful":{"intrigue":2,"diplomacy":-2,"prowess":2},"forgiving":{"intrigue":-2,"diplomacy":2,"learning":1},"rowdy":{"martial":1,"intrigue":1},"charming":{"intrigue":1,"diplomacy":1},"curious":{"diplomacy":1,"learning":1},"pensive":{"stewardship":1,"learning":1},"bossy":{"stewardship":1,"martial":1},"drunkard":{"stewardship":-2,"prowess":-2},"hashishiyah":{"stewardship":-2,"learning":-2},"rakish":{"intrigue":1,"diplomacy":-1},"reclusive":{"stewardship":-1,"diplomacy":-2},"irritable":{"martial":-1,"diplomacy":-2,"prowess":2},"beardless_eunuch":{"prowess":-4},"blind":{"stewardship":-2,"martial":-6,"intrigue":-2,"prowess":-10},"beauty_bad_1":{"diplomacy":-1},"beauty_bad_2":{"diplomacy":-2},"beauty_bad_3":{"diplomacy":-3},"beauty_good_1":{"diplomacy":1},"beauty_good_2":{"diplomacy":2},"beauty_good_3":{"diplomacy":3},"intellect_bad_1":{"stewardship":-2,"martial":-2,"intrigue":-2,"diplomacy":-2,"learning":-2},"intellect_bad_2":{"stewardship":-4,"martial":-4,"intrigue":-4,"diplomacy":-4,"learning":-4},"intellect_bad_3":{"stewardship":-8,"martial":-8,"intrigue":-8,"diplomacy":-8,"learning":-8},"intellect_good_1":{"stewardship":1,"martial":1,"intrigue":1,"diplomacy":1,"learning":1},"intellect_good_2":{"stewardship":3,"martial":3,"intrigue":3,"diplomacy":3,"learning":3},"intellect_good_3":{"stewardship":5,"martial":5,"intrigue":5,"diplomacy":5,"learning":5},"physique_bad_1":{"prowess":-2},"physique_bad_2":{"prowess":-4},"physique_bad_3":{"prowess":-6},"physique_good_1":{"prowess":2},"physique_good_2":{"prowess":4},"physique_good_3":{"prowess":8},"strong":{"prowess":4},"shrewd":{"stewardship":2,"martial":2,"intrigue":2,"diplomacy":2,"learning":2},"clubfooted":{"prowess":-2},"hunchbacked":{"prowess":-2},"lisping":{"diplomacy":-2},"stuttering":{"diplomacy":-2},"dwarf":{"prowess":-4},"giant":{"prowess":6},"inbred":{"stewardship":-5,"martial":-5,"intrigue":-5,"diplomacy":-5,"learning":-5,"prowess":-2},"weak":{"prowess":-2},"dull":{"stewardship":-2,"martial":-2,"intrigue":-2,"diplomacy":-2,"learning":-2},"spindly":{"prowess":-1},"witch":{"intrigue":1,"diplomacy":-1,"learning":1},"lifestyle_traveler":{"diplomacy":1}};
+const TRAIT_STATS = {
+  // ── Education tiers (Education stats only) ─────────────────
+  education_intrigue_1: { intrigue: 2 },
+  education_intrigue_2: { intrigue: 4 },
+  education_intrigue_3: { intrigue: 6 },
+  education_intrigue_4: { intrigue: 8 },
+  education_intrigue_5: { intrigue: 10, diplomacy: 3 },
+
+  education_diplomacy_1: { diplomacy: 2 },
+  education_diplomacy_2: { diplomacy: 4 },
+  education_diplomacy_3: { diplomacy: 6 },
+  education_diplomacy_4: { diplomacy: 8 },
+  education_diplomacy_5: { martial: 3, diplomacy: 10 },
+
+  education_stewardship_1: { stewardship: 2 },
+  education_stewardship_2: { stewardship: 4 },
+  education_stewardship_3: { stewardship: 6 },
+  education_stewardship_4: { stewardship: 8 },
+  education_stewardship_5: { stewardship: 10, learning: 3 },
+
+  education_martial_1: { martial: 2 },
+  education_martial_2: { martial: 4 },
+  education_martial_3: { martial: 6 },
+  education_martial_4: { martial: 8 },
+  education_martial_5: { stewardship: 3, martial: 10 },
+
+  education_learning_1: { learning: 2 },
+  education_learning_2: { learning: 4 },
+  education_learning_3: { learning: 6 },
+  education_learning_4: { learning: 8 },
+  education_learning_5: { intrigue: 3, learning: 10 },
+
+  // ── Lifestyle / Role traits ─────────────────────────────────
+  diplomat:           { diplomacy: 3, charisma: 1, persuasion: 3 },
+  august:             { martial: 1, diplomacy: 2, charisma: 2, intimidation: 1 },
+  family_first:       { diplomacy: 1, insight: 1, persuasion: 1 },
+  lifestyle_reveler:  { intrigue: 1, charisma: 1, performance: 2 },
+  lifestyle_blademaster: { prowess: 3, strength: 2, dexterity: 2, athletics: 3 },
+  lifestyle_hunter:   { prowess: 1, dexterity: 1, survival: 2, perception: 2, stealth: 1, animal_handling: 1 },
+  strategist:         { martial: 3, diplomacy: 1, intelligence: 1, investigation: 1 },
+  overseer:           { stewardship: 2, martial: 2, wisdom: 1, perception: 2 },
+  gallant:            { martial: 2, prowess: 4, strength: 1, dexterity: 1, athletics: 2 },
+  architect:          { stewardship: 2, intelligence: 1, investigation: 1, history: 1 },
+  administrator:      { stewardship: 3, diplomacy: 1, intelligence: 1 },
+  avaricious:         { stewardship: 2, investigation: 1 },
+  schemer:            { intrigue: 5, intelligence: 1, dexterity: 1, deception: 2, insight: 2 },
+  seducer:            { intrigue: 3, charisma: 2, dexterity: 1, persuasion: 2, deception: 1 },
+  torturer:           { prowess: 4, intimidation: 3 },
+  whole_of_body:      { constitution: 2, strength: 1, dexterity: 1, athletics: 1, survival: 1 },
+  scholar:            { learning: 3, intelligence: 2, arcana: 1, history: 2, investigation: 2 },
+  theologian:         { learning: 3, wisdom: 1, religion: 3, history: 1 },
+  lifestyle_mystic:   { learning: 1, intelligence: 1, arcana: 3, religion: 2 },
+  lifestyle_physician:{ learning: 1, intelligence: 1, medicine: 3 },
+  lifestyle_herbalist:{ intrigue: 2, learning: 2, medicine: 2, nature: 2, survival: 1 },
+  lifestyle_gardener: { stewardship: 2, nature: 2, animal_handling: 1 },
+  lifestyle_traveler: { diplomacy: 1, survival: 2, perception: 2, nature: 1 },
+  witch:              { intrigue: 1, diplomacy: -1, learning: 1, intelligence: 1, arcana: 3, deception: 1 },
+  governor:           { stewardship: 2, diplomacy: 2, charisma: 1, persuasion: 2, intimidation: 1, insight: 1 },
+
+  // ── Personality traits ─────────────────────────────────────
+  lustful:      { intrigue: 2, charisma: 1, deception: 1 },
+  chaste:       { learning: 2, wisdom: 1 },
+  gluttonous:   { stewardship: -2, constitution: -1, survival: -1 },
+  temperate:    { stewardship: 2, constitution: 1, wisdom: 1 },
+  greedy:       { diplomacy: -2, investigation: 1 },
+  generous:     { diplomacy: 3, charisma: 1, persuasion: 1 },
+  lazy: {
+    stewardship: -1, martial: -1, intrigue: -1, diplomacy: -1, learning: -1,
+    constitution: -1, athletics: -1,
+  },
+  diligent: {
+    stewardship: 3, diplomacy: 2, learning: 3,
+    intelligence: 1, wisdom: 1,
+  },
+  wrathful:     { martial: 3, intrigue: -1, diplomacy: -1, strength: 1, intimidation: 2 },
+  calm:         { intrigue: 1, diplomacy: 1, wisdom: 2, insight: 1 },
+  patient:      { learning: 2, wisdom: 2, insight: 2 },
+  impatient:    { learning: -2, wisdom: -1 },
+  deceitful:    { intrigue: 4, diplomacy: -2, deception: 3, insight: 1 },
+  honest:       { intrigue: -4, diplomacy: 2, persuasion: 1 },
+  craven:       { martial: -2, intrigue: 2, prowess: -3, strength: -1, dexterity: -1, constitution: -1 },
+  brave:        { martial: 2, prowess: 3, strength: 1, dexterity: 1, constitution: 1, athletics: 1, intimidation: 1 },
+  shy:          { diplomacy: -2, learning: 1, charisma: -1, persuasion: -1 },
+  gregarious:   { diplomacy: 2, charisma: 1, performance: 1, persuasion: 1 },
+  ambitious: {
+    stewardship: 1, martial: 1, intrigue: 1, diplomacy: 1, learning: 1, prowess: 1,
+    charisma: 1, persuasion: 1,
+  },
+  content:      { intrigue: -1, learning: 2, wisdom: 1 },
+  arbitrary:    { stewardship: -2, intrigue: 3, learning: -1, wisdom: -1 },
+  just:         { stewardship: 2, intrigue: -3, learning: 1, wisdom: 1, insight: 1 },
+  cynical:      { intrigue: 2, learning: 2, insight: 2, deception: 1 },
+  zealous:      { martial: 2, wisdom: 1, religion: 3, persuasion: 1 },
+  paranoid:     { intrigue: 3, diplomacy: -1, perception: 2, insight: 1 },
+  trusting:     { intrigue: -2, diplomacy: 2, insight: -1 },
+  compassionate:{ intrigue: -2, diplomacy: 2, insight: 2, medicine: 1, animal_handling: 1 },
+  callous:      { intrigue: 2, diplomacy: -2, insight: -1 },
+  sadistic:     { intrigue: 2, prowess: 4, intimidation: 2 },
+  stubborn:     { stewardship: 3, constitution: 1 },
+  fickle:       { stewardship: -2, intrigue: 1, diplomacy: 2, wisdom: -1, charisma: -1 },
+  eccentric:    { diplomacy: -2, learning: 2, intelligence: 1 },
+  vengeful:     { intrigue: 2, diplomacy: -2, prowess: 2, intimidation: 1, insight: 1 },
+  forgiving:    { intrigue: -2, diplomacy: 2, learning: 1, charisma: 1, persuasion: 1 },
+  rowdy:        { martial: 1, intrigue: 1, constitution: 1, intimidation: 1, performance: 1 },
+  charming:     { intrigue: 1, diplomacy: 1, charisma: 2, persuasion: 2, performance: 1 },
+  curious:      { diplomacy: 1, learning: 1, intelligence: 1, investigation: 2, arcana: 1 },
+  pensive:      { stewardship: 1, learning: 1, wisdom: 1, insight: 2, perception: 1 },
+  bossy:        { stewardship: 1, martial: 1, intimidation: 1, charisma: -1 },
+  selfless:     { diplomacy: 2, charisma: 1, insight: 1, persuasion: 1 },
+  self_serving: { intrigue: 2, stewardship: 1, deception: 1 },
+  excessive:    { stewardship: -2, constitution: -1, wisdom: -1 },
+  perceptive:   { intrigue: 1, wisdom: 1, perception: 3, insight: 2 },
+  oblivious:    { wisdom: -1, perception: -2, insight: -2 },
+  stoic:        { constitution: 1, wisdom: 1, insight: 1, intimidation: 1 },
+  expressive:   { diplomacy: 1, charisma: 2, performance: 2, persuasion: 1 },
+  calculating:  { intrigue: 2, intelligence: 1, investigation: 1, insight: 1 },
+  impulsive:    { intrigue: -1, wisdom: -1, dexterity: 1, athletics: 1 },
+  worldly:      { diplomacy: 2, intrigue: 1, intelligence: 1, history: 1, persuasion: 1 },
+  naive:        { intrigue: -2, insight: -1, deception: -2 },
+  fateful:      { wisdom: 1, religion: 1, insight: 1 },
+  defiant:      { intrigue: 1, constitution: 1, strength: 1, intimidation: 1 },
+  oathbound:    { stewardship: 2, diplomacy: 1, wisdom: 1, persuasion: 1 },
+  oathbreaking: { intrigue: 2, diplomacy: -2, deception: 2 },
+  reverent:     { diplomacy: 1, wisdom: 1, religion: 2, insight: 1 },
+  rude:         { diplomacy: -2, charisma: -1, intimidation: 1 },
+
+  // ── Vices / lifestyle flaws ────────────────────────────────
+  drunkard:     { stewardship: -2, prowess: -2, constitution: -1, charisma: -1 },
+  hashishiyah:  { stewardship: -2, learning: -2, intelligence: -1 },
+  rakish:       { intrigue: 1, diplomacy: -1, charisma: 1, dexterity: 1, deception: 1, performance: 1 },
+  reclusive:    { stewardship: -1, diplomacy: -2, charisma: -2, stealth: 1 },
+  irritable:    { martial: -1, diplomacy: -2, prowess: 2, charisma: -1, persuasion: -1 },
+
+  // ── Health / congenital ────────────────────────────────────
+  scarred:        { intimidation: 1, prowess: 1 },
+  beardless_eunuch: { prowess: -4, charisma: -1 },
+  blind: {
+    stewardship: -2, martial: -6, intrigue: -2, prowess: -10,
+    dexterity: -1, perception: -4, athletics: -2,
+  },
+  pure_blooded:   { constitution: 1 },
+  fecund:         { constitution: 1 },
+  wheezing:       { constitution: -2, dexterity: -1, athletics: -2, survival: -1 },
+  bleeder:        { constitution: -1 },
+  albino:         { perception: 1 },
+
+  beauty_bad_1:   { diplomacy: -1, charisma: -1 },
+  beauty_bad_2:   { diplomacy: -2, charisma: -2 },
+  beauty_bad_3:   { diplomacy: -3, charisma: -3 },
+  beauty_good_1:  { diplomacy: 1,  charisma: 1 },
+  beauty_good_2:  { diplomacy: 2,  charisma: 2 },
+  beauty_good_3:  { diplomacy: 3,  charisma: 3 },
+
+  intellect_bad_1: {
+    stewardship: -2, martial: -2, intrigue: -2, diplomacy: -2, learning: -2,
+    intelligence: -2, wisdom: -1,
+  },
+  intellect_bad_2: {
+    stewardship: -4, martial: -4, intrigue: -4, diplomacy: -4, learning: -4,
+    intelligence: -4, wisdom: -2,
+  },
+  intellect_bad_3: {
+    stewardship: -8, martial: -8, intrigue: -8, diplomacy: -8, learning: -8,
+    intelligence: -6, wisdom: -3,
+  },
+  intellect_good_1: {
+    stewardship: 1, martial: 1, intrigue: 1, diplomacy: 1, learning: 1,
+    intelligence: 2, wisdom: 1,
+  },
+  intellect_good_2: {
+    stewardship: 3, martial: 3, intrigue: 3, diplomacy: 3, learning: 3,
+    intelligence: 4, wisdom: 2,
+  },
+  intellect_good_3: {
+    stewardship: 5, martial: 5, intrigue: 5, diplomacy: 5, learning: 5,
+    intelligence: 6, wisdom: 3,
+  },
+
+  physique_bad_1: { prowess: -2, strength: -1, dexterity: -1, constitution: -1, athletics: -1 },
+  physique_bad_2: { prowess: -4, strength: -2, dexterity: -2, constitution: -2, athletics: -2 },
+  physique_bad_3: { prowess: -6, strength: -3, dexterity: -3, constitution: -3, athletics: -3 },
+  physique_good_1:{ prowess: 2,  strength: 1,  dexterity: 1,  constitution: 1,  athletics: 1  },
+  physique_good_2:{ prowess: 4,  strength: 2,  dexterity: 2,  constitution: 2,  athletics: 2  },
+  physique_good_3:{ prowess: 8,  strength: 4,  dexterity: 3,  constitution: 3,  athletics: 4  },
+
+  strong:     { prowess: 4, strength: 3, athletics: 2, intimidation: 1 },
+  shrewd: {
+    stewardship: 2, martial: 2, intrigue: 2, diplomacy: 2, learning: 2,
+    intelligence: 3, wisdom: 2, investigation: 2, insight: 2,
+  },
+  clubfooted: { prowess: -2, dexterity: -3, athletics: -2, acrobatics: -2, stealth: -2 },
+  hunchbacked:{ prowess: -2, dexterity: -1, athletics: -1, stealth: -1 },
+  lisping:    { diplomacy: -2, charisma: -1, performance: -1, persuasion: -1 },
+  stuttering: { diplomacy: -2, charisma: -1, performance: -1 },
+  dwarf:      { prowess: -4, strength: -1, dexterity: -1, constitution: 1, stealth: 1 },
+  giant:      { prowess: 6,  strength: 3,  dexterity: -1, athletics: 2,  intimidation: 2 },
+  inbred: {
+    stewardship: -5, martial: -5, intrigue: -5, diplomacy: -5, learning: -5, prowess: -2,
+    intelligence: -2, wisdom: -2, constitution: -1,
+  },
+  weak:       { prowess: -2, strength: -2, constitution: -1, athletics: -1 },
+  dull: {
+    stewardship: -2, martial: -2, intrigue: -2, diplomacy: -2, learning: -2,
+    intelligence: -2,
+  },
+  spindly:    { prowess: -1, strength: -1, dexterity: 1, constitution: -1 },
+
+  // ── Commander traits ────────────────────────────────────────
+  logistician:          { stewardship: 2, intelligence: 1, investigation: 1 },
+  military_engineer:    { stewardship: 1, martial: 1, intelligence: 2, investigation: 1 },
+  aggressive_attacker:  { martial: 2, prowess: 2, strength: 1, dexterity: 1, athletics: 1 },
+  unyielding_defender:  { martial: 2, constitution: 2, strength: 1 },
+  forder:               { martial: 1, athletics: 1, survival: 1 },
+  flexible_leader:      { martial: 1, diplomacy: 1, wisdom: 1, insight: 1, charisma: 1 },
+  desert_warrior:       { martial: 1, prowess: 1, survival: 3, perception: 1 },
+  jungle_stalker:       { martial: 1, prowess: 1, dexterity: 2, stealth: 3, survival: 2, perception: 1 },
+  reaver:               { martial: 2, prowess: 2, strength: 1, intimidation: 2, athletics: 1 },
+  holy_warrior:         { martial: 2, prowess: 1, strength: 1, religion: 2, intimidation: 1 },
+  open_terrain_expert:  { martial: 1, dexterity: 1, athletics: 1, perception: 1 },
+  rough_terrain_expert: { martial: 1, survival: 2, athletics: 1 },
+  forest_fighter:       { martial: 1, dexterity: 1, stealth: 2, survival: 1, nature: 1 },
+  cautious_leader:      { martial: 1, diplomacy: 1, wisdom: 1, insight: 2 },
+  organizer:            { stewardship: 1, martial: 1, intelligence: 1, insight: 1 },
+
+  // ── Magic: Gate Traits ────────────────────────────────────
+  magic_affinity: { learning: 2, arcana: 3, intelligence: 1, wisdom: 1 },
+  talented_mage:  { learning: 2, arcana: 3, intelligence: 2, wisdom: 1 },
+
+  // ── Magic Elements ────────────────────────────────────────
+  elem_earth:     { arcana: 2, nature: 2, constitution: 1 },
+  elem_fire:      { arcana: 2, intimidation: 1, athletics: 1 },
+  elem_water:     { arcana: 2, medicine: 1, wisdom: 1 },
+  elem_wind:      { arcana: 2, acrobatics: 1, dexterity: 1 },
+  elem_ice:       { arcana: 3, nature: 1, constitution: 1, dexterity: 1 },
+  elem_magma:     { arcana: 3, intimidation: 2, strength: 1 },
+  elem_lightning: { arcana: 3, dexterity: 2, intimidation: 1 },
+  elem_nature:    { arcana: 3, nature: 2, medicine: 1, wisdom: 1 },
+  elem_light:     { arcana: 4, religion: 2, wisdom: 2, charisma: 1 },
+  elem_dark:      { arcana: 4, intrigue: 2, intimidation: 2, stealth: 1 },
+};

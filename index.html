@@ -18,18 +18,18 @@
     <div class="header-inner">
       <div class="header-title">
         <h1>Character <span class="accent">Codex</span></h1>
-        <p class="header-sub">CK3-Inspired Book Character Builder</p>
+        <p class="header-sub">Book Character Builder</p>
       </div>
       <div class="point-budget-display">
         <div class="budget-ring" id="budget-ring">
           <div class="budget-inner">
-            <span id="points-remaining" class="points-number">400</span>
+            <span id="points-remaining" class="points-number">600</span>
             <span class="points-label">pts left</span>
           </div>
         </div>
         <div class="budget-meta">
           <div class="budget-line"><span id="points-spent">0</span> spent</div>
-          <div class="budget-line budget-total">of <span id="points-total">400</span> total</div>
+          <div class="budget-line budget-total">of <span id="points-total">600</span> total</div>
         </div>
       </div>
       <div class="header-actions">
@@ -85,6 +85,16 @@
         <div class="field-group" id="pronouns-custom-wrap" style="display:none">
           <label for="char-pronouns-custom">Custom pronouns</label>
           <input type="text" id="char-pronouns-custom" placeholder="e.g. xe/xem" />
+        </div>
+        <div class="field-group">
+          <label>Race</label>
+          <div class="race-selector" id="race-selector">
+            <button class="race-btn selected" data-race="human">Human</button>
+            <button class="race-btn" data-race="elf">Elf</button>
+            <button class="race-btn" data-race="dwarf">Dwarf</button>
+            <button class="race-btn" data-race="half_elf">Half-Elf</button>
+            <button class="race-btn" data-race="half_dwarf">Half-Dwarf</button>
+          </div>
         </div>
       </section>
 
@@ -181,61 +191,69 @@
 
     <!-- ══════ RIGHT COLUMN: Character Summary ══════ -->
     <aside id="col-summary" class="panel">
-      <div class="panel-header">
-        <h2>Character Sheet</h2>
-      </div>
+      <div class="sheet-layout">
 
-      <!-- Portrait placeholder -->
-      <div id="char-portrait">
-        <div id="portrait-circle">
-          <div id="portrait-initials">?</div>
+        <!-- ── Left column: title / portrait / appearance ── -->
+        <div class="sheet-col-left">
+          <div class="panel-header sheet-panel-header">
+            <h2>Character Sheet</h2>
+          </div>
+
+          <div id="char-portrait">
+            <div id="portrait-circle">
+              <div id="portrait-initials">?</div>
+            </div>
+            <div id="portrait-name-display">—</div>
+            <div id="portrait-subtitle-display"></div>
+          </div>
+
+          <div id="warnings-area" class="warnings-area" style="display:none">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div class="summary-card">
+            <div class="summary-card-header">Appearance</div>
+            <div id="appearance-summary" class="summary-list"></div>
+          </div>
         </div>
-        <div id="portrait-name-display">—</div>
-        <div id="portrait-subtitle-display"></div>
-      </div>
 
-      <!-- Warnings -->
-      <div id="warnings-area" class="warnings-area" style="display:none">
-        <!-- Rendered by JS -->
-      </div>
+        <!-- ── Right column: narrative / traits by category ── -->
+        <div class="sheet-col-right">
+          <div class="summary-card sheet-narrative-card">
+            <div class="summary-card-header">Narrative</div>
+            <p id="narrative-text" class="narrative-text">Fill out your character to see a summary appear here.</p>
+          </div>
 
-      <!-- Narrative summary -->
-      <div class="summary-card">
-        <div class="summary-card-header">Narrative</div>
-        <p id="narrative-text" class="narrative-text">Fill out your character to see a summary appear here.</p>
-      </div>
+          <div class="summary-card">
+            <div class="summary-card-header">Traits by Category</div>
+            <div id="traits-summary" class="summary-list sheet-traits-list"></div>
+          </div>
+        </div>
 
-      <!-- Appearance summary -->
-      <div class="summary-card">
-        <div class="summary-card-header">Appearance</div>
-        <div id="appearance-summary" class="summary-list"></div>
-      </div>
+        <!-- ── Bottom: stat totals spanning full width ── -->
+        <div class="sheet-bottom">
+          <div class="summary-card sheet-stats-card">
+            <div class="summary-card-header">Stat Totals</div>
+            <div id="stat-totals" class="stat-totals-grid"></div>
+          </div>
 
-      <!-- Traits summary grouped by category -->
-      <div class="summary-card">
-        <div class="summary-card-header">Traits by Category</div>
-        <div id="traits-summary" class="summary-list"></div>
-      </div>
+          <div class="export-row">
+            <button class="btn-export" id="btn-copy">Copy</button>
+            <button class="btn-export" id="btn-export-json">{ } JSON</button>
+            <button class="btn-export" id="btn-export-txt">Text</button>
+          </div>
+        </div>
 
-      <!-- Stat Totals -->
-      <div class="summary-card">
-        <div class="summary-card-header">Stat Totals</div>
-        <div id="stat-totals" class="stat-totals-grid"></div>
       </div>
-
-      <!-- Export buttons -->
-      <div class="export-row">
-        <button class="btn-export" id="btn-copy">Copy</button>
-        <button class="btn-export" id="btn-export-json">{ } JSON</button>
-        <button class="btn-export" id="btn-export-txt">Text</button>
-      </div>
-
       <div id="copy-toast" class="copy-toast">Copied!</div>
     </aside>
 
   </main>
 
 </div>
+
+<!-- Trait hover tooltip (populated by JS) -->
+<div id="trait-tooltip" class="trait-tooltip" aria-hidden="true"></div>
 
 <!-- Data + Logic -->
 <script src="traits.js"></script>
