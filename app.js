@@ -1764,11 +1764,178 @@ function copyToClipboard() {
   });
 }
 
-function showToast(msg) {
+function showToast(msg, type = 'success') {
   const toast = document.getElementById('copy-toast');
   toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2000);
+  toast.className = 'copy-toast show' + (type === 'error' ? ' error' : '');
+  setTimeout(() => { toast.classList.remove('show', 'error'); }, type === 'error' ? 4000 : 2000);
+}
+
+// ── FILE LOAD ─────────────────────────────────────────────────
+function loadFromFile() {
+  const input = document.getElementById('file-load-input');
+  input.value = '';
+  input.click();
+}
+
+function handleFileLoad(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (ext !== 'json' && ext !== 'txt') {
+    showToast('Invalid file type. Use a .json or .txt export.', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onerror = () => showToast('Could not read the file.', 'error');
+  reader.onload = evt => {
+    if (ext === 'json') loadFromJSON(evt.target.result);
+    else                loadFromTxt(evt.target.result);
+  };
+  reader.readAsText(file, 'utf-8');
+}
+
+function loadFromJSON(content) {
+  let data;
+  try { data = JSON.parse(content); }
+  catch { showToast('File is not valid JSON.', 'error'); return; }
+
+  if (!data || typeof data !== 'object' || !data.character || data.character.version !== 1) {
+    showToast('Not a valid Character Codex file.', 'error');
+    return;
+  }
+
+  applySaveData(data.character);
+  renderSkinSwatches();
+  renderEyeSwatches();
+  renderHairColorSwatches();
+  renderHairStyleGrid();
+  renderAll();
+  showToast('Character loaded!');
+}
+
+function loadFromTxt(content) {
+  const lines = content.split('\n').map(l => l.trimEnd());
+
+  // Validate it's a codex export
+  const hasHeader = lines.some(l => l.startsWith('═══'));
+  const hasCharLine = lines.some(l => l.startsWith('CHARACTER:'));
+  if (!hasHeader || !hasCharLine) {
+    showToast('Not a valid Character Codex file.', 'error');
+    return;
+  }
+
+  // Extract a value after "Key: value" (case-insensitive prefix match)
+  function extract(prefix) {
+    const lp = prefix.toLowerCase();
+    for (const line of lines) {
+      const t = line.trim();
+      if (t.toLowerCase().startsWith(lp)) {
+        const ci = t.indexOf(':');
+        if (ci !== -1) return t.slice(ci + 1).trim();
+      }
+    }
+    return null;
+  }
+
+  // Build reverse-lookup maps
+  const raceByLabel = {};
+  for (const [id, label] of Object.entries(RACE_LABELS)) raceByLabel[label.toLowerCase()] = id;
+
+  const skinByLabel = {};
+  for (const s of SKIN_TONES) skinByLabel[s.label.toLowerCase()] = s.hex;
+
+  const weightByLabel = {};
+  for (const [lo, hi, label] of WEIGHT_LABELS) weightByLabel[label.toLowerCase()] = Math.round((lo + hi) / 2);
+
+  const traitByLabel = {};
+  for (const t of CK3_TRAITS) traitByLabel[t.label.toLowerCase()] = t.id;
+
+  // Identity
+  state.name        = extract('name')        || '';
+  state.nickname    = extract('nickname')    || '';
+  state.age         = extract('age')         || '';
+  state.pronouns    = extract('pronouns')    || '';
+  state.orientation = extract('orientation') || '';
+  state.race        = raceByLabel[(extract('race') || '').toLowerCase()] || 'human';
+
+  // Appearance — height
+  const heightRaw = extract('height');
+  if (heightRaw) {
+    const m = heightRaw.match(/(\d+)\s*cm/);
+    if (m) state.height = parseInt(m[1], 10);
+  }
+
+  // Build/weight
+  const buildRaw = extract('build');
+  if (buildRaw) {
+    const wv = weightByLabel[buildRaw.toLowerCase()];
+    if (wv !== undefined) state.weight = wv;
+  }
+
+  // Skin
+  const skinRaw = extract('skin');
+  state.skinTone = skinRaw ? (skinByLabel[skinRaw.toLowerCase()] || null) : null;
+  state.skinHex  = state.skinTone || '#c68642';
+
+  // Eyes
+  state.eyeColor = extract('eyes') || null;
+
+  // Hair — "Color, Style"
+  const hairRaw = extract('hair');
+  if (hairRaw) {
+    const parts = hairRaw.split(',').map(p => p.trim());
+    state.hairColor = parts[0] || null;
+    state.hairStyle = parts[1] || null;
+  } else {
+    state.hairColor = null;
+    state.hairStyle = null;
+  }
+
+  // Traits — match indented "Label (x pts)" lines between category headers
+  state.selectedTraits.clear();
+  let inTraits = false;
+  for (const line of lines) {
+    const t = line.trim();
+    if (t.startsWith('── TRAITS')) { inTraits = true; continue; }
+    if (t.startsWith('── STATS'))  { inTraits = false; continue; }
+    if (!inTraits) continue;
+    if (t.startsWith('[') && t.endsWith(']')) continue; // category header
+    if (t.startsWith('Points used:')) continue;
+    if (!t) continue;
+    // "Brave (Free pts)" or "Ambitious (+10 pts)"
+    const m = t.match(/^(.+?)\s*\([^)]+pts\)\s*$/);
+    if (m) {
+      const id = traitByLabel[m[1].trim().toLowerCase()];
+      if (id) state.selectedTraits.add(id);
+    }
+  }
+
+  // Sync DOM
+  document.getElementById('char-name').value        = state.name;
+  document.getElementById('char-nickname').value    = state.nickname;
+  document.getElementById('char-age').value         = state.age;
+  document.getElementById('char-pronouns').value    = state.pronouns;
+  document.getElementById('char-orientation').value = state.orientation;
+  document.querySelectorAll('.race-btn').forEach(b =>
+    b.classList.toggle('selected', b.dataset.race === state.race));
+  document.getElementById('char-height').value      = state.height;
+  document.getElementById('char-weight').value      = state.weight;
+  document.getElementById('height-val').textContent = `${state.height} cm`;
+  document.getElementById('weight-val').textContent = getWeightLabel(state.weight);
+  document.getElementById('skin-hex').value = state.skinHex;
+  document.getElementById('skin-hex-preview').style.background = state.skinHex;
+  const pwrap = document.getElementById('pronouns-custom-wrap');
+  if (pwrap) pwrap.style.display = 'none';
+
+  renderSkinSwatches();
+  renderEyeSwatches();
+  renderHairColorSwatches();
+  renderHairStyleGrid();
+  renderAll();
+  showToast('Character loaded from text!');
 }
 
 // ── RESET ────────────────────────────────────────────────────
@@ -1908,13 +2075,14 @@ function bindEvents() {
 
   // Header buttons
   document.getElementById('btn-save').addEventListener('click', saveToLocalStorage);
-  document.getElementById('btn-load').addEventListener('click', loadFromLocalStorage);
+  document.getElementById('btn-load').addEventListener('click', loadFromFile);
   document.getElementById('btn-reset').addEventListener('click', resetAll);
 
   // Export buttons
   document.getElementById('btn-copy').addEventListener('click', copyToClipboard);
   document.getElementById('btn-export-json').addEventListener('click', exportJSON);
   document.getElementById('btn-export-txt').addEventListener('click', exportTxt);
+  document.getElementById('file-load-input').addEventListener('change', handleFileLoad);
 }
 
 // ── INIT ─────────────────────────────────────────────────────

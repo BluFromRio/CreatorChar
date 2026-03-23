@@ -965,7 +965,6 @@ input[type="color"] {
   border-color: var(--gold-dim);
   color: var(--gold-light);
 }
-
 /* Copy toast */
 .copy-toast {
   position: fixed;
@@ -984,6 +983,10 @@ input[type="color"] {
   z-index: 999;
 }
 .copy-toast.show { opacity: 1; }
+.copy-toast.error {
+  border-color: rgba(200, 80, 80, 0.6);
+  color: #ff9090;
+}
 
 /* ══════════════════════════════════════
    CATEGORY ICON COLORS
