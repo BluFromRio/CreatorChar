@@ -1,5 +1,5 @@
 // ============================================================
-// app.js — Character Codex: CK3-Inspired Book Character Creator
+// app.js — Character Codex:
 // ============================================================
 
 'use strict';
@@ -190,6 +190,7 @@ const state = {
   nickname:    '',
   age:         '',
   pronouns:    '',
+  orientation: '',
   height:      170,
   weight:      50,
   skinTone:    null,     // hex string
@@ -1079,6 +1080,7 @@ function renderSummary() {
   const heightIn = Math.round((heightCm / 2.54) % 12);
   const rows = [
     ['Race',        RACE_LABELS[state.race] || 'Human'],
+    ['Orientation', state.orientation || '—'],
     ['Height',      `${heightCm} cm (${heightFt}′${heightIn}″)`],
     ['Build',       getWeightLabel(state.weight)],
     ['Skin',        state.skinTone ? getSkinLabel(state.skinTone) : '—'],
@@ -1527,8 +1529,9 @@ function buildSaveData() {
     name:     state.name,
     nickname: state.nickname,
     age:      state.age,
-    pronouns: state.pronouns,
-    race:     state.race,
+    pronouns:    state.pronouns,
+    orientation: state.orientation,
+    race:        state.race,
     height:   state.height,
     weight:   state.weight,
     skinTone: state.skinTone,
@@ -1545,8 +1548,9 @@ function applySaveData(data) {
   state.name     = data.name     || '';
   state.nickname = data.nickname || '';
   state.age      = data.age      || '';
-  state.pronouns = data.pronouns || '';
-  state.race     = data.race     || 'human';
+  state.pronouns    = data.pronouns    || '';
+  state.orientation = data.orientation || '';
+  state.race        = data.race        || 'human';
   state.height   = data.height   || 170;
   state.weight   = data.weight   || 50;
   state.skinTone = data.skinTone || null;
@@ -1560,7 +1564,8 @@ function applySaveData(data) {
   document.getElementById('char-name').value     = state.name;
   document.getElementById('char-nickname').value = state.nickname;
   document.getElementById('char-age').value      = state.age;
-  document.getElementById('char-pronouns').value = state.pronouns;
+  document.getElementById('char-pronouns').value    = state.pronouns;
+  document.getElementById('char-orientation').value = state.orientation;
   document.querySelectorAll('.race-btn').forEach(b => b.classList.toggle('selected', b.dataset.race === state.race));
   document.getElementById('char-height').value   = state.height;
   document.getElementById('char-weight').value   = state.weight;
@@ -1614,8 +1619,9 @@ function buildTextSummary() {
     `Name:     ${name}`,
     state.nickname ? `Nickname: ${state.nickname}` : null,
     state.age       ? `Age:      ${state.age}` : null,
-    state.pronouns  ? `Pronouns: ${state.pronouns}` : null,
-    `Race:     ${RACE_LABELS[state.race] || 'Human'}`,
+    state.pronouns    ? `Pronouns:    ${state.pronouns}` : null,
+    state.orientation ? `Orientation: ${state.orientation}` : null,
+    `Race:        ${RACE_LABELS[state.race] || 'Human'}`,
     '',
     '── APPEARANCE ──',
     `Height:   ${heightCm} cm (${heightFt}′${heightIn}″)`,
@@ -1771,7 +1777,8 @@ function resetAll() {
   state.name = '';
   state.nickname = '';
   state.age = '';
-  state.pronouns = '';
+  state.pronouns    = '';
+  state.orientation = '';
   state.race = 'human';
   state.height = 170;
   state.weight = 50;
@@ -1790,7 +1797,8 @@ function resetAll() {
   document.getElementById('char-name').value      = '';
   document.getElementById('char-nickname').value  = '';
   document.getElementById('char-age').value       = '';
-  document.getElementById('char-pronouns').value  = '';
+  document.getElementById('char-pronouns').value    = '';
+  document.getElementById('char-orientation').value = '';
   document.querySelectorAll('.race-btn').forEach(b => b.classList.toggle('selected', b.dataset.race === 'human'));
   document.getElementById('char-height').value    = 170;
   document.getElementById('char-weight').value    = 50;
@@ -1853,6 +1861,12 @@ function bindEvents() {
     renderSummary();
   });
 
+  // Orientation
+  document.getElementById('char-orientation').addEventListener('change', e => {
+    state.orientation = e.target.value;
+    renderSummary();
+  });
+
   // Sliders
   document.getElementById('char-height').addEventListener('input', e => {
     state.height = +e.target.value;
@@ -1909,6 +1923,27 @@ function init() {
   collapseAllCats();
   populateCatFilter();
   bindEvents();
+
+  // Orientation info-tip tooltip
+  const orientTip = document.getElementById('orientation-tip');
+  if (orientTip) {
+    let _orientTimer = null;
+    const ORIENT_DESCRIPTIONS = {
+      title: 'Sexual Orientation',
+      body: [
+        '<b>Heterosexual</b> — attraction to people of a different gender.',
+        '<b>Bisexual</b> — attraction to people of one\'s own gender and other genders.',
+        '<b>Gay</b> — attraction primarily to people of the same gender.',
+        '<b>Lesbian</b> — a woman attracted primarily to other women.',
+      ].join('<br><br>'),
+    };
+    orientTip.addEventListener('mouseenter', e => {
+      _orientTimer = setTimeout(() => {
+        showGenericTooltip(ORIENT_DESCRIPTIONS.title, ORIENT_DESCRIPTIONS.body, e.clientX, e.clientY);
+      }, 400);
+    });
+    orientTip.addEventListener('mouseleave', () => { clearTimeout(_orientTimer); hideTooltip(); });
+  }
 
   // Initial skin preview
   document.getElementById('skin-hex-preview').style.background = state.skinHex;

@@ -1,6 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
    CHARACTER CODEX — styles.css
-   Dark medieval/manuscript aesthetic
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── CSS Variables ── */
@@ -301,6 +300,28 @@ body {
   margin-bottom: 0.25rem;
   font-family: var(--font-heading);
   letter-spacing: 0.04em;
+}
+
+.field-tip {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  cursor: help;
+  vertical-align: middle;
+  margin-left: 0.3rem;
+  transition: color 0.15s, border-color 0.15s;
+}
+.field-tip:hover {
+  color: var(--gold);
+  border-color: var(--border-gold);
 }
 
 .field-row {

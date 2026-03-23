@@ -1,6 +1,5 @@
 // ============================================================
-// traits.js — Auto-generated from CK3 00_traits.txt
-// 152 traits extracted and normalized for book character creation
+// traits.js
 // ============================================================
 
 const CK3_TRAITS = [
