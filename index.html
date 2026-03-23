@@ -266,8 +266,31 @@
 <!-- Trait hover tooltip (populated by JS) -->
 <div id="trait-tooltip" class="trait-tooltip" aria-hidden="true"></div>
 
-<!-- Data + Logic -->
-<script src="traits.js"></script>
-<script src="app.js"></script>
+<!-- Trait data — category files must load before combiner -->
+<script src="traits/traits_education.js"></script>
+<script src="traits/traits_lifestyle.js"></script>
+<script src="traits/traits_personality.js"></script>
+<script src="traits/traits_congenital.js"></script>
+<script src="traits/traits_health.js"></script>
+<script src="traits/traits_childhood.js"></script>
+<script src="traits/traits_commander.js"></script>
+<script src="traits/traits_fame.js"></script>
+<script src="traits/traits_magic.js"></script>
+<script src="traits/traits_other.js"></script>
+<script src="traits/traits.js"></script>
+<!-- Core data & state -->
+<script src="app_logic/config.js"></script>
+<script src="app_logic/state.js"></script>
+<script src="app_logic/stats.js"></script>
+<!-- Logic -->
+<script src="app_logic/trait_rules.js"></script>
+<script src="app_logic/tooltip.js"></script>
+<!-- Rendering -->
+<script src="app_logic/render_appearance.js"></script>
+<script src="app_logic/render_traits.js"></script>
+<script src="app_logic/render_summary.js"></script>
+<!-- Persistence & entry point -->
+<script src="app_logic/persistence.js"></script>
+<script src="app_logic/app.js"></script>
 </body>
 </html>
