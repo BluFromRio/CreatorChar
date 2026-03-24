@@ -166,6 +166,6 @@ const CATEGORY_META = {
   commander:      { label: 'Commander',       order: 6 },
   childhood:      { label: 'Childhood',       order: 7 },
   fame:           { label: 'Fame & Vices',    order: 8 },
-  magic_elements: { label: 'Magic Elements',  order: 9 },
+  magic_elements: { label: 'Magic',           order: 9 },
   other:          { label: 'Other',           order: 10 },
 };

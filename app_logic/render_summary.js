@@ -41,7 +41,7 @@ function renderSummary() {
     ['Orientation', state.orientation || '—'],
     ['Height',      `${heightCm} cm (${heightFt}′${heightIn}″)`],
     ['Build',       getWeightLabel(state.weight)],
-    ['Skin',        state.skinTone ? getSkinLabel(state.skinTone) : '—'],
+    ['Skin',        state.skinTone ? getColorDisplay(state.skinTone, state.skinName, SKIN_TONES) : '—'],
     ['Eyes',        state.eyeColor || '—'],
     ['Hair Color',  state.hairColor || '—'],
     ['Hair Style',  state.hairStyle || '—'],
@@ -110,7 +110,7 @@ function renderNarrative() {
   const heightDesc = describeHeight(state.height);
   if (heightDesc) bodyParts.push(heightDesc);
   bodyParts.push(`${getWeightLabel(state.weight).toLowerCase()} in build`);
-  if (state.skinTone) bodyParts.push(`${getSkinLabel(state.skinTone).toLowerCase()}-skinned`);
+  if (state.skinTone) bodyParts.push(`${getColorDisplay(state.skinTone, state.skinName, SKIN_TONES).toLowerCase()}-skinned`);
   if (state.eyeColor) bodyParts.push(`${state.eyeColor.toLowerCase()}-eyed`);
 
   if (state.hairStyle || state.hairColor) {

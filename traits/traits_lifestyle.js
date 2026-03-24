@@ -414,6 +414,23 @@ const LIFESTYLE_TRAITS = [
         "scholar": 15,
         "architect": 5
       }
+  },
+  {
+    "id": "lifestyle_traveler",
+    "label": "Traveler",
+    "category": "lifestyle",
+    "cost": 20,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+        "worldly": 15,
+        "curious": 15,
+        "lifestyle_hunter": 10,
+        "reclusive": -15
+      }
   }
 ];
 
@@ -439,7 +456,8 @@ const LIFESTYLE_STATS = {
   lifestyle_mystic: { learning: 1, intelligence: 1, arcana: 3, religion: 2 },
   lifestyle_physician: { learning: 1, intelligence: 1, medicine: 3 },
   lifestyle_herbalist: { intrigue: 2, learning: 2, medicine: 2, nature: 2, survival: 1 },
-  lifestyle_gardener: { stewardship: 2, nature: 2, animal_handling: 1 }
+  lifestyle_gardener: { stewardship: 2, nature: 2, animal_handling: 1 },
+  lifestyle_traveler: { diplomacy: 1, survival: 2, perception: 2, nature: 1 }
 };
 
 const LIFESTYLE_FLAVOR = {
@@ -464,5 +482,6 @@ const LIFESTYLE_FLAVOR = {
   lifestyle_mystic: '{name} is drawn to the occult edges of the world. Whether they find truth there is anyone\'s guess.',
   lifestyle_physician: '{name} has learned to read the body\'s language — fever, pulse, pallor. They can sometimes answer it.',
   lifestyle_herbalist: '{name} knows which roots heal and which kill, and the difference matters enormously in their work.',
-  lifestyle_gardener: '{name} finds meaning in careful cultivation. There is philosophy in pruning.'
+  lifestyle_gardener: '{name} finds meaning in careful cultivation. There is philosophy in pruning.',
+  lifestyle_traveler: '{name} has seen more of the world than most. The road has shaped them.'
 };

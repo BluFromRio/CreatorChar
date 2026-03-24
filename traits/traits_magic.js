@@ -4,6 +4,58 @@
 
 const MAGIC_TRAITS = [
   {
+    "id": "magic_affinity",
+    "label": "Magic Affinity",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": true,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+        "talented_mage": 15,
+        "elem_fire": 5,
+        "elem_earth": 5,
+        "elem_water": 5,
+        "elem_wind": 5,
+        "elem_light": 10,
+        "elem_dark": 10,
+        "elem_ice": 10,
+        "elem_magma": 10,
+        "elem_lightning": 10,
+        "elem_nature": 10,
+        "witch": 10,
+        "lifestyle_mystic": 10
+      }
+  },
+  {
+    "id": "talented_mage",
+    "label": "Talented Mage",
+    "category": "magic_elements",
+    "cost": 50,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+        "magic_affinity": 15,
+        "elem_fire": 5,
+        "elem_earth": 5,
+        "elem_water": 5,
+        "elem_wind": 5,
+        "elem_light": 10,
+        "elem_dark": 10,
+        "elem_ice": 10,
+        "elem_magma": 10,
+        "elem_lightning": 10,
+        "elem_nature": 10,
+        "scholar": 5,
+        "lifestyle_mystic": 10
+      }
+  },
+  {
     "id": "elem_earth",
     "label": "Earth",
     "category": "magic_elements",
@@ -130,7 +182,7 @@ const MAGIC_TRAITS = [
   },
   {
     "id": "elem_nature",
-    "label": "Nature Element",
+    "label": "Nature",
     "category": "magic_elements",
     "cost": 50,
     "group": null,
@@ -184,6 +236,8 @@ const MAGIC_TRAITS = [
 ];
 
 const MAGIC_STATS = {
+  magic_affinity: { arcana: 3, learning: 1, intelligence: 1 },
+  talented_mage: { arcana: 4, learning: 2, intelligence: 2, wisdom: 1 },
   elem_earth: { arcana: 2, nature: 2, constitution: 1 },
   elem_fire: { arcana: 2, intimidation: 1, athletics: 1 },
   elem_water: { arcana: 2, medicine: 1, wisdom: 1 },
@@ -197,6 +251,8 @@ const MAGIC_STATS = {
 };
 
 const MAGIC_FLAVOR = {
+  magic_affinity: '{name} was born with something in them that responds to the arcane. It is not power, exactly — not yet. It is the capacity for it, the receptivity. A door that opens both ways.',
+  talented_mage: '{name} has a gift that goes beyond study or practice — an intuitive grasp of magical principles that takes others years to learn. Raw talent, carefully sharpened.',
   elem_earth: '{name} has bonded with the element of earth. In stone and root, in stillness and weight, they find both anchor and power. The ground answers when they call.',
   elem_fire: '{name} commands fire. Not in the reckless sense — in the way of someone who has spent time with flame and learned to respect the line between controlled and catastrophic.',
   elem_water: '{name} works with water — patient, adaptable, and quietly unstoppable. It flows where it will, and {name} has learned to guide rather than force it.',

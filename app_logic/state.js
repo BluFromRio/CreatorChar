@@ -18,10 +18,18 @@ const state = {
   // Appearance
   height:    170,
   weight:    50,
-  skinTone:  null,     // hex string
-  skinHex:   '#c68642',
-  eyeColor:  null,     // label string
-  hairColor: null,     // label string
+  skinTone:  null,     // hex string (selected skin color)
+  skinHex:   '#c68642',// color picker value
+  skinName:  '',       // custom display name for skin
+
+  eyeHex:    null,     // hex string (selected eye color)
+  eyeColor:  null,     // display name (preset label or custom name)
+  eyeName:   '',       // custom name input
+
+  hairColorHex:  null, // hex string (selected hair color)
+  hairColor:     null, // display name (preset label or custom name)
+  hairColorName: '',   // custom name input
+
   hairStyle: null,     // label string
 
   // Traits

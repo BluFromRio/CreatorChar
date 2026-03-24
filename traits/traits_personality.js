@@ -1175,6 +1175,45 @@ const PERSONALITY_TRAITS = [
         "compassionate": -10,
         "humble": -10
       }
+  },
+  {
+    "id": "easily_influenced",
+    "label": "Easily Influenced",
+    "category": "personality",
+    "cost": -15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": ["stubborn", "defiant"],
+    "compat": {
+        "gullible": 20,
+        "trusting": 10,
+        "naive": 10,
+        "fickle": 15,
+        "stubborn": -25,
+        "defiant": -20,
+        "oathbound": -10
+      }
+  },
+  {
+    "id": "gullible",
+    "label": "Gullible",
+    "category": "personality",
+    "cost": -15,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": ["cynical", "perceptive"],
+    "compat": {
+        "easily_influenced": 20,
+        "trusting": 15,
+        "naive": 15,
+        "cynical": -25,
+        "perceptive": -20,
+        "calculating": -15
+      }
   }
 ];
 
@@ -1229,7 +1268,9 @@ const PERSONALITY_STATS = {
   oathbound: { stewardship: 2, diplomacy: 1, wisdom: 1, persuasion: 1 },
   oathbreaking: { intrigue: 2, diplomacy: -2, deception: 2 },
   reverent: { diplomacy: 1, wisdom: 1, religion: 2, insight: 1 },
-  rude: { diplomacy: -2, charisma: -1, intimidation: 1 }
+  rude: { diplomacy: -2, charisma: -1, intimidation: 1 },
+  easily_influenced: { intrigue: -2, wisdom: -1, diplomacy: 1 },
+  gullible: { intrigue: -3, insight: -2, wisdom: -1 }
 };
 
 const PERSONALITY_FLAVOR = {
@@ -1285,5 +1326,7 @@ const PERSONALITY_FLAVOR = {
   oathbound: '{name} does not give their word lightly. And when they do, they mean every syllable of it.',
   oathbreaking: '{name} understands that vows are made under circumstances that change. Principles, for them, have flexibility built in.',
   reverent: '{name} carries a deep respect for what came before. Tradition, people, the sacred — they do not treat these things lightly.',
-  rude: '{name} says what they mean, and means what they say, at full volume and without ceremony. It is not always welcome.'
+  rude: '{name} says what they mean, and means what they say, at full volume and without ceremony. It is not always welcome.',
+  easily_influenced: '{name} is a little too quick to adopt the views of whoever last spoke to them. They mean well — they are just not the most stable of anchors.',
+  gullible: '{name} tends to believe what they are told. People who know this have occasionally taken advantage of it.'
 };

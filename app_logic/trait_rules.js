@@ -117,6 +117,64 @@ function isBlockedByMagicRules(traitId) {
   return false;
 }
 
+// ── Magic state reconciliation ─────────────────────────────────
+// Removes any magic element selections that are now invalid.
+// Called after any deselection so the state is always consistent.
+function reconcileMagicState() {
+  const sel = state.selectedTraits;
+
+  // Step 1: no magic_affinity → remove every magic element
+  if (!sel.has('magic_affinity')) {
+    for (const e of MAGIC_ALL_ELEMENTS) sel.delete(e);
+    return;
+  }
+
+  // Step 2: remove combo elements whose prerequisites are no longer met
+  for (const combo of MAGIC_COMBO_ELEMENTS) {
+    if (!sel.has(combo)) continue;
+    const reqs = MAGIC_COMBO_REQS[combo];
+    if (reqs && !reqs.every(r => sel.has(r))) sel.delete(combo);
+  }
+
+  // Step 3: enforce per-talented_mage element limits
+  const hasTalented = sel.has('talented_mage');
+
+  if (!hasTalented) {
+    // Without talented_mage: max 1 element total.
+    // Combos can never be the sole element (they require 2 bases that can't
+    // coexist under the 1-element limit), so remove them first, then trim.
+    for (const e of MAGIC_COMBO_ELEMENTS) sel.delete(e);
+    const remaining = MAGIC_ALL_ELEMENTS.filter(e => sel.has(e));
+    for (let i = 1; i < remaining.length; i++) sel.delete(remaining[i]);
+    return;
+  }
+
+  // With talented_mage:
+  const selRare  = MAGIC_RARE_ELEMENTS.filter(e => sel.has(e));
+  const selBase  = MAGIC_BASE_ELEMENTS.filter(e => sel.has(e));
+  const selCombo = MAGIC_COMBO_ELEMENTS.filter(e => sel.has(e));
+
+  if (selRare.length > 0) {
+    // Rare elements are mutually exclusive with everything else — keep only
+    // the first rare and clear all other elements.
+    for (let i = 1; i < selRare.length; i++) sel.delete(selRare[i]);
+    for (const e of selBase)  sel.delete(e);
+    for (const e of selCombo) sel.delete(e);
+    return;
+  }
+
+  // No rare: max 2 base, max 1 combo
+  for (let i = 2; i < selBase.length; i++) sel.delete(selBase[i]);
+  for (let i = 1; i < selCombo.length; i++) sel.delete(selCombo[i]);
+
+  // Re-check combo prerequisites now that excess bases may have been removed
+  for (const combo of MAGIC_COMBO_ELEMENTS) {
+    if (!sel.has(combo)) continue;
+    const reqs = MAGIC_COMBO_REQS[combo];
+    if (reqs && !reqs.every(r => sel.has(r))) sel.delete(combo);
+  }
+}
+
 // ── Master selection gate ─────────────────────────────────────
 function canSelect(traitId) {
   if (state.selectedTraits.has(traitId)) return true; // always allow deselect
@@ -147,6 +205,7 @@ function getCompatScore(traitId) {
 function toggleTrait(traitId) {
   if (state.selectedTraits.has(traitId)) {
     state.selectedTraits.delete(traitId);
+    reconcileMagicState();
   } else {
     if (!canSelect(traitId)) return;
     state.selectedTraits.add(traitId);

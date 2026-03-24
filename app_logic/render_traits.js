@@ -87,43 +87,59 @@ function renderTraitBrowser() {
     const body = document.createElement('div');
     body.className = 'cat-body' + (collapsed ? ' hidden' : '');
 
-    // Render group ladders first
-    const renderedGroups = new Set();
-    for (const t of filtered) {
-      if (!t.group || renderedGroups.has(t.group)) continue;
-      renderedGroups.add(t.group);
-
-      const groupTraits = (traitsByGroup[t.group] || []).filter(gt =>
-        filtered.some(f => f.id === gt.id)
-      );
-      if (groupTraits.length === 0) continue;
-
-      const groupBlock = document.createElement('div');
-      groupBlock.className = 'group-block';
-
-      const glabel = document.createElement('div');
-      glabel.className = 'group-label';
-      const gname = t.group
-        .replace(/_/g, ' ')
-        .split(' ')
-        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-        .join(' ');
-      glabel.textContent = `↳ ${gname}`;
-      groupBlock.appendChild(glabel);
-
-      const ladder = document.createElement('div');
-      ladder.className = 'group-ladder';
-      for (const gt of groupTraits) {
-        ladder.appendChild(makeLadderCard(gt));
+    if (cat === 'congenital') {
+      renderCongenitalPaired(body, filtered);
+    } else if (cat === 'fame') {
+      renderFameTwoCols(body, filtered);
+    } else if (cat === 'magic_elements') {
+      // Magic tab uses the tree renderer instead of cards
+      try {
+        renderMagicTree(body, allTraitsInCat, search, costFilter);
+      } catch (e) {
+        console.error('Magic tree render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Magic tree unavailable.</div>';
       }
-      groupBlock.appendChild(ladder);
-      body.appendChild(groupBlock);
-    }
+    } else {
+      // Render group ladders — sorted alphabetically by group name
+      const renderedGroups = new Set();
+      const groupsInFiltered = [...new Set(filtered.filter(t => t.group).map(t => t.group))];
+      groupsInFiltered.sort((a, b) => a.localeCompare(b));
+      for (const grp of groupsInFiltered) {
+        if (renderedGroups.has(grp)) continue;
+        renderedGroups.add(grp);
 
-    // Render ungrouped traits as full cards
-    for (const t of filtered) {
-      if (t.group) continue;
-      body.appendChild(makeTraitCard(t));
+        const groupTraits = (traitsByGroup[grp] || []).filter(gt =>
+          filtered.some(f => f.id === gt.id)
+        );
+        if (groupTraits.length === 0) continue;
+
+        const groupBlock = document.createElement('div');
+        groupBlock.className = 'group-block';
+
+        const glabel = document.createElement('div');
+        glabel.className = 'group-label';
+        const gname = grp
+          .replace(/_/g, ' ')
+          .split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+        glabel.textContent = `↳ ${gname}`;
+        groupBlock.appendChild(glabel);
+
+        const ladder = document.createElement('div');
+        ladder.className = 'group-ladder';
+        for (const gt of groupTraits) {
+          ladder.appendChild(makeLadderCard(gt));
+        }
+        groupBlock.appendChild(ladder);
+        body.appendChild(groupBlock);
+      }
+
+      // Render ungrouped traits as full cards — alphabetical
+      const ungrouped = filtered.filter(t => !t.group).sort((a, b) => a.label.localeCompare(b.label));
+      for (const t of ungrouped) {
+        body.appendChild(makeTraitCard(t));
+      }
     }
 
     catEl.appendChild(body);
@@ -136,6 +152,118 @@ function renderTraitBrowser() {
     empty.textContent = 'No traits match your filters.';
     browser.appendChild(empty);
   }
+}
+
+// ── Congenital paired layout ──────────────────────────────
+// Display order for bad/good pair rows. Each entry is the base group
+// name shared by both the _bad and _good variant.
+const CONGENITAL_PAIR_ORDER = [
+  'beauty', 'bloodline', 'fertility', 'form',
+  'health', 'intellect', 'mobility', 'physique',
+  'posture', 'respiration', 'speech',
+];
+
+function renderCongenitalPaired(body, filtered) {
+  const filteredIds = new Set(filtered.map(t => t.id));
+
+  const grid = document.createElement('div');
+  grid.className = 'cong-grid';
+
+  let anyPair = false;
+  for (const base of CONGENITAL_PAIR_ORDER) {
+    const badGroup  = `${base}_bad`;
+    const goodGroup = `${base}_good`;
+
+    const badFiltered  = (traitsByGroup[badGroup]  || []).filter(t => filteredIds.has(t.id));
+    const goodFiltered = (traitsByGroup[goodGroup] || []).filter(t => filteredIds.has(t.id));
+
+    if (badFiltered.length === 0 && goodFiltered.length === 0) continue;
+    anyPair = true;
+
+    const pair = document.createElement('div');
+    pair.className = 'cong-pair';
+    pair.appendChild(_makeCongCol(badGroup,  badFiltered,  false));
+    pair.appendChild(_makeCongCol(goodGroup, goodFiltered, true));
+    grid.appendChild(pair);
+  }
+
+  if (!anyPair) {
+    const empty = document.createElement('div');
+    empty.className = 'cong-no-match';
+    empty.textContent = 'No traits match your filters.';
+    grid.appendChild(empty);
+  }
+
+  body.appendChild(grid);
+}
+
+function _makeCongCol(groupName, traits, isGood) {
+  const col = document.createElement('div');
+  col.className = 'cong-col ' + (isGood ? 'cong-col-good' : 'cong-col-bad');
+
+  const hdr = document.createElement('div');
+  hdr.className = 'cong-col-hdr';
+  hdr.textContent = groupName
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+  col.appendChild(hdr);
+
+  if (traits.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'cong-col-empty';
+    empty.textContent = '—';
+    col.appendChild(empty);
+  } else {
+    const ladder = document.createElement('div');
+    ladder.className = 'group-ladder';
+    for (const t of traits) ladder.appendChild(makeLadderCard(t));
+    col.appendChild(ladder);
+  }
+
+  return col;
+}
+
+// ── Fame & Vices two-column layout ────────────────────────────
+// Trait IDs that belong in the Fames column; everything else is a Vice.
+const FAME_ROLE_IDS = new Set(['witch', 'governor']);
+
+function renderFameTwoCols(body, filtered) {
+  const fames = filtered.filter(t =>  FAME_ROLE_IDS.has(t.id))
+                        .sort((a, b) => a.label.localeCompare(b.label));
+  const vices = filtered.filter(t => !FAME_ROLE_IDS.has(t.id))
+                        .sort((a, b) => a.label.localeCompare(b.label));
+
+  const grid = document.createElement('div');
+  grid.className = 'fame-two-col';
+
+  function makeCol(label, traits) {
+    const col = document.createElement('div');
+    col.className = 'fame-col';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'fame-col-hdr';
+    hdr.textContent = label;
+    col.appendChild(hdr);
+
+    for (const t of traits) {
+      col.appendChild(makeTraitCard(t));
+    }
+
+    if (traits.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'fame-col-empty';
+      empty.textContent = 'None match filters';
+      col.appendChild(empty);
+    }
+
+    return col;
+  }
+
+  grid.appendChild(makeCol('Fames', fames));
+  grid.appendChild(makeCol('Vices', vices));
+  body.appendChild(grid);
 }
 
 // ── Trait card builders ───────────────────────────────────────

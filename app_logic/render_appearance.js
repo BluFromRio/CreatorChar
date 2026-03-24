@@ -32,6 +32,13 @@ function getSkinLabel(hex) {
   return match ? match.label : hex;
 }
 
+// Returns the best display name for a color: custom name > preset label > hex value
+function getColorDisplay(hex, customName, presets) {
+  if (customName) return customName;
+  const match = presets.find(p => p.hex === hex);
+  return match ? match.label : (hex || '—');
+}
+
 // ── Budget bar ────────────────────────────────────────────────
 function renderBudget() {
   const spent     = calcPointsSpent();
@@ -63,13 +70,18 @@ function renderSkinSwatches() {
     sw.addEventListener('click', () => {
       state.skinTone = hex;
       state.skinHex  = hex;
+      state.skinName = '';
       document.getElementById('skin-hex').value = hex;
       document.getElementById('skin-hex-preview').style.background = hex;
+      document.getElementById('skin-hex-name').value = '';
       renderSkinSwatches();
       renderSummary();
     });
     grid.appendChild(sw);
   }
+  // Show active ring on custom preview when a non-preset color is selected
+  const isCustomSkin = state.skinTone && !SKIN_TONES.some(s => s.hex === state.skinTone);
+  document.getElementById('skin-hex-preview').classList.toggle('active', isCustomSkin);
 }
 
 function renderEyeSwatches() {
@@ -77,16 +89,24 @@ function renderEyeSwatches() {
   grid.innerHTML = '';
   for (const { hex, label } of EYE_COLORS) {
     const sw = document.createElement('div');
-    sw.className = 'swatch' + (state.eyeColor === label ? ' selected' : '');
+    sw.className = 'swatch' + (state.eyeHex === hex ? ' selected' : '');
     sw.style.background = hex;
     sw.title = label;
     sw.addEventListener('click', () => {
+      state.eyeHex   = hex;
+      state.eyeName  = '';
       state.eyeColor = label;
+      document.getElementById('eye-hex').value = hex;
+      document.getElementById('eye-hex-preview').style.background = hex;
+      document.getElementById('eye-hex-name').value = '';
       renderEyeSwatches();
       renderSummary();
     });
     grid.appendChild(sw);
   }
+  // Show active ring on custom preview when a non-preset color is selected
+  const isCustomEye = state.eyeHex && !EYE_COLORS.some(e => e.hex === state.eyeHex);
+  document.getElementById('eye-hex-preview').classList.toggle('active', isCustomEye);
 }
 
 function renderHairColorSwatches() {
@@ -94,16 +114,24 @@ function renderHairColorSwatches() {
   grid.innerHTML = '';
   for (const { hex, label } of HAIR_COLORS) {
     const sw = document.createElement('div');
-    sw.className = 'swatch' + (state.hairColor === label ? ' selected' : '');
+    sw.className = 'swatch' + (state.hairColorHex === hex ? ' selected' : '');
     sw.style.background = hex;
     sw.title = label;
     sw.addEventListener('click', () => {
-      state.hairColor = label;
+      state.hairColorHex  = hex;
+      state.hairColorName = '';
+      state.hairColor     = label;
+      document.getElementById('hair-color-hex').value = hex;
+      document.getElementById('hair-color-hex-preview').style.background = hex;
+      document.getElementById('hair-color-hex-name').value = '';
       renderHairColorSwatches();
       renderSummary();
     });
     grid.appendChild(sw);
   }
+  // Show active ring on custom preview when a non-preset color is selected
+  const isCustomHair = state.hairColorHex && !HAIR_COLORS.some(h => h.hex === state.hairColorHex);
+  document.getElementById('hair-color-hex-preview').classList.toggle('active', isCustomHair);
 }
 
 function renderHairStyleGrid() {

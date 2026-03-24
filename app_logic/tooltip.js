@@ -45,7 +45,7 @@ function hideTooltip() {
   if (el) el.classList.remove('visible');
 }
 
-// Trait hover — 1 second delay, resets on mouse movement
+// Trait hover — 800 ms delay; stays visible while cursor is inside the element
 function attachTraitTooltip(el, traitId) {
   el.addEventListener('mouseenter', e => {
     clearTimeout(_tooltipTimer);
@@ -53,16 +53,7 @@ function attachTraitTooltip(el, traitId) {
     _tooltipTimer = setTimeout(() => {
       const t = traitById[traitId];
       if (t) showGenericTooltip(t.label, getTraitFlavor(traitId), x, y);
-    }, 1000);
-  });
-  el.addEventListener('mousemove', e => {
-    clearTimeout(_tooltipTimer);
-    hideTooltip();
-    const x = e.clientX, y = e.clientY;
-    _tooltipTimer = setTimeout(() => {
-      const t = traitById[traitId];
-      if (t) showGenericTooltip(t.label, getTraitFlavor(traitId), x, y);
-    }, 1000);
+    }, 800);
   });
   el.addEventListener('mouseleave', () => { clearTimeout(_tooltipTimer); hideTooltip(); });
 }

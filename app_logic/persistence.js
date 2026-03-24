@@ -29,8 +29,13 @@ function buildSaveData() {
     weight:   state.weight,
     skinTone: state.skinTone,
     skinHex:  state.skinHex,
-    eyeColor:    state.eyeColor,
-    hairColor:   state.hairColor,
+    skinName: state.skinName,
+    eyeHex:   state.eyeHex,
+    eyeColor: state.eyeColor,
+    eyeName:  state.eyeName,
+    hairColorHex:  state.hairColorHex,
+    hairColor:     state.hairColor,
+    hairColorName: state.hairColorName,
     hairStyle:   state.hairStyle,
     selectedTraits: [...state.selectedTraits],
   };
@@ -48,8 +53,30 @@ function applySaveData(data) {
   state.weight   = data.weight   || 50;
   state.skinTone = data.skinTone || null;
   state.skinHex  = data.skinHex  || '#c68642';
-  state.eyeColor = data.eyeColor || null;
-  state.hairColor= data.hairColor|| null;
+  state.skinName = data.skinName || '';
+
+  // Eye color — support old saves (eyeColor label only) and new (eyeHex + eyeName)
+  state.eyeHex  = data.eyeHex  || null;
+  state.eyeName = data.eyeName || '';
+  if (!state.eyeHex && data.eyeColor) {
+    const m = EYE_COLORS.find(e => e.label === data.eyeColor);
+    if (m) state.eyeHex = m.hex;
+  }
+  state.eyeColor = state.eyeHex
+    ? getColorDisplay(state.eyeHex, state.eyeName, EYE_COLORS)
+    : null;
+
+  // Hair color — same pattern
+  state.hairColorHex  = data.hairColorHex  || null;
+  state.hairColorName = data.hairColorName || '';
+  if (!state.hairColorHex && data.hairColor) {
+    const m = HAIR_COLORS.find(h => h.label === data.hairColor);
+    if (m) state.hairColorHex = m.hex;
+  }
+  state.hairColor = state.hairColorHex
+    ? getColorDisplay(state.hairColorHex, state.hairColorName, HAIR_COLORS)
+    : null;
+
   state.hairStyle= data.hairStyle|| null;
   state.selectedTraits = new Set(data.selectedTraits || []);
 
@@ -68,6 +95,17 @@ function applySaveData(data) {
   if (state.skinHex) {
     document.getElementById('skin-hex').value = state.skinHex;
     document.getElementById('skin-hex-preview').style.background = state.skinHex;
+    document.getElementById('skin-hex-name').value = state.skinName;
+  }
+  if (state.eyeHex) {
+    document.getElementById('eye-hex').value = state.eyeHex;
+    document.getElementById('eye-hex-preview').style.background = state.eyeHex;
+    document.getElementById('eye-hex-name').value = state.eyeName;
+  }
+  if (state.hairColorHex) {
+    document.getElementById('hair-color-hex').value = state.hairColorHex;
+    document.getElementById('hair-color-hex-preview').style.background = state.hairColorHex;
+    document.getElementById('hair-color-hex-name').value = state.hairColorName;
   }
 }
 
@@ -119,7 +157,7 @@ function buildTextSummary() {
     '── APPEARANCE ──',
     `Height:   ${heightCm} cm (${heightFt}′${heightIn}″)`,
     `Build:    ${getWeightLabel(state.weight)}`,
-    state.skinTone  ? `Skin:     ${getSkinLabel(state.skinTone)}` : null,
+    state.skinTone  ? `Skin:     ${getColorDisplay(state.skinTone, state.skinName, SKIN_TONES)}` : null,
     state.eyeColor  ? `Eyes:     ${state.eyeColor}` : null,
     state.hairColor ? `Hair:     ${state.hairColor}${state.hairStyle ? ', ' + state.hairStyle : ''}` : null,
     '',
@@ -356,16 +394,33 @@ function loadFromTxt(content) {
   const skinRaw = extract('skin');
   state.skinTone = skinRaw ? (skinByLabel[skinRaw.toLowerCase()] || null) : null;
   state.skinHex  = state.skinTone || '#c68642';
+  state.skinName = '';
 
-  state.eyeColor = extract('eyes') || null;
+  const eyesRaw = extract('eyes') || null;
+  if (eyesRaw) {
+    const eyePreset = EYE_COLORS.find(e => e.label.toLowerCase() === eyesRaw.toLowerCase());
+    state.eyeHex   = eyePreset ? eyePreset.hex : null;
+    state.eyeName  = '';
+    state.eyeColor = eyePreset ? eyePreset.label : eyesRaw;
+  } else {
+    state.eyeHex = null; state.eyeName = ''; state.eyeColor = null;
+  }
 
   const hairRaw = extract('hair');
   if (hairRaw) {
     const parts = hairRaw.split(',').map(p => p.trim());
-    state.hairColor = parts[0] || null;
+    const hairLabel = parts[0] || null;
     state.hairStyle = parts[1] || null;
+    if (hairLabel) {
+      const hairPreset = HAIR_COLORS.find(h => h.label.toLowerCase() === hairLabel.toLowerCase());
+      state.hairColorHex  = hairPreset ? hairPreset.hex : null;
+      state.hairColorName = '';
+      state.hairColor     = hairPreset ? hairPreset.label : hairLabel;
+    } else {
+      state.hairColorHex = null; state.hairColorName = ''; state.hairColor = null;
+    }
   } else {
-    state.hairColor = null;
+    state.hairColorHex = null; state.hairColorName = ''; state.hairColor = null;
     state.hairStyle = null;
   }
 
@@ -399,6 +454,17 @@ function loadFromTxt(content) {
   document.getElementById('weight-val').textContent = getWeightLabel(state.weight);
   document.getElementById('skin-hex').value = state.skinHex;
   document.getElementById('skin-hex-preview').style.background = state.skinHex;
+  document.getElementById('skin-hex-name').value = '';
+  if (state.eyeHex) {
+    document.getElementById('eye-hex').value = state.eyeHex;
+    document.getElementById('eye-hex-preview').style.background = state.eyeHex;
+  }
+  document.getElementById('eye-hex-name').value = '';
+  if (state.hairColorHex) {
+    document.getElementById('hair-color-hex').value = state.hairColorHex;
+    document.getElementById('hair-color-hex-preview').style.background = state.hairColorHex;
+  }
+  document.getElementById('hair-color-hex-name').value = '';
   const pwrap = document.getElementById('pronouns-custom-wrap');
   if (pwrap) pwrap.style.display = 'none';
 
@@ -422,9 +488,14 @@ function resetAll() {
   state.height = 170;
   state.weight = 50;
   state.skinTone = null;
-  state.skinHex = '#c68642';
+  state.skinHex  = '#c68642';
+  state.skinName = '';
+  state.eyeHex   = null;
   state.eyeColor = null;
-  state.hairColor = null;
+  state.eyeName  = '';
+  state.hairColorHex  = null;
+  state.hairColor     = null;
+  state.hairColorName = '';
   state.hairStyle = null;
   state.selectedTraits.clear();
   state.searchQuery = '';
@@ -449,6 +520,9 @@ function resetAll() {
   document.getElementById('trait-filter-selected').checked = false;
   document.getElementById('skin-hex').value = '#c68642';
   document.getElementById('skin-hex-preview').style.background = '#c68642';
+  document.getElementById('skin-hex-name').value = '';
+  document.getElementById('eye-hex-name').value = '';
+  document.getElementById('hair-color-hex-name').value = '';
   document.getElementById('portrait-circle').style.borderColor = '';
   document.getElementById('portrait-initials').style.color = '';
 

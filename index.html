@@ -6,7 +6,7 @@
   <title>Character Codex — Book Character Creator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -18,7 +18,7 @@
     <div class="header-inner">
       <div class="header-title">
         <h1>Character <span class="accent">Codex</span></h1>
-        <p class="header-sub">Book Character Builder</p>
+        <p class="header-sub">Character Builder</p>
       </div>
       <div class="point-budget-display">
         <div class="budget-ring" id="budget-ring">
@@ -36,6 +36,7 @@
         <button class="btn-icon" id="btn-save" title="Save to browser">Save</button>
         <button class="btn-icon" id="btn-load" title="Load from browser">Load</button>
         <button class="btn-icon btn-danger" id="btn-reset" title="Reset all">↺ Reset</button>
+        <button id="btn-font-toggle" title="Toggle accessibility font (Lexend)">Aa</button>
       </div>
     </div>
     <!-- Progress bar -->
@@ -63,7 +64,7 @@
         </div>
         <div class="field-group">
           <label for="char-nickname">Nickname / Title</label>
-          <input type="text" id="char-nickname" placeholder="The Bold, Lady of Ash…" autocomplete="off" />
+          <input type="text" id="char-nickname" placeholder="The Old, Lord of Pigs…" autocomplete="off" />
         </div>
         <div class="field-row">
           <div class="field-group">
@@ -131,10 +132,11 @@
           <!-- Rendered by JS -->
         </div>
         <div class="field-group field-hex">
-          <label for="skin-hex">Custom hex</label>
+          <label>Custom</label>
           <div class="hex-row">
             <div class="hex-preview" id="skin-hex-preview"></div>
             <input type="color" id="skin-hex" value="#c68642" />
+            <input type="text" id="skin-hex-name" class="hex-name-input" placeholder="Name (optional)" autocomplete="off" />
           </div>
         </div>
       </section>
@@ -145,6 +147,14 @@
         <div class="swatch-grid" id="eye-swatches">
           <!-- Rendered by JS -->
         </div>
+        <div class="field-group field-hex">
+          <label>Custom</label>
+          <div class="hex-row">
+            <div class="hex-preview" id="eye-hex-preview"></div>
+            <input type="color" id="eye-hex" value="#3060a0" />
+            <input type="text" id="eye-hex-name" class="hex-name-input" placeholder="Name (optional)" autocomplete="off" />
+          </div>
+        </div>
       </section>
 
       <!-- Hair Color -->
@@ -152,6 +162,14 @@
         <h3 class="section-label">Hair Color</h3>
         <div class="swatch-grid" id="hair-color-swatches">
           <!-- Rendered by JS -->
+        </div>
+        <div class="field-group field-hex">
+          <label>Custom</label>
+          <div class="hex-row">
+            <div class="hex-preview" id="hair-color-hex-preview"></div>
+            <input type="color" id="hair-color-hex" value="#4a2c18" />
+            <input type="text" id="hair-color-hex-name" class="hex-name-input" placeholder="Name (optional)" autocomplete="off" />
+          </div>
         </div>
       </section>
 
@@ -288,6 +306,7 @@
 <!-- Rendering -->
 <script src="app_logic/render_appearance.js"></script>
 <script src="app_logic/render_traits.js"></script>
+<script src="app_logic/render_magic.js"></script>
 <script src="app_logic/render_summary.js"></script>
 <!-- Persistence & entry point -->
 <script src="app_logic/persistence.js"></script>

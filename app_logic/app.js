@@ -64,13 +64,43 @@ function bindEvents() {
     renderSummary();
   });
 
-  // Skin hex
+  // Skin custom color
   document.getElementById('skin-hex').addEventListener('input', e => {
     state.skinTone = e.target.value;
     state.skinHex  = e.target.value;
     document.getElementById('skin-hex-preview').style.background = e.target.value;
     renderSkinSwatches();
     renderSummary();
+  });
+  document.getElementById('skin-hex-name').addEventListener('input', e => {
+    state.skinName = e.target.value;
+    renderSummary();
+  });
+
+  // Eye custom color
+  document.getElementById('eye-hex').addEventListener('input', e => {
+    state.eyeHex   = e.target.value;
+    state.eyeColor = state.eyeName || e.target.value;
+    document.getElementById('eye-hex-preview').style.background = e.target.value;
+    renderEyeSwatches();
+    renderSummary();
+  });
+  document.getElementById('eye-hex-name').addEventListener('input', e => {
+    state.eyeName = e.target.value;
+    if (state.eyeHex) { state.eyeColor = e.target.value || state.eyeHex; renderSummary(); }
+  });
+
+  // Hair custom color
+  document.getElementById('hair-color-hex').addEventListener('input', e => {
+    state.hairColorHex  = e.target.value;
+    state.hairColor     = state.hairColorName || e.target.value;
+    document.getElementById('hair-color-hex-preview').style.background = e.target.value;
+    renderHairColorSwatches();
+    renderSummary();
+  });
+  document.getElementById('hair-color-hex-name').addEventListener('input', e => {
+    state.hairColorName = e.target.value;
+    if (state.hairColorHex) { state.hairColor = e.target.value || state.hairColorHex; renderSummary(); }
   });
 
   // Trait filters
@@ -95,6 +125,14 @@ function bindEvents() {
   document.getElementById('btn-save').addEventListener('click', saveToLocalStorage);
   document.getElementById('btn-load').addEventListener('click', loadFromFile);
   document.getElementById('btn-reset').addEventListener('click', resetAll);
+
+  // Accessibility font toggle
+  document.getElementById('btn-font-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('font-lexend');
+    document.getElementById('btn-font-toggle').classList.toggle(
+      'active', document.body.classList.contains('font-lexend')
+    );
+  });
 
   // Export buttons
   document.getElementById('btn-copy').addEventListener('click', copyToClipboard);
@@ -129,8 +167,12 @@ function init() {
     orientTip.addEventListener('mouseleave', () => { clearTimeout(_orientTimer); hideTooltip(); });
   }
 
-  // Initial skin preview
+  // Initial color previews
   document.getElementById('skin-hex-preview').style.background = state.skinHex;
+  document.getElementById('eye-hex-preview').style.background =
+    state.eyeHex || document.getElementById('eye-hex').value;
+  document.getElementById('hair-color-hex-preview').style.background =
+    state.hairColorHex || document.getElementById('hair-color-hex').value;
 
   // Render all appearance swatches
   renderSkinSwatches();
