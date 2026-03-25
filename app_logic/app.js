@@ -377,7 +377,6 @@ function init() {
   // Orientation info-tip tooltip
   const orientTip = document.getElementById('orientation-tip');
   if (orientTip) {
-    let _orientTimer = null;
     const orientTitle = 'Sexual Orientation';
     const orientBody = [
       '<b>Heterosexual</b>: attraction to people of a different gender.',
@@ -386,11 +385,9 @@ function init() {
       '<b>Lesbian</b>: a woman attracted primarily to other women.',
     ].join('<br><br>');
     orientTip.addEventListener('mouseenter', e => {
-      _orientTimer = setTimeout(() => {
-        showGenericTooltip(orientTitle, orientBody, e.clientX, e.clientY);
-      }, 400);
+      showGenericTooltip(orientTitle, orientBody, e.clientX, e.clientY);
     });
-    orientTip.addEventListener('mouseleave', () => { clearTimeout(_orientTimer); hideTooltip(); });
+    orientTip.addEventListener('mouseleave', () => hideTooltip());
   }
 
   // Initial body display

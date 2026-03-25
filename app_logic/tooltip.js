@@ -45,38 +45,29 @@ function hideTooltip() {
   if (el) el.classList.remove('visible');
 }
 
-// Trait hover — 800 ms delay; stays visible while cursor is inside the element
+// Trait hover — instant
 function attachTraitTooltip(el, traitId) {
   el.addEventListener('mouseenter', e => {
     clearTimeout(_tooltipTimer);
-    const x = e.clientX, y = e.clientY;
-    _tooltipTimer = setTimeout(() => {
-      const t = traitById[traitId];
-      if (t) showGenericTooltip(t.label, getTraitFlavor(traitId), x, y);
-    }, 800);
+    const t = traitById[traitId];
+    if (t) showGenericTooltip(t.label, getTraitFlavor(traitId), e.clientX, e.clientY);
   });
   el.addEventListener('mouseleave', () => { clearTimeout(_tooltipTimer); hideTooltip(); });
 }
 
-// Stat/skill hover — 600 ms delay
+// Stat/skill hover — instant
 function attachStatTooltip(el, statKey) {
-  let timer = null;
   el.style.cursor = 'help';
   el.addEventListener('mouseenter', e => {
-    timer = setTimeout(() => {
-      showGenericTooltip(ALL_STAT_LABELS[statKey], STAT_DESCRIPTIONS[statKey], e.clientX, e.clientY);
-    }, 600);
+    showGenericTooltip(ALL_STAT_LABELS[statKey], STAT_DESCRIPTIONS[statKey], e.clientX, e.clientY);
   });
-  el.addEventListener('mouseleave', () => { clearTimeout(timer); hideTooltip(); });
+  el.addEventListener('mouseleave', () => hideTooltip());
 }
 
-// Race button hover — 600 ms delay
+// Race button hover — instant
 function attachRaceTooltip(el, raceKey) {
-  let timer = null;
   el.addEventListener('mouseenter', e => {
-    timer = setTimeout(() => {
-      showGenericTooltip(RACE_LABELS[raceKey], RACE_DESCRIPTIONS[raceKey], e.clientX, e.clientY);
-    }, 600);
+    showGenericTooltip(RACE_LABELS[raceKey], RACE_DESCRIPTIONS[raceKey], e.clientX, e.clientY);
   });
-  el.addEventListener('mouseleave', () => { clearTimeout(timer); hideTooltip(); });
+  el.addEventListener('mouseleave', () => hideTooltip());
 }
