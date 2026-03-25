@@ -84,35 +84,58 @@ function renderSummary() {
   renderWarnings();
 }
 
+// ── Article helper ────────────────────────────────────────────
+function articleFor(word) {
+  return /^[aeiou]/i.test((word || '').trim()) ? 'an' : 'a';
+}
+
 // ── Narrative text ────────────────────────────────────────────
 function renderNarrative() {
-  const narEl = document.getElementById('narrative-text');
-  const parts  = [];
+  const narEl  = document.getElementById('narrative-text');
+  const taEl   = document.getElementById('narrative-custom');
+  const btnGen = document.getElementById('btn-nar-generated');
+  const btnCus = document.getElementById('btn-nar-custom');
 
-  const namePart = state.name.trim()
-    ? (state.nickname ? `${state.name.trim()} — known as "${state.nickname}" —` : state.name.trim())
-    : 'This character';
+  const isCustom = state.narrativeMode === 'custom';
+  if (btnGen) btnGen.classList.toggle('active', !isCustom);
+  if (btnCus) btnCus.classList.toggle('active',  isCustom);
 
-  const raceLabel = RACE_LABELS[state.race] || '';
-  let intro = `${namePart} is`;
-  if (raceLabel && state.race !== 'rat') {
-    intro += (state.race === 'dwarf' || state.race === 'elf')
-      ? ` an ${raceLabel.toLowerCase()}`
-      : ` a ${raceLabel.toLowerCase()}`;
-    if (state.age) intro += ` of ${state.age} years,`;
-  } else {
-    if (state.age) intro += ` ${state.age} years old,`;
+  if (isCustom) {
+    narEl.style.display = 'none';
+    if (taEl) taEl.style.display = '';
+    return;
   }
 
+  narEl.style.display = '';
+  if (taEl) taEl.style.display = 'none';
+
+  const parts = [];
+  const nameStr  = state.name.trim();
+  const namePart = nameStr
+    ? (state.nickname ? `${nameStr}, known as "${state.nickname}",` : nameStr)
+    : 'This character';
+
+  const raceLabel  = RACE_LABELS[state.race] || '';
   const pronounWord = getPronounWord();
 
+  // Sentence 1: identity
+  let intro = `${namePart} is`;
+  if (raceLabel) {
+    intro += ` ${articleFor(raceLabel)} ${raceLabel.toLowerCase()}`;
+    if (state.age) intro += ` of ${state.age} years`;
+  } else {
+    if (state.age) intro += ` ${state.age} years old`;
+  }
+  intro += '.';
+  parts.push(intro);
+
+  // Sentence 2: physical appearance
   const bodyParts = [];
   const heightDesc = describeHeight(state.height);
   if (heightDesc) bodyParts.push(heightDesc);
   bodyParts.push(`${getWeightLabel(state.weight).toLowerCase()} in build`);
   if (state.skinTone) bodyParts.push(`${getColorDisplay(state.skinTone, state.skinName, SKIN_TONES).toLowerCase()}-skinned`);
   if (state.eyeColor) bodyParts.push(`${state.eyeColor.toLowerCase()}-eyed`);
-
   if (state.hairStyle || state.hairColor) {
     const hc = state.hairColor ? state.hairColor.toLowerCase() : '';
     const hs = state.hairStyle ? state.hairStyle.toLowerCase() : '';
@@ -120,12 +143,11 @@ function renderNarrative() {
     else if (hc)       bodyParts.push(`with ${hc} hair`);
     else if (hs)       bodyParts.push(`with ${hs} hair`);
   }
+  if (bodyParts.length > 0) {
+    parts.push(`${pronounWord.cap} is ${bodyParts.join(', ')}.`);
+  }
 
-  intro += bodyParts.length > 0
-    ? ' ' + bodyParts.join(', ') + '.'
-    : ' yet to be fully described.';
-  parts.push(intro);
-
+  // Trait sentences
   if (state.selectedTraits.size > 0) {
     const selected = [...state.selectedTraits].map(id => traitById[id]).filter(Boolean);
     const personalityTraits = selected.filter(t => t.category === 'personality').map(t => t.label.toLowerCase());
@@ -136,14 +158,12 @@ function renderNarrative() {
       parts.push(`${pronounWord.cap} is ${listToEnglish(personalityTraits)} by nature.`);
 
     if (eduTraits.length > 0) {
-      parts.push(eduTraits[0].includes('Intrigue')
-        ? `${pronounWord.cap} received an ${eduTraits[0]} education.`
-        : `${pronounWord.cap} received a ${eduTraits[0]} education.`);
+      const label = eduTraits[0];
+      parts.push(`${pronounWord.cap} received ${articleFor(label)} ${label} education.`);
     }
 
-    if (otherTraits.length > 0) {
-      parts.push(`${pronounWord.cap} is known for being ${listToEnglish(otherTraits.slice(0, 4))}.`);
-    }
+    if (otherTraits.length > 0)
+      parts.push(`${pronounWord.cap} is also known for ${listToEnglish(otherTraits.slice(0, 4))}.`);
   }
 
   narEl.textContent = parts.join(' ');

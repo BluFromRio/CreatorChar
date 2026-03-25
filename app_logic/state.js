@@ -36,6 +36,10 @@ const state = {
   selectedTraits: new Set(),
   collapsedCats:  new Set(),
 
+  // Narrative
+  narrativeMode:   'generated',  // 'generated' | 'custom'
+  customNarrative: '',
+
   // UI filter state
   searchQuery:    '',
   filterCost:     'all',

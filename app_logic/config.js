@@ -15,7 +15,7 @@ const CONFIG = {
     lifestyle: 4,
     congenital: null,
     health: 3,
-    commander: 3,
+    commander: 4,
     childhood: 2,
     fame: 3,
     magic_elements: null,     // enforced by isBlockedByMagicRules
@@ -74,6 +74,13 @@ const RACE_BASES = {
   },
 };
 
+// ── Race-based height caps (in cm) ───────────────────────────
+// Races not listed here have no cap (slider goes to full 230 cm).
+const RACE_HEIGHT_CAPS = {
+  dwarf:      157,  // 5'2"
+  half_dwarf: 168,  // 5'6"
+};
+
 const RACE_LABELS = {
   human:      'Human',
   elf:        'Elf',
@@ -84,9 +91,9 @@ const RACE_LABELS = {
 
 const RACE_DESCRIPTIONS = {
   human:      'Adaptable and ambitious by nature, humans spread across the world with remarkable ease. Neither the longest-lived nor the mightiest, they compensate with drive, diversity, and resilience. Balanced across all disciplines.',
-  elf:        'Ancient and perceptive, elves are scholars of the subtle — attuned to magic, beauty, and the long view of history. Their senses are keen and their patience vast. Strong in Intelligence, Wisdom, and Learning; slight of body.',
+  elf:        'Ancient and perceptive, elves are scholars of the subtle. Attuned to magic, beauty, and the long view of history. Their senses are keen and their patience vast. Strong in Intelligence, Wisdom, and Learning.',
   dwarf:      'Stout in body and immovable in will, dwarves endure where others break. Masters of craft and war alike, they carry the weight of ancestral tradition with pride. Strong in Constitution, Strength, and Stewardship.',
-  half_elf:   'Born between worlds, half-elves carry the curiosity of elvenkind and the warmth of humanity. Socially fluid and quick-witted, they rarely feel fully at home anywhere — and have learned to thrive everywhere. Strong in Charisma.',
+  half_elf:   'Born between worlds, half-elves carry the curiosity of elvenkind and the warmth of humanity. Socially fluid and quick-witted, they rarely feel fully at home anywhere, learning to thrive everywhere. Strong in Charisma.',
   half_dwarf: 'Hardier than most humans yet more flexible than their dwarven kin, half-dwarves are natural survivors. Equally at home beside a forge or a mountain pass. Strong in Constitution and Strength.',
 };
 

@@ -33,6 +33,7 @@
         </div>
       </div>
       <div class="header-actions">
+        <button class="btn-icon btn-random" id="btn-random" title="Generate a random character">⚅ Random</button>
         <button class="btn-icon" id="btn-save" title="Save to browser">Save</button>
         <button class="btn-icon" id="btn-load" title="Load from browser">Load</button>
         <button class="btn-icon btn-danger" id="btn-reset" title="Reset all">↺ Reset</button>
@@ -114,12 +115,13 @@
         <h3 class="section-label">Body</h3>
 
         <div class="field-group">
-          <label>Height <span class="slider-val" id="height-val">170 cm</span></label>
+          <label>Height <span class="slider-val" id="height-val">5'7"</span></label>
           <input type="range" id="char-height" min="130" max="230" value="170" class="slider" />
-          <div class="slider-labels"><span>130 cm</span><span>230 cm</span></div>
+          <div class="slider-labels"><span>4'3"</span><span>7'7"</span></div>
+          <div id="height-cap-hint" class="height-cap-hint" style="display:none"></div>
         </div>
         <div class="field-group">
-          <label>Build / Weight <span class="slider-val" id="weight-val">Medium</span></label>
+          <label>Build / Weight <span class="slider-val" id="weight-val">Medium</span><span class="slider-lbs" id="weight-lbs"> · 195 lbs</span></label>
           <input type="range" id="char-weight" min="0" max="100" value="50" class="slider" />
           <div class="slider-labels"><span>Very Lean</span><span>Very Heavy</span></div>
         </div>
@@ -248,8 +250,15 @@
         <!-- ── Right column: narrative / traits by category ── -->
         <div class="sheet-col-right">
           <div class="summary-card sheet-narrative-card">
-            <div class="summary-card-header">Narrative</div>
-            <p id="narrative-text" class="narrative-text">Fill out your character to see a summary appear here.</p>
+            <div class="nar-card-header">
+              Narrative
+              <div class="nar-toggle">
+                <button class="nar-btn active" id="btn-nar-generated">Generated</button>
+                <button class="nar-btn" id="btn-nar-custom">Custom</button>
+              </div>
+            </div>
+            <p id="narrative-text" class="narrative-text"></p>
+            <textarea id="narrative-custom" class="narrative-custom" style="display:none" placeholder="Write your own narrative here…"></textarea>
           </div>
 
           <div class="summary-card">
@@ -307,6 +316,8 @@
 <script src="app_logic/render_appearance.js"></script>
 <script src="app_logic/render_traits.js"></script>
 <script src="app_logic/render_magic.js"></script>
+<script src="app_logic/render_commander.js"></script>
+<script src="app_logic/render_personality.js"></script>
 <script src="app_logic/render_summary.js"></script>
 <!-- Persistence & entry point -->
 <script src="app_logic/persistence.js"></script>

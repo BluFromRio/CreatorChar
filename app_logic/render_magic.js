@@ -9,7 +9,7 @@
 'use strict';
 
 // SVG viewBox dimensions
-const MAGIC_VW = 760, MAGIC_VH = 510;
+const MAGIC_VW = 760, MAGIC_VH = 570;
 
 // Center coordinates for each node (in viewBox units)
 const MAGIC_NODE_POS = {
@@ -25,17 +25,18 @@ const MAGIC_NODE_POS = {
   elem_nature:    { x: 322, y: 453 },
   elem_ice:       { x: 470, y: 453 },
   elem_lightning: { x: 628, y: 453 },
+  elem_healing:   { x: 335, y: 530 },
 };
 
 // Edges to draw between nodes
 const MAGIC_EDGES = [
   ['magic_affinity', 'talented_mage'],
-  ['magic_affinity', 'elem_light'],
-  ['magic_affinity', 'elem_dark'],
   ['magic_affinity', 'elem_fire'],
   ['magic_affinity', 'elem_earth'],
   ['magic_affinity', 'elem_water'],
   ['magic_affinity', 'elem_wind'],
+  ['talented_mage',  'elem_light'],
+  ['talented_mage',  'elem_dark'],
   ['elem_fire',  'elem_magma'],
   ['elem_earth', 'elem_magma'],
   ['elem_earth', 'elem_nature'],
@@ -44,12 +45,14 @@ const MAGIC_EDGES = [
   ['elem_wind',  'elem_ice'],
   ['elem_fire',  'elem_lightning'],
   ['elem_wind',  'elem_lightning'],
+  ['elem_light', 'elem_healing'],
+  ['elem_water', 'elem_healing'],
 ];
 
 function _magicTier(id) {
-  if (id === 'magic_affinity') return 'gateway';
-  if (id === 'talented_mage')  return 'special';
+  if (id === 'magic_affinity' || id === 'talented_mage') return 'gateway';
   if (id === 'elem_light' || id === 'elem_dark') return 'rare';
+  if (id === 'elem_healing') return 'sacred';
   if (['elem_magma', 'elem_nature', 'elem_ice', 'elem_lightning'].includes(id)) return 'combo';
   return 'base';
 }
@@ -68,10 +71,10 @@ function renderMagicTree(container, allMagicTraits, search, costFilter) {
   legend.className = 'magic-legend';
   legend.innerHTML =
     '<span class="ml-item ml-gateway">Gateway</span>' +
-    '<span class="ml-item ml-special">Special</span>' +
     '<span class="ml-item ml-rare">Rare</span>' +
     '<span class="ml-item ml-base">Base Element</span>' +
-    '<span class="ml-item ml-combo">Combination</span>';
+    '<span class="ml-item ml-combo">Combination</span>' +
+    '<span class="ml-item ml-sacred">Sacred</span>';
   container.appendChild(legend);
 
   // ── Tree wrapper (relative-positioned host) ───────────────
@@ -139,10 +142,30 @@ function renderMagicTree(container, allMagicTraits, search, costFilter) {
       node.addEventListener('click', () => toggleTrait(id));
     } else {
       let reason = '';
-      if      (isBlockedByMagicRules(id))    reason = 'Magic Affinity required';
-      else if (isBlockedByOpposites(id))     reason = 'Blocked by opposite trait';
-      else if (isBlockedByCatLimit(id))      reason = 'Category limit reached';
-      else if (isBlockedByBudget(id))        reason = 'Not enough points';
+      if (isBlockedByMagicRules(id)) {
+        const sel = state.selectedTraits;
+        if (!sel.has('magic_affinity')) {
+          reason = 'Requires: Magic Affinity';
+        } else if (id === 'elem_healing') {
+          if (!sel.has('talented_mage'))      reason = 'Requires: Talented Mage';
+          else if (!sel.has('elem_light'))    reason = 'Requires: Light + Water';
+          else if (!sel.has('elem_water'))    reason = 'Requires: Light + Water';
+          else                               reason = 'Prerequisites not met';
+        } else if (id === 'elem_light' || id === 'elem_dark') {
+          if (!sel.has('talented_mage'))      reason = 'Requires: Talented Mage';
+          else if (sel.has('elem_dark'))      reason = 'Blocked: Dark is an exclusive path';
+          else if (id === 'elem_dark')        reason = 'Dark requires no other elements';
+          else                               reason = 'Incompatible with current elements';
+        } else if (sel.has('elem_dark')) {
+          reason = 'Blocked: Dark is an exclusive path';
+        } else if (sel.has('elem_light')) {
+          reason = 'Incompatible with the Light path';
+        } else {
+          reason = 'Magic rules: prerequisites not met';
+        }
+      } else if (isBlockedByOpposites(id))   reason = 'Blocked by opposite trait';
+      else if   (isBlockedByCatLimit(id))    reason = 'Category limit reached';
+      else if   (isBlockedByBudget(id))      reason = 'Not enough points';
       if (reason) node.setAttribute('title', reason);
     }
 

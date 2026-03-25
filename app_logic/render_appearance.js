@@ -20,11 +20,31 @@ function costLabel(cost) {
   return `${cost}`;
 }
 
+// ── Height conversion helpers ─────────────────────────────────
+function cmToFtIn(cm) {
+  const totalInches = cm / 2.54;
+  const ft = Math.floor(totalInches / 12);
+  let inches = Math.round(totalInches % 12);
+  if (inches === 12) { inches = 0; return { ft: ft + 1, inches }; }
+  return { ft, inches };
+}
+
+function formatFtIn(cm) {
+  const { ft, inches } = cmToFtIn(cm);
+  return `${ft}'${inches}"`;
+}
+
+// ── Weight/build helpers ──────────────────────────────────────
 function getWeightLabel(val) {
   for (const [lo, hi, label] of WEIGHT_LABELS) {
     if (val >= lo && val <= hi) return label;
   }
   return 'Medium';
+}
+
+// Maps slider 0–100 linearly to ~90–300 lbs
+function getWeightLbs(val) {
+  return Math.round(90 + (val / 100) * 210);
 }
 
 function getSkinLabel(hex) {

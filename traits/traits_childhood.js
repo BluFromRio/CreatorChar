@@ -207,9 +207,9 @@ const CHILDHOOD_FLAVOR = {
   charming: '{name} has a way with people. A smile, a word, and the room tilts in their favor.',
   curious: '{name} always wants to know what is around the next corner. Questions follow them like a loyal hound.',
   pensive: '{name} lives much of life inside their own head. Still waters run deep.',
-  bossy:           '{name} knows how things should be done, and they are not above telling you — at length.',
+  bossy:           '{name} knows how things should be done, and they are not above telling you at length.',
   childhood_orphan:'{name} lost their parents early. They learned to manage before they were ready, and they have been managing ever since.',
-  neglected:       '{name} was not looked after as they should have been. They grew up largely on their own terms — which had costs.',
+  neglected:       '{name} was not looked after as they should have been. They grew up largely on their own terms, which had costs.',
   spoiled:         '{name} had most things handed to them growing up. They are still adjusting to a world that does not.',
-  well_cared_for:  '{name} had a solid upbringing — stable, attentive, and kind. That foundation shows.'
+  well_cared_for:  '{name} had a solid upbringing, stable, attentive, and kind. That foundation shows.'
 };

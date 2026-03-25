@@ -368,6 +368,20 @@ select option { background: var(--bg-card); }
   transition: transform 0.15s;
 }
 .slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+.slider::-moz-range-track {
+  height: 4px;
+  background: var(--border-mid);
+  border-radius: 2px;
+  border: none;
+}
+.slider::-moz-range-thumb {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--bg-panel);
+  box-shadow: 0 0 6px rgba(201,152,58,0.5);
+  cursor: pointer;
+}
 .slider-val {
   float: right;
   font-size: 0.78rem;
@@ -380,6 +394,22 @@ select option { background: var(--bg-card); }
   font-size: 0.65rem;
   color: var(--text-faint);
   margin-top: 0.15rem;
+}
+.slider-lbs {
+  font-size: 0.72rem;
+  color: var(--text-dim, var(--text-faint));
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+  opacity: 0.75;
+}
+.height-cap-hint {
+  font-size: 0.65rem;
+  color: var(--gold-dim, var(--gold-light));
+  font-family: var(--font-heading);
+  letter-spacing: 0.04em;
+  text-align: right;
+  margin-top: 0.2rem;
+  opacity: 0.8;
 }
 
 /* Swatch grids */
@@ -1212,16 +1242,16 @@ input[type="color"] {
   transform: translateY(-2px);
 }
 .ml-gateway { color: var(--gold); }
-.ml-special  { color: #c0a040; }
 .ml-rare     { color: #b060d0; }
 .ml-base     { color: var(--border-accent); }
 .ml-combo    { color: #5090c0; }
+.ml-sacred   { color: var(--green-light); }
 
 .magic-tree-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 760 / 510;
-  min-height: 280px;
+  aspect-ratio: 760 / 570;
+  min-height: 300px;
   margin: 0.25rem 0 0.75rem;
   overflow: visible;
 }
@@ -1279,10 +1309,10 @@ input[type="color"] {
 
 /* Tier border colors */
 .mnt-gateway { --node-border: var(--gold); }
-.mnt-special  { --node-border: #c0a040; }
-.mnt-rare     { --node-border: #b060d0; }
-.mnt-base     { --node-border: var(--border-accent); }
-.mnt-combo    { --node-border: #5090c0; }
+.mnt-rare    { --node-border: #b060d0; }
+.mnt-base    { --node-border: var(--border-accent); }
+.mnt-combo   { --node-border: #5090c0; }
+.mnt-sacred  { --node-border: var(--green-light); }
 
 .mn-name {
   font-family: var(--font-heading);
@@ -1300,6 +1330,97 @@ input[type="color"] {
 }
 
 /* ══════════════════════════════════════
+   COMMANDER TREE
+══════════════════════════════════════ */
+
+/* Ribbon title with cycling arrows */
+.cmd-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.45rem 1rem;
+  margin: 0.1rem 0 0;
+  background: linear-gradient(90deg, transparent 0%, var(--crimson) 18%, var(--crimson) 82%, transparent 100%);
+  border-top: 1px solid var(--crimson-bright);
+  border-bottom: 1px solid var(--crimson-bright);
+}
+
+.cmd-ribbon-title {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-white);
+}
+
+.cmd-ribbon-count {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  color: rgba(240,232,216,0.5);
+  letter-spacing: 0.05em;
+}
+
+.cmd-arrow {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: var(--text-white);
+  cursor: pointer;
+  padding: 0.18rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  line-height: 1;
+  transition: background 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+.cmd-arrow:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.45);
+}
+
+/* Tree wrapper — mirrors .magic-tree-wrapper */
+.cmd-tree-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  margin: 0.25rem 0 0.75rem;
+  overflow: visible;
+}
+
+.cmd-tree-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Connector lines */
+.cmd-edge {
+  stroke: var(--border-mid);
+  stroke-width: 1.5;
+  opacity: 0.35;
+}
+.cmd-edge.active {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  opacity: 0.85;
+}
+
+/* Node tier border colors — applied to .magic-node elements */
+.cmt-root   { --node-border: var(--gold); }
+.cmt-mid    { --node-border: var(--border-accent); }
+.cmt-deep   { --node-border: #5090c0; }
+.cmt-expert { --node-border: var(--green-light); }
+
+/* Legend tier colors — applied alongside .ml-item */
+.ml-cmt-root   { color: var(--gold); }
+.ml-cmt-mid    { color: var(--border-accent); }
+.ml-cmt-deep   { color: #5090c0; }
+.ml-cmt-expert { color: var(--green-light); }
+
+/* ══════════════════════════════════════
    ACCESSIBILITY FONT (Lexend)
 ══════════════════════════════════════ */
 body.font-lexend {
@@ -1311,6 +1432,7 @@ body.font-lexend .trait-name,
 body.font-lexend .trait-id,
 body.font-lexend .group-label,
 body.font-lexend .narrative-text,
+body.font-lexend .narrative-custom,
 body.font-lexend .summary-value,
 body.font-lexend .tooltip-body {
   font-family: 'Lexend', sans-serif;
@@ -1434,4 +1556,131 @@ body.font-lexend .tooltip-body {
   color: var(--text-faint);
   font-size: 0.78rem;
   padding: 0.5rem 0.25rem;
+}
+
+/* ── PERSONALITY TRIADS ─────────────────────────────────────── */
+
+/* Tree wrapper — mirrors .magic-tree-wrapper */
+.pers-tree-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  margin: 0.25rem 0 0.75rem;
+  overflow: visible;
+}
+
+.pers-tree-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.pers-edge {
+  stroke: var(--border-mid);
+  stroke-width: 1.5;
+  opacity: 0.35;
+}
+.pers-edge.active {
+  stroke: var(--gold);
+  stroke-width: 2.5;
+  opacity: 0.85;
+}
+
+/* Cost-tier node border colors */
+.pnt-pos  { --node-border: var(--green-good); }
+.pnt-neg  { --node-border: var(--crimson); }
+.pnt-zero { --node-border: var(--muted); }
+
+/* Triad-locked: another member selected, node is clickable for swap */
+.magic-node.pers-tri-locked {
+  opacity: 0.45;
+  border-style: dashed;
+  cursor: pointer;
+}
+.magic-node.pers-tri-locked:hover:not(.disabled) {
+  opacity: 1;
+  background: var(--bg-hover);
+  box-shadow: 0 0 0 2px var(--node-border, var(--border-mid));
+}
+
+/* Legend colors for personality cost tiers */
+.ml-pnt-pos  { color: var(--green-light); }
+.ml-pnt-zero { color: var(--muted); }
+.ml-pnt-neg  { color: var(--crimson-bright); }
+
+/* ── RANDOM BUTTON ──────────────────────────────────────────── */
+.btn-icon.btn-random {
+  border-color: var(--gold-dim);
+  color: var(--gold-light);
+}
+.btn-icon.btn-random:hover {
+  background: var(--bg-selected);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+/* ── NARRATIVE TOGGLE ───────────────────────────────────────── */
+.nar-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.8rem;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gold-dim);
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.nar-toggle {
+  display: flex;
+  gap: 0.25rem;
+}
+.nar-btn {
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  background: var(--bg-card);
+  color: var(--text-faint);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nar-btn:hover {
+  border-color: var(--gold-dim);
+  color: var(--text-main);
+}
+.nar-btn.active {
+  background: var(--bg-selected);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+.narrative-custom {
+  display: block;
+  width: 100%;
+  min-height: 90px;
+  padding: 0.6rem 0.8rem;
+  background: transparent;
+  color: var(--text-main);
+  border: none;
+  resize: vertical;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  font-style: italic;
+  box-sizing: border-box;
+}
+.narrative-custom:focus {
+  outline: 1px solid var(--border-mid);
+  outline-offset: -1px;
+}
+.narrative-custom::placeholder {
+  color: var(--text-faint);
+  font-style: italic;
 }

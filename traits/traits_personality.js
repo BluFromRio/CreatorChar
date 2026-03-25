@@ -1,1332 +1,1387 @@
 // ============================================================
-// traits_personality.js — Personality trait definitions, stat modifiers, and flavor text.
+// traits_personality.js — Personality trait definitions organized into
+// 21 Aristotelian Golden Mean triads. Each triad has a deficiency (left),
+// ideal (middle), and excess (right). Traits share group: 'triad_*' for
+// mutual exclusivity and auto-switching. Cost: (p)=25, (n)=-15, (z)=0.
 // ============================================================
 
 const PERSONALITY_TRAITS = [
+
+  // ── Triad 1: Social ────────────────────────────────────────────────
+  // Left: shy | Middle: gregarious | Right: eccentric
   {
-    "id": "lustful",
-    "label": "Lustful",
+    "id": "shy",
+    "label": "Shy",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_social",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "cautious": 5,
+      "anxious": 5,
+      "diffident": 5,
+      "pensive": 5
+    }
+  },
+  {
+    "id": "gregarious",
+    "label": "Gregarious",
     "category": "personality",
     "cost": 25,
-    "group": null,
+    "group": "triad_social",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["chaste"],
+    "opposites": [],
     "compat": {
-        "lustful": 30,
-        "gregarious": 5,
-        "lifestyle_reveler": 5,
-        "seducer": 5,
-        "chaste": -30,
-        "celibate": -30,
-        "shy": -5
-      }
+      "charismatic": 15,
+      "brave": 5,
+      "ambitious": 5,
+      "diplomat": 5,
+      "lifestyle_reveler": 10,
+      "worldly": 5
+    }
   },
   {
-    "id": "chaste",
-    "label": "Chaste",
+    "id": "eccentric",
+    "label": "Eccentric",
     "category": "personality",
-    "cost": 20,
-    "group": null,
+    "cost": 0,
+    "group": "triad_social",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["lustful"],
+    "opposites": [],
     "compat": {
-        "chaste": 15,
-        "celibate": 15,
-        "temperate": 5,
-        "calm": 5,
-        "lustful": -30,
-        "deviant": -30,
-        "lovers_pox": -5,
-        "early_great_pox": -5,
-        "great_pox": -5,
-        "lifestyle_reveler": -5,
-        "seducer": -5
-      }
+      "scholar": 5,
+      "lifestyle_mystic": 5,
+      "open_minded": 10,
+      "curious": 5
+    }
+  },
+
+  // ── Triad 2: Courage ───────────────────────────────────────────────
+  // Left: craven | Middle: brave | Right: reckless
+  {
+    "id": "craven",
+    "label": "Craven",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_courage",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "cautious": 5,
+      "anxious": 5,
+      "diffident": 5
+    }
   },
   {
-    "id": "gluttonous",
-    "label": "Gluttonous",
+    "id": "brave",
+    "label": "Brave",
     "category": "personality",
-    "cost": 20,
-    "group": null,
+    "cost": 25,
+    "group": "triad_courage",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["temperate"],
+    "opposites": [],
     "compat": {
-        "gluttonous": 15,
-        "drunkard": 5,
-        "greedy": 5,
-        "ambitious": 5,
-        "lifestyle_reveler": 15,
-        "temperate": -15
-      }
+      "ambitious": 10,
+      "diligent": 5,
+      "authoritative": 10,
+      "composed": 5,
+      "lifestyle_blademaster": 10,
+      "gallant": 10,
+      "strategist": 5,
+      "holy_warrior": 10,
+      "rowdy": 15
+    }
   },
   {
-    "id": "temperate",
-    "label": "Temperate",
+    "id": "reckless",
+    "label": "Reckless",
     "category": "personality",
-    "cost": 40,
-    "group": null,
+    "cost": -15,
+    "group": "triad_courage",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["gluttonous","excessive"],
+    "opposites": [],
     "compat": {
-        "temperate": 15,
-        "calm": 5,
-        "content": 5,
-        "chaste": 5,
-        "gluttonous": -15,
-        "excessive": -15,
-        "drunkard": -5,
-        "greedy": -5,
-        "lustful": -5,
-        "lifestyle_reveler": -15
-      }
+      "aggressive_attacker": 10,
+      "reaver": 5,
+      "wrathful": 5,
+      "impulsive": 5
+    }
+  },
+
+  // ── Triad 3: Drive ─────────────────────────────────────────────────
+  // Left: lazy | Middle: ambitious | Right: greedy
+  {
+    "id": "lazy",
+    "label": "Lazy",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_drive",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "complacent": 10,
+      "content": 5,
+      "gluttonous": 5
+    }
+  },
+  {
+    "id": "ambitious",
+    "label": "Ambitious",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_drive",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 10,
+      "diligent": 10,
+      "calculating": 10,
+      "authoritative": 5,
+      "conqueror": 10,
+      "grand_marshal": 5,
+      "bossy": 5
+    }
   },
   {
     "id": "greedy",
     "label": "Greedy",
     "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["generous"],
-    "compat": {
-        "greedy": 5,
-        "ambitious": 5,
-        "generous": -30,
-        "content": -15,
-        "compassionate": -15
-      }
-  },
-  {
-    "id": "generous",
-    "label": "Generous",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["greedy"],
-    "compat": {
-        "generous": 30,
-        "compassionate": 15,
-        "content": 5,
-        "forgiving": 5,
-        "greedy": -30,
-        "ambitious": -5
-      }
-  },
-  {
-    "id": "lazy",
-    "label": "Lazy",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["diligent"],
-    "compat": {
-        "lazy": 15,
-        "content": 5,
-        "calm": 5,
-        "gluttonous": 5,
-        "diligent": -15,
-        "ambitious": -5,
-        "eccentric": -5
-      }
-  },
-  {
-    "id": "diligent",
-    "label": "Diligent",
-    "category": "personality",
-    "cost": 40,
-    "group": null,
+    "cost": -15,
+    "group": "triad_drive",
     "level": null,
     "genetic": false,
     "physical": false,
     "opposites": [],
     "compat": {
-        "diligent": 15,
-        "ambitious": 5,
-        "patient": 5,
-        "whole_of_body": 5,
-        "scholar": 5,
-        "theologian": 5,
-        "pensive": 5,
-        "architect": 5,
-        "administrator": 5,
-        "avaricious": 5,
-        "lazy": -15,
-        "content": -5
-      }
+      "deceitful": 5,
+      "manipulative": 5,
+      "avaricious": 10,
+      "bossy": 5
+    }
   },
+
+  // ── Triad 4: Appetite ──────────────────────────────────────────────
+  // Left: gluttonous | Middle: content | Right: insensible
   {
-    "id": "wrathful",
-    "label": "Wrathful",
+    "id": "gluttonous",
+    "label": "Gluttonous",
     "category": "personality",
-    "cost": 30,
-    "group": null,
+    "cost": -15,
+    "group": "triad_appetite",
     "level": null,
     "genetic": false,
     "physical": false,
     "opposites": [],
     "compat": {
-        "wrathful": 5,
-        "stubborn": 5,
-        "honest": 5,
-        "vengeful": 5,
-        "calm": -15,
-        "patient": -15,
-        "forgiving": -5,
-        "compassionate": -5,
-        "eccentric": -5
-      }
+      "lazy": 5,
+      "lifestyle_reveler": 10
+    }
+  },
+  {
+    "id": "content",
+    "label": "Content",
+    "category": "personality",
+    "cost": 0,
+    "group": "triad_desire",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "humble": 5,
+      "patient": 5,
+      "composed": 5,
+      "forgiving": 5,
+      "whole_of_body": 5
+    }
+  },
+  {
+    "id": "insensible",
+    "label": "Insensible",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_appetite",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "stoic": 5,
+      "rigid": 5,
+      "winter_soldier": 5
+    }
+  },
+
+  // ── Triad 5: Self-Worth ────────────────────────────────────────────
+  // Left: diffident | Middle: humble | Right: arrogant
+  {
+    "id": "diffident",
+    "label": "Diffident",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_self_worth",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "shy": 5,
+      "anxious": 10,
+      "cautious": 5
+    }
+  },
+  {
+    "id": "humble",
+    "label": "Humble",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_self_worth",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "compassionate": 10,
+      "honest": 10,
+      "just": 5,
+      "forgiving": 5,
+      "content": 5,
+      "well_cared_for": 5
+    }
+  },
+  {
+    "id": "arrogant",
+    "label": "Arrogant",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_self_worth",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "ambitious": 5,
+      "authoritative": 5,
+      "spoiled": 10
+    }
+  },
+
+  // ── Triad 6: Decision ──────────────────────────────────────────────
+  // Left: indecisive | Middle: calculating | Right: impulsive
+  {
+    "id": "indecisive",
+    "label": "Indecisive",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_decision",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "anxious": 10,
+      "paranoid": 5,
+      "push_over": 5
+    }
+  },
+  {
+    "id": "calculating",
+    "label": "Calculating",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_decision",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "ambitious": 10,
+      "cautious": 5,
+      "schemer": 10,
+      "shadow_general": 5,
+      "strategist": 10,
+      "objective": 5,
+      "cynical": 5
+    }
+  },
+  {
+    "id": "impulsive",
+    "label": "Impulsive",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_decision",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "reckless": 10,
+      "wrathful": 5,
+      "aggressive_attacker": 5
+    }
+  },
+
+  // ── Triad 7: Desire ────────────────────────────────────────────────
+  // Left: chaste | Middle: temperate | Right: lustful
+  {
+    "id": "chaste",
+    "label": "Chaste",
+    "category": "personality",
+    "cost": 0,
+    "group": "triad_desire",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "just": 5,
+      "composed": 5,
+      "theologian": 5,
+      "holy_warrior": 5
+    }
+  },
+  {
+    "id": "temperate",
+    "label": "Temperate",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_appetite",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calm": 10,
+      "patient": 5,
+      "whole_of_body": 5,
+      "content": 5,
+      "diligent": 5
+    }
+  },
+  {
+    "id": "lustful",
+    "label": "Lustful",
+    "category": "personality",
+    "cost": 0,
+    "group": "triad_desire",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "gregarious": 5,
+      "lifestyle_reveler": 10,
+      "seducer": 10
+    }
+  },
+
+  // ── Triad 8: Composure ─────────────────────────────────────────────
+  // Left: oblivious | Middle: calm | Right: anxious
+  {
+    "id": "oblivious",
+    "label": "Oblivious",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_composure",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "trusting": 5,
+      "careless": 5
+    }
   },
   {
     "id": "calm",
     "label": "Calm",
     "category": "personality",
     "cost": 25,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["wrathful"],
-    "compat": {
-        "calm": 15,
-        "patient": 15,
-        "chaste": 5,
-        "temperate": 5,
-        "lazy": 5,
-        "wrathful": -30,
-        "impatient": -15
-      }
-  },
-  {
-    "id": "patient",
-    "label": "Patient",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["impatient"],
-    "compat": {
-        "patient": 15,
-        "calm": 15,
-        "stubborn": 5,
-        "temperate": 5,
-        "eccentric": 5,
-        "impatient": -30,
-        "wrathful": -5,
-        "fickle": -5
-      }
-  },
-  {
-    "id": "impatient",
-    "label": "Impatient",
-    "category": "personality",
-    "cost": 25,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["patient"],
-    "compat": {
-        "impatient": 5,
-        "wrathful": 5,
-        "brave": 5,
-        "patient": -15,
-        "calm": -5,
-        "temperate": -5,
-        "eccentric": -30
-      }
-  },
-  {
-    "id": "arrogant",
-    "label": "Arrogant",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["humble"],
-    "compat": {
-        "arrogant": 5,
-        "greedy": 15,
-        "ambitious": 15,
-        "beauty_good_1": 5,
-        "beauty_good_2": 5,
-        "beauty_good_3": 5,
-        "humble": -15,
-        "content": -15,
-        "generous": -5,
-        "beauty_bad_1": -5,
-        "beauty_bad_2": -5,
-        "beauty_bad_3": -5
-      }
-  },
-  {
-    "id": "humble",
-    "label": "Humble",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["arrogant"],
-    "compat": {
-        "humble": 30,
-        "content": 5,
-        "generous": 5,
-        "compassionate": 5,
-        "just": 5,
-        "arrogant": -30,
-        "greedy": -15,
-        "ambitious": -15
-      }
-  },
-  {
-    "id": "deceitful",
-    "label": "Deceitful",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["honest"],
-    "compat": {
-        "deceitful": 15,
-        "charming": 15,
-        "ambitious": 5,
-        "honest": -15,
-        "just": -15,
-        "trusting": -15,
-        "paranoid": -5,
-        "compassionate": -5,
-        "eccentric": -5
-      }
-  },
-  {
-    "id": "honest",
-    "label": "Honest",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["deceitful"],
-    "compat": {
-        "honest": 30,
-        "just": 15,
-        "trusting": 15,
-        "compassionate": 5,
-        "deceitful": -30,
-        "charming": -15,
-        "paranoid": -15
-      }
-  },
-  {
-    "id": "craven",
-    "label": "Craven",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["brave"],
-    "compat": {
-        "craven": 5,
-        "patient": 5,
-        "calm": 5,
-        "content": 5,
-        "brave": -15,
-        "wrathful": -30,
-        "sadistic": -30,
-        "callous": -15,
-        "impatient": -5,
-        "ambitious": -5,
-        "deceitful": -5
-      }
-  },
-  {
-    "id": "brave",
-    "label": "Brave",
-    "category": "personality",
-    "cost": 40,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["craven"],
-    "compat": {
-        "brave": 30,
-        "ambitious": 15,
-        "rowdy": 15,
-        "gallant": 5,
-        "lifestyle_blademaster": 5,
-        "strategist": 5,
-        "overseer": 5,
-        "craven": -30,
-        "lazy": -15,
-        "calm": -5,
-        "content": -5
-      }
-  },
-  {
-    "id": "shy",
-    "label": "Shy",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["gregarious"],
-    "compat": {
-        "shy": 15,
-        "content": 5,
-        "calm": 5,
-        "craven": 5,
-        "chaste": 5,
-        "celibate": 5,
-        "eccentric": 5,
-        "gregarious": -30,
-        "curious": -15,
-        "wrathful": -15,
-        "ambitious": -5,
-        "lustful": -5
-      }
-  },
-  {
-    "id": "gregarious",
-    "label": "Gregarious",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
+    "group": "triad_composure",
     "level": null,
     "genetic": false,
     "physical": false,
     "opposites": [],
     "compat": {
-        "gregarious": 30,
-        "curious": 15,
-        "charming": 30,
-        "compassionate": 15,
-        "honest": 15,
-        "lustful": 15,
-        "lifestyle_reveler": 15,
-        "diplomat": 15,
-        "family_first": 15,
-        "august": 15,
-        "gallant": 15,
-        "eccentric": 15,
-        "trusting": 5,
-        "shy": -15,
-        "callous": -15,
-        "sadistic": -15,
-        "chaste": -5,
-        "celibate": -5,
-        "craven": -5
-      }
+      "patient": 15,
+      "temperate": 5,
+      "composed": 10,
+      "cautious": 5,
+      "objective": 5
+    }
   },
   {
-    "id": "ambitious",
-    "label": "Ambitious",
+    "id": "anxious",
+    "label": "Anxious",
     "category": "personality",
-    "cost": 40,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["content"],
-    "compat": {
-        "ambitious": 5,
-        "diligent": 5,
-        "greedy": 5,
-        "brave": 5,
-        "rowdy": 5,
-        "content": -15,
-        "lazy": -15,
-        "craven": -15,
-        "generous": -5,
-        "trusting": -5
-      }
-  },
-  {
-    "id": "content",
-    "label": "Content",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["ambitious"],
-    "compat": {
-        "content": 15,
-        "lazy": 5,
-        "calm": 5,
-        "generous": 5,
-        "forgiving": 5,
-        "ambitious": -15,
-        "diligent": -5,
-        "greedy": -5,
-        "brave": -5,
-        "vengeful": -5
-      }
-  },
-  {
-    "id": "arbitrary",
-    "label": "Arbitrary",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
+    "cost": -15,
+    "group": "triad_composure",
     "level": null,
     "genetic": false,
     "physical": false,
     "opposites": [],
     "compat": {
-        "eccentric": 15,
-        "arbitrary": 5,
-        "fickle": 5,
-        "just": -15,
-        "zealous": -5,
-        "stubborn": -5,
-        "honest": -5
-      }
+      "paranoid": 10,
+      "indecisive": 5,
+      "cautious": 5,
+      "diffident": 5
+    }
   },
-  {
-    "id": "just",
-    "label": "Just",
-    "category": "personality",
-    "cost": 40,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["arbitrary"],
-    "compat": {
-        "just": 30,
-        "zealous": 15,
-        "honest": 15,
-        "compassionate": 15,
-        "gallant": 15,
-        "trusting": 5,
-        "brave": 5,
-        "arbitrary": -30,
-        "deceitful": -15,
-        "sadistic": -15,
-        "callous": -15,
-        "fickle": -5,
-        "greedy": -5,
-        "eccentric": -5
-      }
-  },
-  {
-    "id": "cynical",
-    "label": "Cynical",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["zealous"],
-    "compat": {
-        "cynical": 30,
-        "whole_of_body": 15,
-        "scholar": 15,
-        "theologian": 15,
-        "honest": 5,
-        "intellect_good_1": 5,
-        "intellect_good_2": 5,
-        "intellect_good_3": 5,
-        "shrewd": 5,
-        "zealous": -30,
-        "intellect_bad_1": -15,
-        "intellect_bad_2": -15,
-        "intellect_bad_3": -15,
-        "trusting": -5
-      }
-  },
-  {
-    "id": "zealous",
-    "label": "Zealous",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["cynical"],
-    "compat": {
-        "zealous": 30,
-        "just": 15,
-        "devoted": 15,
-        "ambitious": 5,
-        "trusting": 5,
-        "whole_of_body": 5,
-        "scholar": 5,
-        "theologian": 5,
-        "cynical": -30,
-        "craven": -15,
-        "content": -5,
-        "paranoid": -5,
-        "drunkard": -5,
-        "lifestyle_herbalist": -5,
-        "lifestyle_mystic": -5,
-        "eccentric": -5
-      }
-  },
+
+  // ── Triad 9: Trust ─────────────────────────────────────────────────
+  // Left: paranoid | Middle: cautious | Right: trusting
   {
     "id": "paranoid",
     "label": "Paranoid",
     "category": "personality",
-    "cost": -10,
-    "group": null,
+    "cost": -15,
+    "group": "triad_trust",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["trusting"],
+    "opposites": [],
     "compat": {
-        "paranoid": 5,
-        "cynical": 5,
-        "honest": 5,
-        "trusting": -30,
-        "forgiving": -15,
-        "deceitful": -30,
-        "sadistic": -30,
-        "callous": -30,
-        "vengeful": -30,
-        "gregarious": -15,
-        "lustful": -15,
-        "greedy": -15,
-        "ambitious": -15,
-        "eccentric": -15
-      }
+      "anxious": 10,
+      "cynical": 5,
+      "shadow_general": 5,
+      "schemer": 5,
+      "neglected": 5
+    }
+  },
+  {
+    "id": "cautious",
+    "label": "Cautious",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_trust",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calculating": 5,
+      "patient": 10,
+      "calm": 5,
+      "diligent": 5,
+      "cautious_leader": 15
+    }
   },
   {
     "id": "trusting",
     "label": "Trusting",
     "category": "personality",
-    "cost": 10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["paranoid"],
-    "compat": {
-        "trusting": 15,
-        "honest": 15,
-        "compassionate": 5,
-        "paranoid": -15,
-        "deceitful": -15,
-        "callous": -5,
-        "sadistic": -5,
-        "vengeful": -5
-      }
-  },
-  {
-    "id": "compassionate",
-    "label": "Compassionate",
-    "category": "personality",
-    "cost": 10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["callous","sadistic"],
-    "compat": {
-        "compassionate": 30,
-        "generous": 30,
-        "honest": 15,
-        "just": 15,
-        "forgiving": 15,
-        "trusting": 5,
-        "gregarious": 5,
-        "curious": 15,
-        "calm": 5,
-        "patient": 5,
-        "eccentric": 5,
-        "callous": -30,
-        "sadistic": -30,
-        "deceitful": -15,
-        "arbitrary": -15,
-        "vengeful": -15,
-        "greedy": -5,
-        "paranoid": -5,
-        "wrathful": -5,
-        "torturer": -5
-      }
-  },
-  {
-    "id": "callous",
-    "label": "Callous",
-    "category": "personality",
-    "cost": 40,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["compassionate","sadistic"],
-    "compat": {
-        "callous": 5,
-        "arbitrary": 5,
-        "compassionate": -30,
-        "curious": -5,
-        "generous": -30,
-        "just": -15,
-        "forgiving": -15,
-        "trusting": -5
-      }
-  },
-  {
-    "id": "sadistic",
-    "label": "Sadistic",
-    "category": "personality",
-    "cost": 40,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["compassionate","callous"],
-    "compat": {
-        "sadistic": 15,
-        "torturer": 5,
-        "callous": 5,
-        "arbitrary": 5,
-        "compassionate": -30,
-        "generous": -30,
-        "just": -15,
-        "forgiving": -15,
-        "trusting": -5,
-        "curious": -5
-      }
-  },
-  {
-    "id": "stubborn",
-    "label": "Stubborn",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["eccentric","fickle"],
-    "compat": {
-        "patient": 5,
-        "forgiving": -5,
-        "fickle": -5
-      }
-  },
-  {
-    "id": "fickle",
-    "label": "Fickle",
-    "category": "personality",
     "cost": 25,
-    "group": null,
+    "group": "triad_trust",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["eccentric","stubborn"],
+    "opposites": [],
     "compat": {
-        "fickle": 5,
-        "forgiving": 5,
-        "stubborn": -15
-      }
+      "compassionate": 10,
+      "forgiving": 10,
+      "gregarious": 5,
+      "honest": 5,
+      "well_cared_for": 10
+    }
   },
+
+  // ── Triad 10: Work Ethic ───────────────────────────────────────────
+  // Left: careless | Middle: diligent | Right: perfectionist
   {
-    "id": "eccentric",
-    "label": "Eccentric",
-    "category": "personality",
-    "cost": 15,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["stubborn","fickle"],
-    "compat": {
-        "patient": 30,
-        "arbitrary": 5,
-        "shy": 5,
-        "gregarious": 5,
-        "compassionate": 5,
-        "stubborn": -15,
-        "fickle": -15,
-        "zealous": -15,
-        "just": -15,
-        "wrathful": -15,
-        "impatient": -15,
-        "deceitful": -15,
-        "paranoid": -15
-      }
-  },
-  {
-    "id": "vengeful",
-    "label": "Vengeful",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["forgiving"],
-    "compat": {
-        "forgiving": -30,
-        "content": -15,
-        "compassionate": -5
-      }
-  },
-  {
-    "id": "forgiving",
-    "label": "Forgiving",
-    "category": "personality",
-    "cost": 25,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["vengeful"],
-    "compat": {
-        "forgiving": 30,
-        "compassionate": 15,
-        "honest": 15,
-        "generous": 5,
-        "just": 5,
-        "trusting": 5,
-        "gregarious": 5,
-        "calm": 5,
-        "patient": 5,
-        "vengeful": -30,
-        "callous": -15,
-        "sadistic": -15,
-        "deceitful": -15,
-        "arbitrary": -5,
-        "paranoid": -5,
-        "wrathful": -5
-      }
-  },
-  {
-    "id": "selfless",
-    "label": "Selfless",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["self_serving"],
-    "compat": {
-        "selfless": 15,
-        "compassionate": 15,
-        "generous": 15,
-        "humble": 10,
-        "forgiving": 5,
-        "just": 5,
-        "self_serving": -30,
-        "greedy": -15,
-        "callous": -10,
-        "arrogant": -10
-      }
-  },
-  {
-    "id": "self_serving",
-    "label": "Self-serving",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["selfless"],
-    "compat": {
-        "self_serving": 5,
-        "greedy": 15,
-        "ambitious": 10,
-        "arrogant": 10,
-        "deceitful": 5,
-        "selfless": -30,
-        "compassionate": -20,
-        "generous": -20,
-        "just": -10,
-        "humble": -10
-      }
-  },
-  {
-    "id": "excessive",
-    "label": "Excessive",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["temperate"],
-    "compat": {
-        "gluttonous": 10,
-        "drunkard": 10,
-        "lustful": 5,
-        "lifestyle_reveler": 10,
-        "temperate": -30,
-        "chaste": -10,
-        "content": -5,
-        "calm": -5
-      }
-  },
-  {
-    "id": "perceptive",
-    "label": "Perceptive",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["oblivious"],
-    "compat": {
-        "perceptive": 15,
-        "curious": 10,
-        "pensive": 10,
-        "paranoid": 5,
-        "shrewd": 10,
-        "diligent": 5,
-        "oblivious": -30,
-        "trusting": -5
-      }
-  },
-  {
-    "id": "oblivious",
-    "label": "Oblivious",
+    "id": "careless",
+    "label": "Careless",
     "category": "personality",
     "cost": -15,
-    "group": null,
+    "group": "triad_work_ethic",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["perceptive"],
+    "opposites": [],
     "compat": {
-        "trusting": 5,
-        "content": 5,
-        "perceptive": -30,
-        "paranoid": -15,
-        "curious": -10
-      }
+      "lazy": 5,
+      "reckless": 5,
+      "oblivious": 5
+    }
   },
   {
-    "id": "stoic",
-    "label": "Stoic",
+    "id": "diligent",
+    "label": "Diligent",
     "category": "personality",
     "cost": 25,
-    "group": null,
+    "group": "triad_work_ethic",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["expressive"],
+    "opposites": [],
     "compat": {
-        "stoic": 15,
-        "calm": 15,
-        "patient": 10,
-        "cynical": 10,
-        "stubborn": 5,
-        "expressive": -30,
-        "zealous": -5,
-        "gregarious": -10
-      }
+      "ambitious": 10,
+      "patient": 5,
+      "brave": 5,
+      "whole_of_body": 5,
+      "scholar": 5,
+      "theologian": 5,
+      "pensive": 5,
+      "architect": 5,
+      "administrator": 5
+    }
   },
   {
-    "id": "expressive",
-    "label": "Expressive",
+    "id": "perfectionist",
+    "label": "Perfectionist",
     "category": "personality",
-    "cost": 15,
-    "group": null,
+    "cost": 0,
+    "group": "triad_work_ethic",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["stoic"],
+    "opposites": [],
     "compat": {
-        "expressive": 10,
-        "gregarious": 15,
-        "compassionate": 10,
-        "charming": 10,
-        "stoic": -30,
-        "calm": -10,
-        "stubborn": -5
-      }
+      "scholar": 5,
+      "diligent": 5,
+      "rigid": 5
+    }
   },
+
+  // ── Triad 11: Patience ─────────────────────────────────────────────
+  // Left: impatient | Middle: patient | Right: complacent
   {
-    "id": "calculating",
-    "label": "Calculating",
-    "category": "personality",
-    "cost": 30,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["impulsive"],
-    "compat": {
-        "calculating": 15,
-        "patient": 15,
-        "shrewd": 15,
-        "cynical": 10,
-        "ambitious": 5,
-        "impulsive": -30,
-        "trusting": -10,
-        "honest": -5
-      }
-  },
-  {
-    "id": "impulsive",
-    "label": "Impulsive",
-    "category": "personality",
-    "cost": -5,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["calculating"],
-    "compat": {
-        "brave": 10,
-        "wrathful": 5,
-        "rowdy": 10,
-        "impatient": 5,
-        "calculating": -30,
-        "patient": -20,
-        "stubborn": -10
-      }
-  },
-  {
-    "id": "worldly",
-    "label": "Worldly",
-    "category": "personality",
-    "cost": 25,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["naive"],
-    "compat": {
-        "worldly": 15,
-        "curious": 15,
-        "gregarious": 10,
-        "cynical": 5,
-        "lifestyle_traveler": 15,
-        "naive": -30,
-        "trusting": -10
-      }
-  },
-  {
-    "id": "naive",
-    "label": "Naive",
-    "category": "personality",
-    "cost": -10,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["worldly"],
-    "compat": {
-        "trusting": 10,
-        "compassionate": 5,
-        "zealous": 5,
-        "worldly": -30,
-        "cynical": -15,
-        "curious": -5
-      }
-  },
-  {
-    "id": "fateful",
-    "label": "Fateful",
-    "category": "personality",
-    "cost": 15,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["defiant"],
-    "compat": {
-        "fateful": 10,
-        "zealous": 15,
-        "content": 10,
-        "humble": 5,
-        "compassionate": 5,
-        "defiant": -30,
-        "ambitious": -10,
-        "stubborn": -5
-      }
-  },
-  {
-    "id": "defiant",
-    "label": "Defiant",
-    "category": "personality",
-    "cost": 20,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["fateful"],
-    "compat": {
-        "defiant": 10,
-        "brave": 10,
-        "stubborn": 15,
-        "ambitious": 10,
-        "wrathful": 5,
-        "fateful": -30,
-        "content": -15,
-        "humble": -5
-      }
-  },
-  {
-    "id": "oathbound",
-    "label": "Oathbound",
-    "category": "personality",
-    "cost": 25,
-    "group": null,
-    "level": null,
-    "genetic": false,
-    "physical": false,
-    "opposites": ["oathbreaking"],
-    "compat": {
-        "oathbound": 20,
-        "honest": 20,
-        "just": 15,
-        "stubborn": 10,
-        "zealous": 10,
-        "humble": 5,
-        "oathbreaking": -30,
-        "deceitful": -20,
-        "ambitious": -5
-      }
-  },
-  {
-    "id": "oathbreaking",
-    "label": "Oathbreaking",
+    "id": "impatient",
+    "label": "Impatient",
     "category": "personality",
     "cost": -15,
-    "group": null,
+    "group": "triad_patience",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["oathbound"],
+    "opposites": [],
     "compat": {
-        "deceitful": 20,
-        "ambitious": 10,
-        "arrogant": 5,
-        "oathbound": -30,
-        "honest": -20,
-        "just": -20,
-        "zealous": -10
-      }
+      "reckless": 5,
+      "impulsive": 5,
+      "wrathful": 5
+    }
   },
   {
-    "id": "reverent",
-    "label": "Reverent",
+    "id": "patient",
+    "label": "Patient",
     "category": "personality",
-    "cost": 20,
-    "group": null,
+    "cost": 25,
+    "group": "triad_patience",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["rude"],
+    "opposites": [],
     "compat": {
-        "reverent": 15,
-        "zealous": 15,
-        "humble": 10,
-        "just": 5,
-        "compassionate": 5,
-        "rude": -30,
-        "arrogant": -10,
-        "arbitrary": -5
-      }
+      "calm": 15,
+      "cautious": 10,
+      "diligent": 5,
+      "composed": 5,
+      "temperate": 5
+    }
   },
   {
-    "id": "rude",
-    "label": "Rude",
+    "id": "complacent",
+    "label": "Complacent",
     "category": "personality",
-    "cost": -10,
-    "group": null,
+    "cost": 0,
+    "group": "triad_patience",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["reverent"],
+    "opposites": [],
     "compat": {
-        "honest": 10,
-        "wrathful": 5,
-        "arrogant": 5,
-        "reverent": -30,
-        "gregarious": -15,
-        "compassionate": -10,
-        "humble": -10
-      }
+      "lazy": 10,
+      "content": 5
+    }
+  },
+
+  // ── Triad 12: Honesty ──────────────────────────────────────────────
+  // Left: deceitful | Middle: honest | Right: easily_influenced
+  {
+    "id": "deceitful",
+    "label": "Deceitful",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_honesty",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "manipulative": 10,
+      "calculating": 5,
+      "schemer": 10,
+      "seducer": 5,
+      "shadow_general": 5,
+      "infiltration_specialist": 5
+    }
+  },
+  {
+    "id": "honest",
+    "label": "Honest",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_honesty",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 5,
+      "just": 15,
+      "humble": 10,
+      "compassionate": 5,
+      "authoritative": 5
+    }
   },
   {
     "id": "easily_influenced",
     "label": "Easily Influenced",
     "category": "personality",
     "cost": -15,
-    "group": null,
+    "group": "triad_honesty",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["stubborn", "defiant"],
+    "opposites": [],
     "compat": {
-        "gullible": 20,
-        "trusting": 10,
-        "naive": 10,
-        "fickle": 15,
-        "stubborn": -25,
-        "defiant": -20,
-        "oathbound": -10
-      }
+      "trusting": 5,
+      "push_over": 10,
+      "oblivious": 5
+    }
   },
+
+  // ── Triad 13: Presence ─────────────────────────────────────────────
+  // Left: awkward | Middle: charismatic | Right: manipulative
   {
-    "id": "gullible",
-    "label": "Gullible",
+    "id": "awkward",
+    "label": "Awkward",
     "category": "personality",
     "cost": -15,
-    "group": null,
+    "group": "triad_presence",
     "level": null,
     "genetic": false,
     "physical": false,
-    "opposites": ["cynical", "perceptive"],
+    "opposites": [],
     "compat": {
-        "easily_influenced": 20,
-        "trusting": 15,
-        "naive": 15,
-        "cynical": -25,
-        "perceptive": -20,
-        "calculating": -15
-      }
-  }
+      "shy": 5,
+      "scholar": 5,
+      "pensive": 5
+    }
+  },
+  {
+    "id": "charismatic",
+    "label": "Charismatic",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_presence",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "gregarious": 15,
+      "brave": 5,
+      "authoritative": 10,
+      "diplomat": 10,
+      "august": 5,
+      "grand_marshal": 5,
+      "charming": 10
+    }
+  },
+  {
+    "id": "manipulative",
+    "label": "Manipulative",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_presence",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "deceitful": 10,
+      "calculating": 5,
+      "schemer": 15,
+      "seducer": 10
+    }
+  },
+
+  // ── Triad 14: Empathy ──────────────────────────────────────────────
+  // Left: callous | Middle: compassionate | Right: bleeding_heart
+  {
+    "id": "callous",
+    "label": "Callous",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_empathy",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calculating": 5,
+      "authoritative": 5,
+      "cynical": 5,
+      "torturer": 10
+    }
+  },
+  {
+    "id": "compassionate",
+    "label": "Compassionate",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_empathy",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "humble": 10,
+      "honest": 5,
+      "just": 5,
+      "forgiving": 10,
+      "trusting": 10,
+      "savior": 15,
+      "well_cared_for": 5,
+      "elem_healing": 10
+    }
+  },
+  {
+    "id": "bleeding_heart",
+    "label": "Bleeding Heart",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_empathy",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "forgiving": 5,
+      "trusting": 5,
+      "push_over": 10,
+      "savior": 10
+    }
+  },
+
+  // ── Triad 15: Authority ────────────────────────────────────────────
+  // Left: push_over | Middle: authoritative | Right: wrathful
+  {
+    "id": "push_over",
+    "label": "Push Over",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_authority",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "bleeding_heart": 10,
+      "easily_influenced": 10,
+      "trusting": 5
+    }
+  },
+  {
+    "id": "authoritative",
+    "label": "Authoritative",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_authority",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 10,
+      "ambitious": 5,
+      "charismatic": 10,
+      "august": 10,
+      "conqueror": 10,
+      "grand_marshal": 10,
+      "iron_bulwark": 5
+    }
+  },
+  {
+    "id": "wrathful",
+    "label": "Wrathful",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_authority",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "vengeful": 10,
+      "stubborn": 5,
+      "reckless": 5,
+      "reaver": 10
+    }
+  },
+
+  // ── Triad 16: Experience ───────────────────────────────────────────
+  // Left: naive | Middle: experienced | Right: worldly
+  {
+    "id": "naive",
+    "label": "Naive",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_experience",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "trusting": 5,
+      "oblivious": 5,
+      "easily_influenced": 5
+    }
+  },
+  {
+    "id": "experienced",
+    "label": "Experienced",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_experience",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calculating": 5,
+      "cautious": 5,
+      "scholar": 5,
+      "strategist": 5,
+      "overseer": 5,
+      "logistician": 5
+    }
+  },
+  {
+    "id": "worldly",
+    "label": "Worldly",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_experience",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "open_minded": 10,
+      "diplomat": 10,
+      "lifestyle_traveler": 15,
+      "gregarious": 5
+    }
+  },
+
+  // ── Triad 17: Faith ────────────────────────────────────────────────
+  // Left: cynical | Middle: zealous | Right: fanatic
+  {
+    "id": "cynical",
+    "label": "Cynical",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_faith",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calculating": 5,
+      "objective": 5,
+      "paranoid": 5,
+      "elem_dark": 5,
+      "schemer": 5
+    }
+  },
+  {
+    "id": "zealous",
+    "label": "Zealous",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_faith",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 5,
+      "authoritative": 5,
+      "theologian": 10,
+      "holy_warrior": 15,
+      "elem_light": 5
+    }
+  },
+  {
+    "id": "fanatic",
+    "label": "Fanatic",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_faith",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "stubborn": 5,
+      "authoritative": 5,
+      "theologian": 5,
+      "holy_warrior": 10,
+      "iron_bulwark": 5
+    }
+  },
+
+  // ── Triad 18: Flexibility ──────────────────────────────────────────
+  // Left: fickle | Middle: open_minded | Right: stubborn
+  {
+    "id": "fickle",
+    "label": "Fickle",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_flexibility",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "impulsive": 5,
+      "charismatic": 5,
+      "lifestyle_reveler": 5
+    }
+  },
+  {
+    "id": "open_minded",
+    "label": "Open Minded",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_flexibility",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "worldly": 10,
+      "scholar": 5,
+      "diplomat": 5,
+      "flexible_leader": 10,
+      "lifestyle_traveler": 5
+    }
+  },
+  {
+    "id": "stubborn",
+    "label": "Stubborn",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_flexibility",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 5,
+      "diligent": 5,
+      "unyielding_defender": 10,
+      "iron_bulwark": 5
+    }
+  },
+
+  // ── Triad 19: Justice ──────────────────────────────────────────────
+  // Left: arbitrary | Middle: just | Right: rigid
+  {
+    "id": "arbitrary",
+    "label": "Arbitrary",
+    "category": "personality",
+    "cost": 0,
+    "group": "triad_justice",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "impulsive": 5,
+      "cynical": 5
+    }
+  },
+  {
+    "id": "just",
+    "label": "Just",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_justice",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "honest": 15,
+      "humble": 5,
+      "compassionate": 5,
+      "brave": 5,
+      "authoritative": 5,
+      "objective": 10,
+      "elem_light": 5
+    }
+  },
+  {
+    "id": "rigid",
+    "label": "Rigid",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_justice",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "stubborn": 5,
+      "perfectionist": 5,
+      "diligent": 5,
+      "fanatic": 5
+    }
+  },
+
+  // ── Triad 20: Expression ───────────────────────────────────────────
+  // Left: stoic | Middle: composed | Right: expressive
+  {
+    "id": "stoic",
+    "label": "Stoic",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_expression",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "brave": 5,
+      "patient": 5,
+      "calculating": 5,
+      "insensible": 5
+    }
+  },
+  {
+    "id": "composed",
+    "label": "Composed",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_expression",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calm": 10,
+      "patient": 5,
+      "authoritative": 5,
+      "cautious": 5,
+      "diplomat": 5,
+      "shadow_general": 5
+    }
+  },
+  {
+    "id": "expressive",
+    "label": "Expressive",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_expression",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "charismatic": 5,
+      "gregarious": 5,
+      "brave": 5,
+      "lifestyle_reveler": 5,
+      "performance": 5
+    }
+  },
+
+  // ── Triad 21: Vengeance ────────────────────────────────────────────
+  // Left: vengeful | Middle: objective | Right: forgiving
+  {
+    "id": "vengeful",
+    "label": "Vengeful",
+    "category": "personality",
+    "cost": -15,
+    "group": "triad_vengeance",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "wrathful": 10,
+      "stubborn": 5,
+      "cynical": 5,
+      "reaver": 5
+    }
+  },
+  {
+    "id": "objective",
+    "label": "Objective",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_vengeance",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "calculating": 5,
+      "just": 10,
+      "calm": 5,
+      "scholar": 5,
+      "strategist": 5
+    }
+  },
+  {
+    "id": "forgiving",
+    "label": "Forgiving",
+    "category": "personality",
+    "cost": 25,
+    "group": "triad_vengeance",
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": {
+      "compassionate": 10,
+      "humble": 5,
+      "trusting": 10,
+      "content": 5,
+      "patient": 5
+    }
+  },
 ];
 
 const PERSONALITY_STATS = {
-  lustful: { intrigue: 2, charisma: 1, deception: 1 },
-  chaste: { learning: 2, wisdom: 1 },
-  gluttonous: { stewardship: -2, constitution: -1, survival: -1 },
-  temperate: { stewardship: 2, constitution: 1, wisdom: 1 },
-  greedy: { diplomacy: -2, investigation: 1 },
-  generous: { diplomacy: 3, charisma: 1, persuasion: 1 },
-  lazy: { stewardship: -1, martial: -1, intrigue: -1, diplomacy: -1, learning: -1, constitution: -1, athletics: -1 },
-  diligent: { stewardship: 3, diplomacy: 2, learning: 3, intelligence: 1, wisdom: 1 },
-  wrathful: { martial: 3, intrigue: -1, diplomacy: -1, strength: 1, intimidation: 2 },
-  calm: { intrigue: 1, diplomacy: 1, wisdom: 2, insight: 1 },
-  patient: { learning: 2, wisdom: 2, insight: 2 },
-  impatient: { learning: -2, wisdom: -1 },
-  deceitful: { intrigue: 4, diplomacy: -2, deception: 3, insight: 1 },
-  honest: { intrigue: -4, diplomacy: 2, persuasion: 1 },
-  craven: { martial: -2, intrigue: 2, prowess: -3, strength: -1, dexterity: -1, constitution: -1 },
-  brave: { martial: 2, prowess: 3, strength: 1, dexterity: 1, constitution: 1, athletics: 1, intimidation: 1 },
-  shy: { diplomacy: -2, learning: 1, charisma: -1, persuasion: -1 },
-  gregarious: { diplomacy: 2, charisma: 1, performance: 1, persuasion: 1 },
-  ambitious: { stewardship: 1, martial: 1, intrigue: 1, diplomacy: 1, learning: 1, prowess: 1, charisma: 1, persuasion: 1 },
-  content: { intrigue: -1, learning: 2, wisdom: 1 },
-  arbitrary: { stewardship: -2, intrigue: 3, learning: -1, wisdom: -1 },
-  just: { stewardship: 2, intrigue: -3, learning: 1, wisdom: 1, insight: 1 },
-  cynical: { intrigue: 2, learning: 2, insight: 2, deception: 1 },
-  zealous: { martial: 2, wisdom: 1, religion: 3, persuasion: 1 },
-  paranoid: { intrigue: 3, diplomacy: -1, perception: 2, insight: 1 },
-  trusting: { intrigue: -2, diplomacy: 2, insight: -1 },
-  compassionate: { intrigue: -2, diplomacy: 2, insight: 2, medicine: 1, animal_handling: 1 },
-  callous: { intrigue: 2, diplomacy: -2, insight: -1 },
-  sadistic: { intrigue: 2, prowess: 4, intimidation: 2 },
-  stubborn: { stewardship: 3, constitution: 1 },
-  fickle: { stewardship: -2, intrigue: 1, diplomacy: 2, wisdom: -1, charisma: -1 },
-  eccentric: { diplomacy: -2, learning: 2, intelligence: 1 },
-  vengeful: { intrigue: 2, diplomacy: -2, prowess: 2, intimidation: 1, insight: 1 },
-  forgiving: { intrigue: -2, diplomacy: 2, learning: 1, charisma: 1, persuasion: 1 },
-  selfless: { diplomacy: 2, charisma: 1, insight: 1, persuasion: 1 },
-  self_serving: { intrigue: 2, stewardship: 1, deception: 1 },
-  excessive: { stewardship: -2, constitution: -1, wisdom: -1 },
-  perceptive: { intrigue: 1, wisdom: 1, perception: 3, insight: 2 },
-  oblivious: { wisdom: -1, perception: -2, insight: -2 },
-  stoic: { constitution: 1, wisdom: 1, insight: 1, intimidation: 1 },
-  expressive: { diplomacy: 1, charisma: 2, performance: 2, persuasion: 1 },
-  calculating: { intrigue: 2, intelligence: 1, investigation: 1, insight: 1 },
-  impulsive: { intrigue: -1, wisdom: -1, dexterity: 1, athletics: 1 },
-  worldly: { diplomacy: 2, intrigue: 1, intelligence: 1, history: 1, persuasion: 1 },
-  naive: { intrigue: -2, insight: -1, deception: -2 },
-  fateful: { wisdom: 1, religion: 1, insight: 1 },
-  defiant: { intrigue: 1, constitution: 1, strength: 1, intimidation: 1 },
-  oathbound: { stewardship: 2, diplomacy: 1, wisdom: 1, persuasion: 1 },
-  oathbreaking: { intrigue: 2, diplomacy: -2, deception: 2 },
-  reverent: { diplomacy: 1, wisdom: 1, religion: 2, insight: 1 },
-  rude: { diplomacy: -2, charisma: -1, intimidation: 1 },
-  easily_influenced: { intrigue: -2, wisdom: -1, diplomacy: 1 },
-  gullible: { intrigue: -3, insight: -2, wisdom: -1 }
+  // Triad 1: Social
+  shy:               { charisma: -1, diplomacy: -1, persuasion: -1 },
+  gregarious:        { charisma: 2, diplomacy: 1, persuasion: 1, performance: 1 },
+  eccentric:         { charisma: -1, insight: 1, intelligence: 1, arcana: 1 },
+
+  // Triad 2: Courage
+  craven:            { martial: -2, prowess: -1, athletics: -1, intimidation: -1 },
+  brave:             { martial: 1, prowess: 1, athletics: 1, intimidation: 1 },
+  reckless:          { martial: 1, prowess: 1, wisdom: -2, perception: -1 },
+
+  // Triad 3: Drive
+  lazy:              { stewardship: -1, martial: -1, constitution: -1, athletics: -1 },
+  ambitious:         { stewardship: 1, martial: 1, intelligence: 1, charisma: 1 },
+  greedy:            { stewardship: 1, intrigue: 1, diplomacy: -1 },
+
+  // Triad 4: Appetite
+  gluttonous:        { constitution: 1, charisma: -1, athletics: -1 },
+  content:           { wisdom: 1, charisma: 1, constitution: 1 },
+  insensible:        { constitution: -1, charisma: -1, performance: -1 },
+
+  // Triad 5: Self-Worth
+  diffident:         { charisma: -1, diplomacy: -1, persuasion: -1, intimidation: -1 },
+  humble:            { wisdom: 1, diplomacy: 1, insight: 1, charisma: 1 },
+  arrogant:          { charisma: 1, intimidation: 1, diplomacy: -1, wisdom: -1 },
+
+  // Triad 6: Decision
+  indecisive:        { wisdom: -1, intelligence: -1, martial: -1 },
+  calculating:       { intelligence: 2, insight: 2, wisdom: 1, investigation: 1 },
+  impulsive:         { athletics: 1, dexterity: 1, wisdom: -2, insight: -1 },
+
+  // Triad 7: Desire
+  chaste:            { wisdom: 1, religion: 1, constitution: 1 },
+  temperate:         { wisdom: 1, constitution: 2, charisma: 1 },
+  lustful:           { charisma: 1, diplomacy: 1, constitution: -1 },
+
+  // Triad 8: Composure
+  oblivious:         { perception: -2, insight: -2 },
+  calm:              { wisdom: 1, charisma: 1, insight: 1, diplomacy: 1 },
+  anxious:           { perception: 1, insight: 1, wisdom: -1, charisma: -1 },
+
+  // Triad 9: Trust
+  paranoid:          { perception: 2, intrigue: 1, insight: 1, diplomacy: -2, charisma: -1 },
+  cautious:          { wisdom: 2, insight: 2, perception: 1 },
+  trusting:          { charisma: 1, diplomacy: 1, persuasion: 1, insight: -1 },
+
+  // Triad 10: Work Ethic
+  careless:          { stewardship: -1, intelligence: -1, perception: -1 },
+  diligent:          { stewardship: 1, learning: 1, intelligence: 1, investigation: 1 },
+  perfectionist:     { learning: 1, intelligence: 1, investigation: 1 },
+
+  // Triad 11: Patience
+  impatient:         { martial: 1, dexterity: 1, wisdom: -1, insight: -1 },
+  patient:           { wisdom: 2, insight: 1, intelligence: 1 },
+  complacent:        { constitution: -1, martial: -1, wisdom: -1 },
+
+  // Triad 12: Honesty
+  deceitful:         { intrigue: 2, deception: 2, charisma: 1 },
+  honest:            { charisma: 1, diplomacy: 1, persuasion: 1, wisdom: 1 },
+  easily_influenced: { charisma: -1, wisdom: -1, insight: -1 },
+
+  // Triad 13: Presence
+  awkward:           { charisma: -2, diplomacy: -1, persuasion: -1 },
+  charismatic:       { charisma: 3, diplomacy: 1, persuasion: 2, performance: 1 },
+  manipulative:      { intrigue: 2, deception: 2, insight: 2, charisma: 1 },
+
+  // Triad 14: Empathy
+  callous:           { intrigue: 1, martial: 1, intimidation: 1, charisma: -1 },
+  compassionate:     { medicine: 1, diplomacy: 1, charisma: 1, wisdom: 1, persuasion: 1 },
+  bleeding_heart:    { medicine: 1, diplomacy: 1, wisdom: -1, insight: 1 },
+
+  // Triad 15: Authority
+  push_over:         { martial: -1, diplomacy: -1, intimidation: -2, charisma: -1 },
+  authoritative:     { martial: 1, intimidation: 2, charisma: 1, diplomacy: 1 },
+  wrathful:          { intimidation: 2, martial: 1, wisdom: -1, diplomacy: -2 },
+
+  // Triad 16: Experience
+  naive:             { insight: -1, perception: -1, intelligence: -1 },
+  experienced:       { wisdom: 2, insight: 2, history: 1, intelligence: 1 },
+  worldly:           { wisdom: 1, diplomacy: 1, insight: 1, survival: 1, history: 1 },
+
+  // Triad 17: Faith
+  cynical:           { intrigue: 1, intelligence: 1, insight: 1, wisdom: 1 },
+  zealous:           { religion: 2, martial: 1, intimidation: 1, wisdom: 1 },
+  fanatic:           { religion: 3, intimidation: 2, martial: 1, wisdom: -1 },
+
+  // Triad 18: Flexibility
+  fickle:            { dexterity: 1, charisma: 1, wisdom: -1, intelligence: -1 },
+  open_minded:       { diplomacy: 1, insight: 1, wisdom: 1, learning: 1 },
+  stubborn:          { constitution: 1, martial: 1, wisdom: 1, diplomacy: -1 },
+
+  // Triad 19: Justice
+  arbitrary:         { intelligence: 1 },
+  just:              { wisdom: 1, diplomacy: 1, insight: 1, charisma: 1 },
+  rigid:             { stewardship: 1, martial: 1, intelligence: 1, diplomacy: -1, wisdom: -1 },
+
+  // Triad 20: Expression
+  stoic:             { constitution: 1, wisdom: 1, insight: 1, charisma: -1 },
+  composed:          { wisdom: 1, charisma: 1, diplomacy: 1, insight: 1 },
+  expressive:        { charisma: 2, performance: 2, persuasion: 1 },
+
+  // Triad 21: Vengeance
+  vengeful:          { intrigue: 1, martial: 1, wisdom: -1, diplomacy: -1 },
+  objective:         { wisdom: 2, intelligence: 1, insight: 1, investigation: 1 },
+  forgiving:         { charisma: 1, diplomacy: 1, wisdom: 1 },
 };
 
 const PERSONALITY_FLAVOR = {
-  lustful: '{name} is drawn to passion and desire — wherever they walk, hearts follow, and sometimes get broken along the way.',
-  chaste: '{name} holds firm to a life of restraint. Whether out of principle or devotion, the flesh holds little temptation for them.',
-  gluttonous: 'The finest foods, the fullest cups — {name} never learned the art of enough. A character trait that warms the heart and strains the purse.',
-  temperate: '{name} drinks from life in measured sips. Self-discipline is their quiet superpower.',
-  greedy: 'Gold speaks first with {name}. Every deal has a price, and they have already calculated theirs.',
-  generous: '{name} gives freely — of coin, of time, of warmth. The world is a little brighter for it.',
-  lazy: 'Why do today what can be done never? {name} has mastered the art of the comfortable pause.',
-  diligent: '{name} does not rest when work remains. Their candles burn late, and their callouses run deep.',
-  wrathful: 'Push {name} too far and the calm breaks like a storm. Their anger, when it comes, is not soon forgotten.',
-  calm: '{name} weathers every tempest with the patience of old stone. Rarely flustered, rarely shaken.',
-  patient: '{name} waits. And waits. And when the moment arrives, they are ready.',
-  impatient: 'Waiting is a kind of torture for {name}. The world never moves fast enough for their liking.',
-  arrogant: '{name} knows they are exceptional — and is not shy about it. Others may find it grating. {name} calls it honesty.',
-  humble: '{name} does not seek the spotlight. They let their deeds speak, quietly and without fanfare.',
-  deceitful: '{name} wears many faces. They are not dishonest out of malice perhaps — but the truth is a tool they use sparingly.',
-  honest: '{name} speaks plainly, sometimes to a fault. What you see is what you get.',
-  craven: 'When danger looms, {name}\'s feet find themselves eager for the door. Call it survival instinct; others call it cowardice.',
-  brave: '{name} walks into the dark without checking for candles first. Courage, or perhaps a lack of imagination.',
-  shy: '{name} takes time to warm to strangers. Beneath the quiet, there is often more than meets the eye.',
-  gregarious: '{name} never met a room they could not work. Conversation is their native language.',
-  ambitious: '{name} eyes every horizon with hunger. Where others see a ceiling, they see a floor.',
-  content: '{name} does not chase the wind. They have found peace with who they are and where they stand.',
-  arbitrary: '{name}\'s decisions can seem unpredictable. They march to a rhythm others can\'t quite hear.',
-  just: '{name} believes in balance. Right and wrong are not abstractions to them — they are standards to be lived by.',
-  cynical: '{name} has seen too much to be surprised. The world is what it is, and they are not fooled by its kindnesses.',
-  zealous: '{name} is deeply devoted to their faith. Perhaps the light of their god shines brightly on them — or perhaps it burns a little.',
-  paranoid: '{name} trusts carefully — perhaps too carefully. Every shadow hides a dagger in their mind.',
-  trusting: '{name} sees the good in people, even when they probably should not. An admirable quality, if sometimes a dangerous one.',
-  compassionate: '{name} feels the weight of others\' suffering. It is not always easy to carry, but they carry it anyway.',
-  callous: '{name} does not lose sleep over others\' troubles. They have learned to separate emotion from necessity.',
-  sadistic: '{name} finds a certain satisfaction in others\' pain. A dark corner of the soul that does not get much sunlight.',
-  stubborn: '{name} once makes up their mind, kingdoms could not move them. Whether that is strength or flaw depends on the day.',
-  fickle: '{name} changes course like wind changes direction — often and without warning. Adaptable, some say. Unreliable, say others.',
-  eccentric: '{name} defies easy description. They live by their own logic, and occasionally it is brilliant.',
-  vengeful: '{name} does not forget. An offense made against them is quietly filed away and never discarded.',
-  forgiving: '{name} lets go of grievances, though not always easily. They believe in second chances.',
-  selfless: '{name} gives without tallying the cost. The needs of others weigh heavier than their own, and they have never resented it.',
-  self_serving: '{name} tends to their own interests first. It is not malice — it is simply their nature, and a practical one at that.',
-  excessive: '{name} does not know when to stop. Whatever they pursue, they pursue with a thoroughness that borders on too much.',
-  perceptive: '{name} sees what others miss. The faint tells, the hesitated breath, the slight shift of weight — all filed away quietly.',
-  oblivious: '{name} moves through the world with a certain comfortable unawareness. What they do not notice cannot trouble them.',
-  stoic: '{name} does not wear their heart on their sleeve. They endure, they persevere, and they rarely show the cost.',
-  expressive: '{name} wears every feeling plainly. There is no reading between the lines — what they feel, you will know.',
-  calculating: '{name} measures before they cut. Every decision is a puzzle considered carefully before the pieces fall.',
-  impulsive: '{name} acts, then thinks. It has served them sometimes. Other times, they are still living with the consequences.',
-  worldly: '{name} has moved in enough circles to understand how the world works. Experience does not lie.',
-  naive: '{name} has not yet been properly disappointed by the world. There is something almost beautiful in that.',
-  fateful: '{name} believes the path was laid before they arrived. They do not resist destiny — they try to read it.',
-  defiant: '{name} does not accept what others say must be. Limits, fates, edicts — all of them feel like challenges to them.',
-  oathbound: '{name} does not give their word lightly. And when they do, they mean every syllable of it.',
-  oathbreaking: '{name} understands that vows are made under circumstances that change. Principles, for them, have flexibility built in.',
-  reverent: '{name} carries a deep respect for what came before. Tradition, people, the sacred — they do not treat these things lightly.',
-  rude: '{name} says what they mean, and means what they say, at full volume and without ceremony. It is not always welcome.',
-  easily_influenced: '{name} is a little too quick to adopt the views of whoever last spoke to them. They mean well — they are just not the most stable of anchors.',
-  gullible: '{name} tends to believe what they are told. People who know this have occasionally taken advantage of it.'
+  // Triad 1: Social
+  shy:               '{name} does not seek out company. They find crowds loud and conversation costly, and they prefer it that way.',
+  gregarious:        '{name} draws people in without effort. Wherever they go, a gathering tends to follow.',
+  eccentric:         '{name} operates by rules no one else quite understands. Somehow it works.',
+
+  // Triad 2: Courage
+  craven:            '{name} avoids danger with the same commitment others pursue it. Survival is its own strategy.',
+  brave:             '{name} does not hesitate when hesitation would cost them. Fear is a feeling they have learned to move through.',
+  reckless:          '{name} acts before the thought is finished. What looks like courage is often just a shorter fuse.',
+
+  // Triad 3: Drive
+  lazy:              '{name} finds effort exhausting in principle. They prefer to let things arrive on their own time.',
+  ambitious:         '{name} does not sit still. There is always a higher position, a better outcome, a further reach. They intend to get there.',
+  greedy:            '{name} wants more. More coin, more land, more of whatever is on the table. Enough is a word they use for other people.',
+
+  // Triad 4: Appetite
+  gluttonous:        '{name} has a considerable appetite. For food, comfort, pleasure, and all the things worth having in abundance.',
+  content:           '{name} is not driven by lust nor are they devoid of passion, {name} is simply...content.',
+  insensible:        '{name} has no real interest in pleasure or comfort. They eat to function and rest to continue. Others find this efficient, or unsettling, depending on the meal.',
+
+  // Triad 5: Self-Worth
+  diffident:         '{name} does not trust their own judgment. They second-guess what is already decided and hesitate over what is not.',
+  humble:            '{name} does not carry themselves as though they are owed anything. That clarity tends to earn them more than arrogance would.',
+  arrogant:          '{name} has a high opinion of their own abilities. Whether it is earned is a separate question from whether they hold it.',
+
+  // Triad 6: Decision
+  indecisive:        '{name} weighs every option until the moment for choosing has passed. The problem is not the thinking, it is committing to the answer.',
+  calculating:       '{name} does not act on feeling. They measure, weigh, and choose the path most likely to succeed. Sentiment is a variable they account for and set aside.',
+  impulsive:         '{name} does not wait for the full picture. They move on instinct and sort out the rest afterward.',
+
+  // Triad 7: Desire
+  chaste:            '{name} holds desire at arm\'s length. Whether this is discipline or disposition is a private matter.',
+  temperate:         '{name} is not ruled by appetite. They enjoy what is good and set aside what is excessive. This makes them reliable in ways that matter.',
+  lustful:           '{name} has a pronounced appetite for pleasure. They do not pretend otherwise.',
+
+  // Triad 8: Composure
+  oblivious:         '{name} misses things. Not from stupidity, but from a persistent inattention to what is right in front of them.',
+  calm:              '{name} does not rattle easily. Whatever is happening, they keep their footing and think clearly. People notice this.',
+  anxious:           '{name} is never quite at rest. There is always something that could go wrong, and they are usually thinking about it.',
+
+  // Triad 9: Trust
+  paranoid:          '{name} trusts no one on instinct. Every offer is a trap until proven otherwise. This has kept them safe and made them exhausting to be around.',
+  cautious:          '{name} does not move without knowing the ground. They take their time, ask their questions, and do not mistake patience for cowardice.',
+  trusting:          '{name} extends good faith readily and withdraws it slowly. They have been wrong before and will be wrong again. They accept this.',
+
+  // Triad 10: Work Ethic
+  careless:          '{name} is not thorough. Details escape them, work is left half-finished, and they are surprised by the consequences.',
+  diligent:          '{name} finishes what they start. Every task, large or small, receives the same steady application.',
+  perfectionist:     '{name} will not submit work they are not proud of. At some point this becomes obstruction, and they know it.',
+
+  // Triad 11: Patience
+  impatient:         '{name} does not wait well. Delay is a provocation, and they respond to it like one.',
+  patient:           '{name} can hold still while the situation resolves itself. They have learned that most things do, given time.',
+  complacent:        '{name} is not driven. Things are good enough. Change requires effort they are not particularly interested in spending.',
+
+  // Triad 12: Honesty
+  deceitful:         '{name} tells people what serves them. Truth is one option among many, and rarely the most useful one.',
+  honest:            '{name} says what they mean. This earns them trust in some quarters and enemies in others. They consider both acceptable.',
+  easily_influenced: '{name} is persuadable. Put the right argument in front of them and they will be convinced by it. Put the wrong one in front of them and they will be convinced by that too.',
+
+  // Triad 13: Presence
+  awkward:           '{name} never quite finds the rhythm of a room. Conversations stall, silences stretch, and they are usually the reason.',
+  charismatic:       '{name} has a presence that rooms adjust to. They do not need to demand attention. It arrives on its own.',
+  manipulative:      '{name} knows which words move people and is not above using them. Whether this is skill or vice depends largely on the outcome.',
+
+  // Triad 14: Empathy
+  callous:           '{name} does not linger over other people\'s difficulties. This is not cruelty. It is efficiency, or so they say.',
+  compassionate:     '{name} takes other people\'s suffering seriously. It lands on them, and they do not look away from it.',
+  bleeding_heart:    '{name} feels everything. Other people\'s pain lands on them as though it were their own, and it does not let go easily.',
+
+  // Triad 15: Authority
+  push_over:         '{name} has difficulty holding a line. What starts as accommodation becomes something others rely on and then exploit.',
+  authoritative:     '{name} gives direction and people follow. Not through fear, but through a certainty that makes compliance feel natural.',
+  wrathful:          '{name} does not absorb insults quietly. When the line is crossed, the response is immediate and rarely proportionate.',
+
+  // Triad 16: Experience
+  naive:             '{name} takes things at face value. The world is newer to them than it looks, and that gap tends to cost them.',
+  experienced:       '{name} has been around long enough to know how things usually go. That knowledge is not glamorous, but it is reliable.',
+  worldly:           '{name} has been places and seen how things differ from one corner of the world to the next. This changes how they read a room.',
+
+  // Triad 17: Faith
+  cynical:           '{name} does not believe in much. Not out of despair, but because the evidence has been consistently poor.',
+  zealous:           '{name} holds their faith with conviction. It shapes what they do and how they justify it.',
+  fanatic:           '{name} does not hold faith loosely. There is no gap between doctrine and self, and they do not see why there should be.',
+
+  // Triad 18: Flexibility
+  fickle:            '{name} changes direction easily. Commitments are provisional. Opinions shift. What seemed certain yesterday is already up for review.',
+  open_minded:       '{name} does not start with a conclusion. They listen, adjust, and arrive somewhere different than they began. This is rarer than it sounds.',
+  stubborn:          '{name} does not change course easily. Once decided, they hold the position, regardless of what the room says.',
+
+  // Triad 19: Justice
+  arbitrary:         '{name} applies rules when convenient and sets them aside when not. There is a logic to it, but it is entirely their own.',
+  just:              '{name} cares about fairness in ways that are inconvenient and non-negotiable. They apply the same standard to themselves.',
+  rigid:             '{name} believes in doing things the right way. The right way is the one they know. Variation is not improvement, it is deviation.',
+
+  // Triad 20: Expression
+  stoic:             '{name} does not show what they feel. Whatever is happening inside, the surface stays steady. This is a choice, and a costly one.',
+  composed:          '{name} does not rattle outwardly. The interior may be loud, but the exterior is controlled and readable only to those paying close attention.',
+  expressive:        '{name} does not conceal much. Their face, their voice, their posture: all of it is visible to anyone in the room.',
+
+  // Triad 21: Vengeance
+  vengeful:          '{name} remembers every slight and waits. The ledger is always open, and eventually, debts get paid.',
+  objective:         '{name} does not let what they want cloud what is true. They follow the evidence, even when it leads somewhere uncomfortable.',
+  forgiving:         '{name} does not carry grievances. This is not weakness. It is a deliberate choice about what is worth carrying.',
 };

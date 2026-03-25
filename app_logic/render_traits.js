@@ -87,10 +87,26 @@ function renderTraitBrowser() {
     const body = document.createElement('div');
     body.className = 'cat-body' + (collapsed ? ' hidden' : '');
 
-    if (cat === 'congenital') {
+    if (cat === 'personality') {
+      // Personality uses the triad renderer
+      try {
+        renderPersonalityTriads(body, allTraitsInCat, search, costFilter);
+      } catch (e) {
+        console.error('Personality triad render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Personality traits unavailable.</div>';
+      }
+    } else if (cat === 'congenital') {
       renderCongenitalPaired(body, filtered);
     } else if (cat === 'fame') {
       renderFameTwoCols(body, filtered);
+    } else if (cat === 'commander') {
+      // Commander tab uses the tree renderer instead of cards
+      try {
+        renderCommanderTree(body, allTraitsInCat, search, costFilter);
+      } catch (e) {
+        console.error('Commander tree render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Commander tree unavailable.</div>';
+      }
     } else if (cat === 'magic_elements') {
       // Magic tab uses the tree renderer instead of cards
       try {
@@ -316,7 +332,8 @@ function makeTraitCard(t) {
     card.addEventListener('click', () => toggleTrait(t.id));
   } else {
     let reason = '';
-    if (isBlockedByMagicRules(t.id))    reason = 'Magic requirements not met';
+    if (isBlockedByRaceRules(t.id))     reason = 'Not available for this race';
+    else if (isBlockedByMagicRules(t.id))    reason = 'Magic requirements not met';
     else if (isBlockedByOpposites(t.id)) reason = 'Blocked by opposite trait';
     else if (isBlockedByGroup(t.id))     reason = 'Group already selected';
     else if (isBlockedByCatLimit(t.id))  reason = 'Category limit reached';
@@ -350,7 +367,8 @@ function makeLadderCard(t) {
     card.addEventListener('click', () => toggleTrait(t.id));
   } else {
     let reason = '';
-    if (isBlockedByMagicRules(t.id))    reason = 'Magic requirements not met';
+    if (isBlockedByRaceRules(t.id))     reason = 'Not available for this race';
+    else if (isBlockedByMagicRules(t.id))    reason = 'Magic requirements not met';
     else if (isBlockedByOpposites(t.id)) reason = 'Blocked by opposite trait';
     else if (isBlockedByGroup(t.id))     reason = 'Group: pick one tier only';
     else if (isBlockedByBudget(t.id))    reason = 'Not enough points';

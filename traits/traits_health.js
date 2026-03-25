@@ -39,7 +39,7 @@ const HEALTH_FLAVOR = {
   blind:           '{name} cannot see the world as others do. They have had to carve their own place in it.',
   boils:           '{name} is afflicted with a persistent skin condition. It draws eyes, and not in ways they appreciate.',
   diseased:        '{name} carries a sickness. Some days are better than others.',
-  eunuch_1:        '{name} has been cut — a political or religious act that changed the path of their life.',
+  eunuch_1:        '{name} has been cut, a political or religious act that changed the path of their life.',
   hard_of_hearing: '{name} does not catch everything the first time. They have learned to read rooms as much as words.',
   needs_glasses:   '{name} needs corrective lenses. Without them, the world is a smudge.',
   night_blind:     '{name} sees poorly in low light. They have learned to stay near candles.',
