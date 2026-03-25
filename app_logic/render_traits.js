@@ -87,7 +87,21 @@ function renderTraitBrowser() {
     const body = document.createElement('div');
     body.className = 'cat-body' + (collapsed ? ' hidden' : '');
 
-    if (cat === 'personality') {
+    if (cat === 'lifestyle') {
+      try {
+        renderLifestyleTree(body, allTraitsInCat, search, costFilter);
+      } catch (e) {
+        console.error('Lifestyle tree render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Lifestyle trees unavailable.</div>';
+      }
+    } else if (cat === 'education') {
+      try {
+        renderEducationTracks(body, allTraitsInCat, search, costFilter);
+      } catch (e) {
+        console.error('Education track render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Education tracks unavailable.</div>';
+      }
+    } else if (cat === 'personality') {
       // Personality uses the triad renderer
       try {
         renderPersonalityTriads(body, allTraitsInCat, search, costFilter);
@@ -96,7 +110,12 @@ function renderTraitBrowser() {
         body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Personality traits unavailable.</div>';
       }
     } else if (cat === 'congenital') {
-      renderCongenitalPaired(body, filtered);
+      try {
+        renderCongenitalTimeline(body, search, costFilter);
+      } catch (e) {
+        console.error('Congenital timeline render error:', e);
+        body.innerHTML = '<div style="padding:1rem;color:var(--text-faint)">Congenital traits unavailable.</div>';
+      }
     } else if (cat === 'fame') {
       renderFameTwoCols(body, filtered);
     } else if (cat === 'commander') {
@@ -170,80 +189,102 @@ function renderTraitBrowser() {
   }
 }
 
-// ── Congenital paired layout ──────────────────────────────
-// Display order for bad/good pair rows. Each entry is the base group
-// name shared by both the _bad and _good variant.
+// ── Congenital timeline layout ────────────────────────────────
+// Display order for each base group. Bad traits go left (worst first),
+// good traits go right (mildest first), separated by a centre divider.
 const CONGENITAL_PAIR_ORDER = [
   'beauty', 'bloodline', 'fertility', 'form',
   'health', 'intellect', 'mobility', 'physique',
   'posture', 'respiration', 'speech',
 ];
 
-function renderCongenitalPaired(body, filtered) {
-  const filteredIds = new Set(filtered.map(t => t.id));
+function renderCongenitalTimeline(body, search, costFilter) {
+  const legend = document.createElement('div');
+  legend.className = 'cong-legend';
+  legend.innerHTML = `
+    <span class="cl-item"><span class="cl-dot cl-neg-dot"></span>Negative</span>
+    <span class="cl-item"><span class="cl-dot cl-pos-dot"></span>Positive</span>
+  `;
+  body.appendChild(legend);
 
-  const grid = document.createElement('div');
-  grid.className = 'cong-grid';
-
-  let anyPair = false;
+  let anyRow = false;
   for (const base of CONGENITAL_PAIR_ORDER) {
-    const badGroup  = `${base}_bad`;
-    const goodGroup = `${base}_good`;
+    const badTraits  = [...(traitsByGroup[`${base}_bad`]  || [])].sort((a, b) => (b.level || 0) - (a.level || 0));
+    const goodTraits = [...(traitsByGroup[`${base}_good`] || [])].sort((a, b) => (a.level || 0) - (b.level || 0));
+    if (badTraits.length === 0 && goodTraits.length === 0) continue;
+    anyRow = true;
 
-    const badFiltered  = (traitsByGroup[badGroup]  || []).filter(t => filteredIds.has(t.id));
-    const goodFiltered = (traitsByGroup[goodGroup] || []).filter(t => filteredIds.has(t.id));
+    const row = document.createElement('div');
+    row.className = 'cong-timeline-row';
 
-    if (badFiltered.length === 0 && goodFiltered.length === 0) continue;
-    anyPair = true;
+    const label = document.createElement('div');
+    label.className = 'cong-row-label';
+    label.textContent = base.charAt(0).toUpperCase() + base.slice(1);
+    row.appendChild(label);
 
-    const pair = document.createElement('div');
-    pair.className = 'cong-pair';
-    pair.appendChild(_makeCongCol(badGroup,  badFiltered,  false));
-    pair.appendChild(_makeCongCol(goodGroup, goodFiltered, true));
-    grid.appendChild(pair);
+    const track = document.createElement('div');
+    track.className = 'cong-track';
+
+    for (const t of badTraits)  track.appendChild(makeCongNode(t, search, costFilter));
+
+    if (badTraits.length > 0 && goodTraits.length > 0) {
+      const gap = document.createElement('div');
+      gap.className = 'cong-gap';
+      track.appendChild(gap);
+    }
+
+    for (const t of goodTraits) track.appendChild(makeCongNode(t, search, costFilter));
+
+    row.appendChild(track);
+    body.appendChild(row);
   }
 
-  if (!anyPair) {
+  if (!anyRow) {
     const empty = document.createElement('div');
     empty.className = 'cong-no-match';
-    empty.textContent = 'No traits match your filters.';
-    grid.appendChild(empty);
+    empty.textContent = 'No traits available.';
+    body.appendChild(empty);
   }
-
-  body.appendChild(grid);
 }
 
-function _makeCongCol(groupName, traits, isGood) {
-  const col = document.createElement('div');
-  col.className = 'cong-col ' + (isGood ? 'cong-col-good' : 'cong-col-bad');
+function makeCongNode(t, search, costFilter) {
+  const isSelected = state.selectedTraits.has(t.id);
+  const isDisabled = !isSelected && !canSelect(t.id);
+  const isDim = !isSelected && (
+    (search && !t.label.toLowerCase().includes(search) && !t.id.toLowerCase().includes(search)) ||
+    (costFilter === 'positive' && !(t.cost > 0)) ||
+    (costFilter === 'negative' && !(t.cost < 0)) ||
+    (costFilter === 'zero'     && t.cost !== 0)
+  );
+  const tierClass = t.cost > 0 ? 'pnt-pos' : t.cost < 0 ? 'pnt-neg' : 'pnt-zero';
 
-  const hdr = document.createElement('div');
-  hdr.className = 'cong-col-hdr';
-  hdr.textContent = groupName
-    .replace(/_/g, ' ')
-    .split(' ')
-    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
-  col.appendChild(hdr);
+  const node = document.createElement('div');
+  node.className = `cong-node ${tierClass}`
+    + (isSelected ? ' selected' : '')
+    + (isDisabled ? ' disabled' : '')
+    + (isDim      ? ' dim'      : '');
 
-  if (traits.length === 0) {
-    const empty = document.createElement('div');
-    empty.className = 'cong-col-empty';
-    empty.textContent = '—';
-    col.appendChild(empty);
-  } else {
-    const ladder = document.createElement('div');
-    ladder.className = 'group-ladder';
-    for (const t of traits) ladder.appendChild(makeLadderCard(t));
-    col.appendChild(ladder);
+  const nameEl = document.createElement('div');
+  nameEl.className = 'cn-name';
+  nameEl.textContent = t.label;
+
+  const costEl = document.createElement('div');
+  costEl.className = 'cn-cost';
+  costEl.textContent = costLabel(t.cost);
+
+  node.appendChild(nameEl);
+  node.appendChild(costEl);
+
+  if (!isDisabled) {
+    node.addEventListener('click', () => toggleTrait(t.id));
   }
-
-  return col;
+  attachTraitTooltip(node, t.id);
+  return node;
 }
 
 // ── Fame & Vices two-column layout ────────────────────────────
 // Trait IDs that belong in the Fames column; everything else is a Vice.
-const FAME_ROLE_IDS = new Set(['witch', 'governor']);
+const FAME_ROLE_IDS = new Set(['witch', 'governor', 'lifestyle_blademaster']);
 
 function renderFameTwoCols(body, filtered) {
   const fames = filtered.filter(t =>  FAME_ROLE_IDS.has(t.id))

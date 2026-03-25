@@ -98,6 +98,18 @@ const FAME_TRAITS = [
     "physical": false,
     "opposites": [],
     "compat": {}
+  },
+  {
+    "id": "lifestyle_blademaster",
+    "label": "Blademaster",
+    "category": "fame",
+    "cost": 40,
+    "group": null,
+    "level": null,
+    "genetic": false,
+    "physical": false,
+    "opposites": [],
+    "compat": { "brave": 5, "craven": -5 }
   }
 ];
 
@@ -108,7 +120,8 @@ const FAME_STATS = {
   hashishiyah: { stewardship: -2, learning: -2, intelligence: -1 },
   rakish: { intrigue: 1, diplomacy: -1, charisma: 1, dexterity: 1, deception: 1, performance: 1 },
   reclusive: { stewardship: -1, diplomacy: -2, charisma: -2, stealth: 1 },
-  irritable: { martial: -1, diplomacy: -2, prowess: 2, charisma: -1, persuasion: -1 }
+  irritable:           { martial: -1, diplomacy: -2, prowess: 2, charisma: -1, persuasion: -1 },
+  lifestyle_blademaster: { prowess: 3, strength: 2, dexterity: 2, athletics: 3 }
 };
 
 const FAME_FLAVOR = {
@@ -118,5 +131,6 @@ const FAME_FLAVOR = {
   rakish: '{name} has a reputation. Much of it earned. They seem oddly proud of that.',
   reclusive: '{name} prefers their own company. The world outside is loud and exhausting; within their walls, there is quiet.',
   witch: '{name} walks a path most dare not name. Whether the power is real or perceived, people treat it as the same thing.',
-  governor: '{name} governs with competence. They know that administration is the quiet cousin of victory.'
+  governor:              '{name} governs with competence. They know that administration is the quiet cousin of victory.',
+  lifestyle_blademaster: '{name} has devoted themselves to the edge and its art. The blade is not a tool they carry. It is an extension of their will.'
 };

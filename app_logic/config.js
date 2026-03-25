@@ -7,12 +7,12 @@
 
 // ── Point budget and per-category limits ─────────────────────
 const CONFIG = {
-  POINT_BUDGET: 600,
+  POINT_BUDGET: 500,
   // Optional per-category limits (null = unlimited)
   CAT_LIMITS: {
     personality: 5,
     education: 1,
-    lifestyle: 4,
+    lifestyle: 14,
     congenital: null,
     health: 3,
     commander: 4,

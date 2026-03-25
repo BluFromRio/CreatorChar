@@ -3,306 +3,45 @@
 // ============================================================
 
 const EDUCATION_TRAITS = [
-  {
-    "id": "education_intrigue_1",
-    "label": "Intrigue: Trained",
-    "category": "education",
-    "cost": 0,
-    "group": "education_intrigue",
-    "level": 1,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_intrigue_2",
-    "label": "Intrigue: Competent",
-    "category": "education",
-    "cost": 20,
-    "group": "education_intrigue",
-    "level": 2,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_intrigue_3",
-    "label": "Intrigue: Expert",
-    "category": "education",
-    "cost": 40,
-    "group": "education_intrigue",
-    "level": 3,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_intrigue_4",
-    "label": "Intrigue: Master",
-    "category": "education",
-    "cost": 80,
-    "group": "education_intrigue",
-    "level": 4,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_intrigue_5",
-    "label": "Intrigue: Legend",
-    "category": "education",
-    "cost": 150,
-    "group": "education_intrigue",
-    "level": 5,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_diplomacy_1",
-    "label": "Diplomacy: Trained",
-    "category": "education",
-    "cost": 0,
-    "group": "education_diplomacy",
-    "level": 1,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_diplomacy_2",
-    "label": "Diplomacy: Competent",
-    "category": "education",
-    "cost": 20,
-    "group": "education_diplomacy",
-    "level": 2,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_diplomacy_3",
-    "label": "Diplomacy: Expert",
-    "category": "education",
-    "cost": 40,
-    "group": "education_diplomacy",
-    "level": 3,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_diplomacy_4",
-    "label": "Diplomacy: Master",
-    "category": "education",
-    "cost": 80,
-    "group": "education_diplomacy",
-    "level": 4,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_diplomacy_5",
-    "label": "Diplomacy: Legend",
-    "category": "education",
-    "cost": 150,
-    "group": "education_diplomacy",
-    "level": 5,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_stewardship_1",
-    "label": "Stewardship: Trained",
-    "category": "education",
-    "cost": 0,
-    "group": "education_stewardship",
-    "level": 1,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_stewardship_2",
-    "label": "Stewardship: Competent",
-    "category": "education",
-    "cost": 20,
-    "group": "education_stewardship",
-    "level": 2,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_stewardship_3",
-    "label": "Stewardship: Expert",
-    "category": "education",
-    "cost": 40,
-    "group": "education_stewardship",
-    "level": 3,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_stewardship_4",
-    "label": "Stewardship: Master",
-    "category": "education",
-    "cost": 80,
-    "group": "education_stewardship",
-    "level": 4,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_stewardship_5",
-    "label": "Stewardship: Legend",
-    "category": "education",
-    "cost": 150,
-    "group": "education_stewardship",
-    "level": 5,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_martial_1",
-    "label": "Martial: Trained",
-    "category": "education",
-    "cost": 0,
-    "group": "education_martial",
-    "level": 1,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_martial_2",
-    "label": "Martial: Competent",
-    "category": "education",
-    "cost": 20,
-    "group": "education_martial",
-    "level": 2,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_martial_3",
-    "label": "Martial: Expert",
-    "category": "education",
-    "cost": 40,
-    "group": "education_martial",
-    "level": 3,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_martial_4",
-    "label": "Martial: Master",
-    "category": "education",
-    "cost": 80,
-    "group": "education_martial",
-    "level": 4,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_martial_5",
-    "label": "Martial: Legend",
-    "category": "education",
-    "cost": 150,
-    "group": "education_martial",
-    "level": 5,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_learning_1",
-    "label": "Learning: Trained",
-    "category": "education",
-    "cost": 0,
-    "group": "education_learning",
-    "level": 1,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_learning_2",
-    "label": "Learning: Competent",
-    "category": "education",
-    "cost": 20,
-    "group": "education_learning",
-    "level": 2,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_learning_3",
-    "label": "Learning: Expert",
-    "category": "education",
-    "cost": 40,
-    "group": "education_learning",
-    "level": 3,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_learning_4",
-    "label": "Learning: Master",
-    "category": "education",
-    "cost": 80,
-    "group": "education_learning",
-    "level": 4,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  },
-  {
-    "id": "education_learning_5",
-    "label": "Learning: Legend",
-    "category": "education",
-    "cost": 150,
-    "group": "education_learning",
-    "level": 5,
-    "genetic": false,
-    "physical": false,
-    "opposites": [],
-    "compat": {}
-  }
+  // ── Intrigue ─────────────────────────────────────────────────
+  // Deception, manipulation, intelligence, and dangerous secrets.
+  { "id": "education_intrigue_1", "label": "Intrigue: Street-Savvy",  "category": "education", "cost": 10,  "group": "education_intrigue", "level": 1, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_intrigue_2", "label": "Intrigue: Schemer",       "category": "education", "cost": 30,  "group": "education_intrigue", "level": 2, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_intrigue_3", "label": "Intrigue: Operative",     "category": "education", "cost": 60,  "group": "education_intrigue", "level": 3, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_intrigue_4", "label": "Intrigue: Spymaster",     "category": "education", "cost": 100, "group": "education_intrigue", "level": 4, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_intrigue_5", "label": "Intrigue: Shadowmaster",  "category": "education", "cost": 150, "group": "education_intrigue", "level": 5, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+
+  // ── Diplomacy ────────────────────────────────────────────────
+  // Negotiation, courtly manners, alliance-building, and statecraft.
+  { "id": "education_diplomacy_1", "label": "Diplomacy: Courtier",       "category": "education", "cost": 10,  "group": "education_diplomacy", "level": 1, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_diplomacy_2", "label": "Diplomacy: Envoy",           "category": "education", "cost": 30,  "group": "education_diplomacy", "level": 2, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_diplomacy_3", "label": "Diplomacy: Negotiator",      "category": "education", "cost": 60,  "group": "education_diplomacy", "level": 3, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_diplomacy_4", "label": "Diplomacy: Ambassador",      "category": "education", "cost": 100, "group": "education_diplomacy", "level": 4, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_diplomacy_5", "label": "Diplomacy: Grand Diplomat",  "category": "education", "cost": 150, "group": "education_diplomacy", "level": 5, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+
+  // ── Stewardship ──────────────────────────────────────────────
+  // Land management, coin, trade, and resource administration.
+  { "id": "education_stewardship_1", "label": "Stewardship: Farmhand",         "category": "education", "cost": 10,  "group": "education_stewardship", "level": 1, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_stewardship_2", "label": "Stewardship: Local Trader",      "category": "education", "cost": 30,  "group": "education_stewardship", "level": 2, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_stewardship_3", "label": "Stewardship: Town Maven",        "category": "education", "cost": 60,  "group": "education_stewardship", "level": 3, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_stewardship_4", "label": "Stewardship: Administrator",     "category": "education", "cost": 100, "group": "education_stewardship", "level": 4, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_stewardship_5", "label": "Stewardship: Golden Sovereign",  "category": "education", "cost": 150, "group": "education_stewardship", "level": 5, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+
+  // ── Martial ──────────────────────────────────────────────────
+  // Military training, battlefield tactics, and the strategy of war.
+  { "id": "education_martial_1", "label": "Martial: Footsoldier",  "category": "education", "cost": 10,  "group": "education_martial", "level": 1, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_martial_2", "label": "Martial: Sergeant",     "category": "education", "cost": 30,  "group": "education_martial", "level": 2, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_martial_3", "label": "Martial: Tactician",    "category": "education", "cost": 60,  "group": "education_martial", "level": 3, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_martial_4", "label": "Martial: Commander",    "category": "education", "cost": 100, "group": "education_martial", "level": 4, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_martial_5", "label": "Martial: Warlord",      "category": "education", "cost": 150, "group": "education_martial", "level": 5, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+
+  // ── Learning ─────────────────────────────────────────────────
+  // Formal scholarship spanning philosophy, theology, history, and the sciences.
+  { "id": "education_learning_1", "label": "Learning: Student",    "category": "education", "cost": 10,  "group": "education_learning", "level": 1, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_learning_2", "label": "Learning: Scholar",    "category": "education", "cost": 30,  "group": "education_learning", "level": 2, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_learning_3", "label": "Learning: Sage",       "category": "education", "cost": 60,  "group": "education_learning", "level": 3, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_learning_4", "label": "Learning: Luminary",   "category": "education", "cost": 100, "group": "education_learning", "level": 4, "genetic": false, "physical": false, "opposites": [], "compat": {} },
+  { "id": "education_learning_5", "label": "Learning: Grand Sage", "category": "education", "cost": 150, "group": "education_learning", "level": 5, "genetic": false, "physical": false, "opposites": [], "compat": {} },
 ];
 
 const EDUCATION_STATS = {
@@ -334,29 +73,38 @@ const EDUCATION_STATS = {
 };
 
 const EDUCATION_FLAVOR = {
-  education_intrigue_1: '{name} has learned the basics of reading rooms and keeping secrets. A foothold in the shadowy arts.',
-  education_intrigue_2: '{name} is no novice in the art of subterfuge. They can read between lines and leave none of their own.',
-  education_intrigue_3: '{name} has honed intrigue into a skill few can match. They know who is watching, and who is lying.',
-  education_intrigue_4: '{name} commands the shadows with ease. Few schemes unfold without their awareness, or participation.',
-  education_intrigue_5: '{name} is a legend in the game of whispers and knives. They did not just learn intrigue. They became it.',
-  education_diplomacy_1: '{name} knows the basics of courtesy and negotiation. A start.',
-  education_diplomacy_2: '{name} handles negotiations with growing confidence. They leave most tables satisfied.',
-  education_diplomacy_3: '{name} is a skilled diplomat, able to defuse tension and forge alliances others thought impossible.',
-  education_diplomacy_4: '{name} has mastered the art of the deal, the treaty, and the carefully worded letter.',
-  education_diplomacy_5: '{name}\'s diplomatic reputation precedes them. They have talked their way out of wars and into legacies.',
-  education_stewardship_1: '{name} knows the basics of managing a household\'s needs. Someone has to count the grain.',
-  education_stewardship_2: '{name} handles resources with growing capability. Nothing goes to waste under their watch.',
-  education_stewardship_3: '{name} runs a tight operation. Ledgers balance; supply chains hold; expenses are accounted for.',
-  education_stewardship_4: '{name} has mastered the administration of resources. They can make a struggling estate profitable.',
-  education_stewardship_5: '{name} is a legend of stewardship. Their mastery of coin and management borders on the miraculous.',
-  education_martial_1: '{name} has had basic military training. They know which end of a sword to hold. Mostly.',
-  education_martial_2: '{name} has a competent grasp of warfare and its demands. Soldiers follow their lead.',
-  education_martial_3: '{name} understands tactics, logistics, and the art of the campaign. They are a credible commander.',
-  education_martial_4: '{name} commands with expertise. Their armies move with purpose and strike with precision.',
-  education_martial_5: '{name} is a martial legend. Their name on the field is worth a hundred swords.',
-  education_learning_1: '{name} has had an education, not a grand one, but a start. They read; they question.',
-  education_learning_2: '{name} has studied enough to know what they do not know. That is its own kind of wisdom.',
-  education_learning_3: '{name} is well-read, well-spoken, and well-regarded in learned circles.',
-  education_learning_4: '{name} has mastered multiple fields of knowledge. Their mind is a library with excellent organization.',
-  education_learning_5: '{name} is a scholar of legendary stature. The sum of their learning humbles most who meet them.'
+  // Intrigue: deception, manipulation, intelligence-gathering
+  education_intrigue_1: '{name} picked up the basics through lived experience: reading people, keeping quiet, and staying out of sight. No formal schooling, just sharp instincts honed on the street.',
+  education_intrigue_2: '{name} learned the craft under a mentor or through guild work. How to gather information, lie convincingly, and move through spaces without leaving a trace.',
+  education_intrigue_3: '{name} received formal training in intelligence and subterfuge, likely through a spy network, a shadowy patron, or a clandestine organization. They know how the game is played.',
+  education_intrigue_4: '{name} was shaped by years of covert operations and possibly mentored by a legend in the field. Few secrets survive their attention, and fewer plots proceed without their knowledge.',
+  education_intrigue_5: '{name} did not merely study intrigue. They became it. Their name, where it is known at all, is spoken only in whispers by those who understand what it means.',
+
+  // Diplomacy: negotiation, courts, alliances, statecraft
+  education_diplomacy_1: '{name} was taught the basics of courtesy, etiquette, and simple negotiation, likely through a minor noble household, a finishing school, or a brief apprenticeship at court.',
+  education_diplomacy_2: '{name} received formal diplomatic training, probably through a noble house or a senior diplomat\'s apprenticeship. They handle formal negotiations with confidence.',
+  education_diplomacy_3: '{name} was extensively schooled in statecraft, rhetoric, and alliance-building, possibly at an academy or through years of real diplomatic postings. Complex negotiations are their territory.',
+  education_diplomacy_4: '{name} achieved mastery through a distinguished career and rigorous education. They have brokered treaties, defused crises, and shaped the political landscape with well-timed words.',
+  education_diplomacy_5: '{name}\'s name carries weight in every court that matters. Their career in diplomacy did not just shape agreements. It shaped history.',
+
+  // Stewardship: land, coin, trade, resource management
+  education_stewardship_1: '{name} learned the basics through practical work: managing a household, counting stock, and working land. No formal schooling, but a solid grounding in what things cost and where they go.',
+  education_stewardship_2: '{name} was trained in trade and basic economics, likely through a merchant family, a guild apprenticeship, or a small-town posting. They understand inventory, negotiation, and ledgers.',
+  education_stewardship_3: '{name} received formal training in resource management, economic law, and estate administration, probably at an academy or under a seasoned steward. They run operations that work.',
+  education_stewardship_4: '{name} is an expert administrator, trained at an advanced level and likely with years of practical experience managing significant holdings. Struggling estates become profitable under their watch.',
+  education_stewardship_5: '{name}\'s mastery of coin, land, and administration borders on the legendary. Their methods are studied and their results are cited as examples. They do not manage wealth. They command it.',
+
+  // Martial: military, warfare, tactics, command
+  education_martial_1: '{name} completed basic military training: drills, weapon handling, and unit formation. Probably from a short stint of service or a militia enrollment. They know which end of a sword to hold.',
+  education_martial_2: '{name} received more formal military education, likely through an officer\'s track, a garrison posting, or years of active campaign service. Soldiers follow their orders.',
+  education_martial_3: '{name} was trained in the full art of war, covering tactics, logistics, siege, and command structure. Possibly schooled at a martial academy or under a renowned general.',
+  education_martial_4: '{name} is an expert commander with advanced military education and a decorated career. Their armies move with purpose, and their campaigns are studied by those who come after.',
+  education_martial_5: '{name} is a legend of the field. Their name on a battle standard is worth a hundred swords. Generals who faced them wrote about it, and those who served under them still speak of it.',
+
+  // Learning: scholarship, philosophy, theology, medicine, sciences
+  education_learning_1: '{name} received basic formal schooling through a tutor, a monastery, or a local school. They can read, write, and reason. A start, and not a small one in the world they inhabit.',
+  education_learning_2: '{name} pursued more serious academic study, likely at a university, a monastery, or under a learned mentor. They have read widely and know what they do not yet know.',
+  education_learning_3: '{name} is deeply educated across multiple disciplines and well-regarded in scholarly circles. They may have studied abroad, written treatises, or taught at an institution.',
+  education_learning_4: '{name} is a distinguished scholar with mastery across several fields of formal study. Their mind is a library with excellent organization, and others come to them for answers.',
+  education_learning_5: '{name} is a living legend of scholarship. Their name carries weight in every hall of learning. The sum of what they know humbles most who encounter it.'
 };

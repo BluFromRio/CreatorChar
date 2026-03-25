@@ -291,6 +291,129 @@ function reconcileCommanderState() {
   }
 }
 
+// ── Lifestyle tree structure and enforcement ──────────────────
+// 7 trees, each with a root node and two branches of 3 sequential nodes.
+// No branch exclusivity — both branches can be pursued.
+// Prerequisite rule: root required for all branch nodes; each branch node
+// requires the previous node in that branch.
+const LIFESTYLE_TREES = [
+  {
+    id: 'nature',
+    label: 'Nature',
+    root: 'ls_forager',
+    branches: [
+      { id: 'branch_wild',   nodes: ['lifestyle_hunter', 'ls_tracker',       'ls_beastmaster']     },
+      { id: 'branch_plants', nodes: ['lifestyle_gardener', 'lifestyle_herbalist', 'ls_plant_expert'] },
+    ],
+  },
+  {
+    id: 'knowledge',
+    label: 'Knowledge',
+    root: 'ls_student',
+    branches: [
+      { id: 'branch_scholar',   nodes: ['scholar',     'ls_philosopher', 'ls_sage']          },
+      { id: 'branch_spiritual', nodes: ['theologian',  'ls_oracle',      'lifestyle_mystic'] },
+    ],
+  },
+  {
+    id: 'realm',
+    label: 'Realm',
+    root: 'august',
+    branches: [
+      { id: 'branch_builder',  nodes: ['architect',   'ls_steward',   'ls_master_builder'] },
+      { id: 'branch_command',  nodes: ['strategist',  'overseer',     'ls_commander_ls']   },
+    ],
+  },
+  {
+    id: 'intrigue',
+    label: 'Intrigue',
+    root: 'schemer',
+    branches: [
+      { id: 'branch_espionage', nodes: ['ls_plotter',   'ls_spy_master',   'ls_shadow_broker'] },
+      { id: 'branch_coercion',  nodes: ['torturer',     'ls_interrogator', 'ls_dread_lord']    },
+    ],
+  },
+  {
+    id: 'social',
+    label: 'Social',
+    root: 'lifestyle_reveler',
+    branches: [
+      { id: 'branch_seduction', nodes: ['ls_charmer',   'seducer',       'ls_courtly_lover'] },
+      { id: 'branch_society',   nodes: ['ls_socialite', 'ls_master_host', 'ls_enchanter']    },
+    ],
+  },
+  {
+    id: 'wealth',
+    label: 'Wealth',
+    root: 'avaricious',
+    branches: [
+      { id: 'branch_trade',   nodes: ['ls_merchant',  'ls_entrepreneur', 'ls_caravan_master'] },
+      { id: 'branch_finance', nodes: ['ls_financier', 'administrator',   'ls_magnate']        },
+    ],
+  },
+  {
+    id: 'body',
+    label: 'Body',
+    root: 'whole_of_body',
+    branches: [
+      { id: 'branch_fitness',  nodes: ['ls_hardy',            'ls_athletic',  'ls_peak_physique']    },
+      { id: 'branch_medicine', nodes: ['lifestyle_physician', 'ls_surgeon',   'ls_master_physician'] },
+    ],
+  },
+];
+
+// Returns the tree and branch/role for traitId, or null.
+function _findLifestyleBranch(traitId) {
+  for (const tree of LIFESTYLE_TREES) {
+    if (tree.root === traitId) return { tree, role: 'root', branch: null, idx: -1 };
+    for (const branch of tree.branches) {
+      const idx = branch.nodes.indexOf(traitId);
+      if (idx !== -1) return { tree, role: 'branch', branch, idx };
+    }
+  }
+  return null;
+}
+
+function isBlockedByLifestyleRules(traitId) {
+  const found = _findLifestyleBranch(traitId);
+  if (!found) return false;
+  const { tree, role, branch, idx } = found;
+
+  // Root node has no prerequisite
+  if (role === 'root') return false;
+
+  // Branch nodes require the root and sequential predecessor
+  if (!state.selectedTraits.has(tree.root)) return true;
+  if (idx > 0 && !state.selectedTraits.has(branch.nodes[idx - 1])) return true;
+
+  return false;
+}
+
+// Removes lifestyle branch nodes whose prerequisites are gone.
+function reconcileLifestyleState() {
+  const sel = state.selectedTraits;
+  for (const tree of LIFESTYLE_TREES) {
+    // If root is gone, clear all branch nodes in this tree
+    if (!sel.has(tree.root)) {
+      for (const branch of tree.branches) {
+        for (const nodeId of branch.nodes) sel.delete(nodeId);
+      }
+      continue;
+    }
+    // Enforce sequential integrity within each branch
+    for (const branch of tree.branches) {
+      let prereqMissing = false;
+      for (const nodeId of branch.nodes) {
+        if (prereqMissing) {
+          sel.delete(nodeId);
+        } else if (!sel.has(nodeId)) {
+          prereqMissing = true;
+        }
+      }
+    }
+  }
+}
+
 // ── Race / height trait enforcement ───────────────────────────
 const RACES_HEIGHT_BLOCK = ['dwarf', 'half_dwarf'];
 const RACES_HEIGHT_AUTO  = ['human', 'elf', 'half_elf'];
@@ -340,7 +463,8 @@ function canSelect(traitId) {
     !isBlockedByBudget(traitId) &&
     !isBlockedByMagicRules(traitId) &&
     !isBlockedByRaceRules(traitId) &&
-    !isBlockedByCommanderRules(traitId)
+    !isBlockedByCommanderRules(traitId) &&
+    !isBlockedByLifestyleRules(traitId)
   );
 }
 
@@ -364,6 +488,7 @@ function toggleTrait(traitId) {
     state.selectedTraits.delete(traitId);
     reconcileMagicState();
     reconcileCommanderState();
+    reconcileLifestyleState();
   } else {
     const t = traitById[traitId];
     // Triad auto-switch: if another member of this triad is selected, swap it out
